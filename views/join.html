@@ -1,0 +1,153 @@
+{% extends 'layout.html' %}
+{% block content %}
+<section id="banner" style="height: 50px;" padding="3em;">
+<h1 style="font-size: 40px;">회원가입</h1>
+</section>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        /* 부모 컨테이너를 가운데 정렬 */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 뷰포트 높이에 맞게 설정하여 화면 중앙에 폼이 위치하도록 합니다. */
+        }
+
+        /* 배경 이미지 설정 */
+        body {
+            background-image: url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MjRfMjMw%2FMDAxNjkyODQ0NzY2OTU0.0SG4bIAAwzTJ1pF9A-TMnRESTe2w5hc-IQZHyVWpeH8g.lSlKu-48_DFLGgmpScxgltG3uzcSKRCME-YRFGVMgagg.PNG.gywls147147%2Fimage.png&type=sc960_832'); /* 배경 이미지 경로를 여기에 입력하세요 */
+            background-size: cover; /* 배경 이미지를 화면 크기에 맞게 조절합니다. */
+            background-repeat: no-repeat; /* 배경 이미지 반복 없음 */
+            background-attachment: fixed; /* 배경 이미지 고정 */
+            
+        }
+        table {
+            background-color: whitesmoke;
+        }
+        /* 폼 요소 스타일 */
+        form {
+            width: 600px;
+            height: 600px;
+        }
+
+        /* 나머지 스타일은 이전 코드와 동일 */
+    </style>
+</head>
+
+<body>
+    <!-- 회원가입 폼 만들기 -->
+    <!-- form 태그 안에 테이블 넣어서 보기 좋게 정렬해보자 -->
+    <!-- 팁 : 처음에 tr td 넣을 때 헷갈리면 table 태그에 border 속성 넣기 -->
+
+    <div class="container">
+        <form action="/user/handleJoin" method="post">
+        <table width="400px">
+            <tr height="50" bgcolor="gray">
+                <th colspan="2" align="left">step1 : 아이디/비번 입력 </th>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right" >아이디</td>
+                <td style="display: flex;"> 
+                    <input type="text" name="userid" id="username"
+                    style="width: 150px; height: 10px; margin-right: 50px; margin-left: 20px;"> 
+                    <button type="button" id="checkDuplicate">중복확인</button>
+                </td>
+                <script>
+
+                </script>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right">비밀번호</td>
+                <td>
+                    <input type="password" name="userpw" maxlength="8" style="width: 150px; height: 10px; margin-left: 20px;">
+                </td>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right">비밀번호 확인</td>
+                <td>
+                    <input type="password" name="repw" maxlength="8" style="width: 150px; height: 10px; margin-left: 20px;">
+                </td>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right">이름</td>
+                <td>
+                    <input type="text" name="username" style="width: 150px; height: 10px; margin-left: 20px;">
+                </td>
+            </tr>
+
+            <!-- 2번째 -->
+            <tr height="50" bgcolor="gray">
+                <th colspan="2" align="left">step2 : 개인정보 </th>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right">성별</td>
+                <td>
+                    <input type="radio" id="radio1" name="radiogroup" value="m" style="margin-left: 20px;">
+                    <label for="radio1" class="radio-label">남</label>
+                      
+                    <input type="radio"  id="radio2" name="radiogroup" value="f">
+                    <label for="radio2" class="radio-label">여</label>
+                </td>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right">이메일</td>
+                <td style="display: flex;" >
+                    <input type="text" style="width: 150px; height: 10px; margin-left: 20px;" name="em">
+                    <span style="margin-left: 10px; margin-right: 10px;">@</span>
+                    <select name="bloodType">
+                        <option value="" selected disabled>선택　　　▼</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="daum.net">daum.net</option>
+                        <option value="etc">직접입력</option>
+                    </select>
+                    <input type="text" style="width: 150px; height: 10px; margin-left: 10px;"
+                    placeholder="직접입력하세요" name="ail">
+
+                </td>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right">생일</td>
+                <td>
+                    <input type="date" name="birthdate" style="margin-left: 20px;" >
+                </td>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right">
+                    몸무게
+                </td>
+                <td>
+                    <input type="number" placeholder="소수점제외" name="kg" style="margin-left: 20px;">
+                </td>
+            </tr>
+            <tr>
+                <td height="35" bgcolor="whitesmoke" align="right" >
+                    키
+                </td>
+                <td>
+                    <input type="number" placeholder="소수점제외" name="cm" style="margin-left: 20px;">
+                </td>
+            </tr>
+            <!-- ... 이후 코드 ... -->
+            <tr height="50" bgcolor="gray">
+                <th colspan="2" align="left"></th>
+            <tr align="center">
+                <td colspan="2">
+                    <input type="submit" value="제출" style="width: 100px;">
+                    <input type="reset" value="초기화" style="width: 100px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+
+</html>
+
+
+
+   
+{% endblock %}
