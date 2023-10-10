@@ -46,12 +46,12 @@
         <form action="/user/handleJoin" method="post">
         <table width="400px">
             <tr height="50" bgcolor="gray">
-                <th colspan="2" align="left">step1 : 아이디/비번 입력 </th>
+                <th colspan="2" align="left">회원가입 </th>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="right" >아이디</td>
                 <td style="display: flex;"> 
-                    <input type="text" name="userid" id="username"
+                    <input type="text" name="userId" id="username"
                     style="width: 150px; height: 10px; margin-right: 50px; margin-left: 20px;"> 
                     <button type="button" id="checkDuplicate">중복확인</button>
                 </td>
@@ -62,7 +62,7 @@
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="right">비밀번호</td>
                 <td>
-                    <input type="password" name="userpw" maxlength="8" style="width: 150px; height: 10px; margin-left: 20px;">
+                    <input type="password" name="userPw" maxlength="8" style="width: 150px; height: 10px; margin-left: 20px;">
                 </td>
             </tr>
             <tr>
@@ -74,21 +74,16 @@
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="right">이름</td>
                 <td>
-                    <input type="text" name="username" style="width: 150px; height: 10px; margin-left: 20px;">
+                    <input type="text" name="userName" style="width: 150px; height: 10px; margin-left: 20px;">
                 </td>
-            </tr>
-
-            <!-- 2번째 -->
-            <tr height="50" bgcolor="gray">
-                <th colspan="2" align="left">step2 : 개인정보 </th>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="right">성별</td>
                 <td>
-                    <input type="radio" id="radio1" name="radiogroup" value="m" style="margin-left: 20px;">
+                    <input type="radio" id="radio1" name="gender" value="m" style="margin-left: 20px;">
                     <label for="radio1" class="radio-label">남</label>
                       
-                    <input type="radio"  id="radio2" name="radiogroup" value="f">
+                    <input type="radio"  id="radio2" name="gender" value="f">
                     <label for="radio2" class="radio-label">여</label>
                 </td>
             </tr>
@@ -112,7 +107,7 @@
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="right">생일</td>
                 <td>
-                    <input type="date" name="birthdate" style="margin-left: 20px;" >
+                    <input type="date" name="birth" style="margin-left: 20px;" >
                 </td>
             </tr>
             <tr>
@@ -120,7 +115,7 @@
                     몸무게
                 </td>
                 <td>
-                    <input type="number" placeholder="소수점제외" name="kg" style="margin-left: 20px;">
+                    <input type="text" placeholder="소수점둘째자리" name="kg" style="width: 150px; height: 10px; margin-left: 20px;">
                 </td>
             </tr>
             <tr>
@@ -128,16 +123,14 @@
                     키
                 </td>
                 <td>
-                    <input type="number" placeholder="소수점제외" name="cm" style="margin-left: 20px;">
+                    <input type="text" placeholder="소수점둘째자리" name="cm" style="width: 150px; height: 10px; margin-left: 20px;">
                 </td>
             </tr>
             <!-- ... 이후 코드 ... -->
-            <tr height="50" bgcolor="gray">
-                <th colspan="2" align="left"></th>
+            
             <tr align="center">
                 <td colspan="2">
-                    <input type="submit" value="제출" style="width: 100px;">
-                    <input type="reset" value="초기화" style="width: 100px;">
+                    <input type="submit" value="가입" style="width: 100px;">
                 </td>
             </tr>
         </table>

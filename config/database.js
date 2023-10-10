@@ -5,11 +5,11 @@ const mysql = require("mysql2");
 
 // 3) 나의 DB 정보 기재
 let conn = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "1234",
-  port: 3306,
-  database: "nodejs",
+  host: "project-db-campus.smhrd.com",
+  user: "campus_23IS_IoT1_hack_1",
+  password: "smhrd1",
+  port: 3307,
+  database: "campus_23IS_IoT1_hack_1",
 });
 
 conn.connect();
