@@ -3,10 +3,41 @@
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
 </section>
-    <h1 style="font-size: 40px;"></h1>
-    <h1>　</h1>
-    <h1>　</h1>
-    <h1>　</h1>
-    <h1>　</h1>
-    <h1>　</h1>
+<div class="container" style="width: 300px;">
+    <form action="/user/handlelogin" method="post">
+        <table style="width:300px;">
+            <tr height="50" bgcolor="gray">
+                <th colspan="2"><strong>로그인</strong></th>
+            </tr>
+            <!-- 아이디입력 -->
+            <tr>
+                <td height="60" bgcolor="whitesmoke" align="right" style="padding-top: 30px; padding-bottom: 10px;" name="userId">아이디</td>
+                <td bgcolor="whitesmoke">
+                    <input type="text" name="userId" id="username"
+                    style="width: 150px; height: 10px; margin-right: 50px; margin-left: 20px;"> 
+                </td>
+            </tr>
+            <!-- 비밀번호 입력 -->
+            <tr>
+                <td height="60" bgcolor="whitesmoke" align="right" name="userPw">비밀번호</td>
+                <td bgcolor="whitesmoke">
+                    <input type="password" name="userPw" maxlength="8" style="width: 150px; height: 10px; margin-left: 20px;">
+                </td>
+            </tr>
+            <!-- 로그인 버튼 -->
+            <tr align="center">
+                <td colspan="2" bgcolor="lightgray">
+                    <input type="submit" value="로그인" style="width: 100px; height: 45px;">
+                </td>
+            </tr>
+            <tr align="center">
+                <td colspan="2" bgcolor="white" style="padding-top: 5px;">
+                    <a href="/join" style="font-size: 15px;">회원가입</a>
+                    <a href="#" style="font-size: 15px; margin-left: 10px;">아이디 찾기 <i class="bi bi-search"></i></a>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
 {%endblock%}
