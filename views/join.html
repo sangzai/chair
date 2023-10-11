@@ -49,13 +49,20 @@
                 <th colspan="2" align="left">회원가입 </th>
             </tr>
             <tr>
-                <td height="35" bgcolor="whitesmoke" align="right" >아이디</td>
-                <td style="display: flex;"> 
-                    <input type="text" name="userId" id="username"
+                <td height="35" bgcolor="whitesmoke" align="right">아이디</td>
+                <td style="display: flex;">
+                  <input
+                    type="text"
+                    name="userId"
+                    id="username"
                     style="width: 150px; height: 10px; margin-right: 50px; margin-left: 20px;"
                     oninput="checkMinLength()"
-                    maxlength = "15"> 
-                    <span id="charCount">0</span> 글자 입력
+                    maxlength="15"
+                  />
+                  <span id="charCount">0</span> 글자 입력
+                  <button id="checkButton">아이디 중복 검사</button>
+                  <div id="result"></div>
+                </td>
                     <script>
                         function checkMinLength() {
                             var inputElement = document.getElementById("username");
@@ -71,11 +78,36 @@
                             }
                         }
                     </script>
-                    <button type="button" id="checkDuplicate">중복확인</button>
-                </td>
-                <script>
+                    <script>
+                        document.getElementById('checkButton').addEventListener('click', () => {
+                            event.preventDefault();
+                            
+                          const username = document.getElementById('username').value;
+                      
+                         // 중복 아이디 검사를 서버로 보냄
+                          fetch('/checkUsername', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ username }),
+                          })
+                            .then((response) => response.json())
+                            .then((data) => {
+                              const resultDiv = document.getElementById('result');
+                              if (data.error) {
+                                resultDiv.innerHTML = `<p>${data.error}</p>`;
+                              } else {
+                                resultDiv.innerHTML = `<p>${data.message}</p>`;
+                              }
+                            })
+                            .catch((error) => console.error(error));
+                        });
+                      </script>
+                    </td>
+                
+                
 
-                </script>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="right">비밀번호</td>

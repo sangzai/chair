@@ -66,9 +66,13 @@
                      </li>
                   </ul>
                </li>
+               {% if obj.userId === undefined or obj.userId === "" %}
                <li><a href="/login" class="button primary">
                   로그인
                </a></li>
+               {% else %}
+               <li><a href="/user/logout" class="button primary">로그아웃</a></li>
+               {% endif %}
             </ul>
          </nav>
       </header>

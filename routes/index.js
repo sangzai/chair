@@ -3,7 +3,7 @@ const router = express.Router();
 
 // 메인화면
 router.get("/", (req, res) => {
-  res.render("main");
+  res.render("main",{obj : req.session.user});
 });
 
 // 마이페이지 화면

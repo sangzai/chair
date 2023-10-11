@@ -10,7 +10,12 @@
 				<h2>스마트체어</h2>
 			</header>
 			<p>
-				<strong>제품설명(간단)</strong>
+				{% if obj.userId === undefined or obj.userId === "" %}
+				<strong>비회원</strong>
+				{% else %}
+				<strong>{{obj.userId}}님 환영합니다</strong>
+				<li><a href="/user/logout">로그아웃</a></li>
+				{% endif %}
 			</p>
 			<footer>
 				<ul class="buttons stacked">
