@@ -17,6 +17,7 @@ router.get('/userstate', (req,res)=>{
 // 마이페이지 화면
 router.get("/mypage", (req, res) => {
   console.log('mypage')
+  res.render("mypage")
 });
 
 // 로그인 화면

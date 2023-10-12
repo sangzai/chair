@@ -138,6 +138,22 @@ const app = express();
 //     }
 //   });
 // });
+// 한명의 회원 정보 검색
+router.get('/mypage',(req,res)=>{
+  // req.session.user
+  // let id = req.query.userId
+  console.log('mypage접속'+req.session.user)
+  let sql = 'select id from nodejs_member where id=?'
+  conn.query(sql, [req.session.user], (err, rows)=>{
+    if(rows.length>0){
+      console.log('검색 성공!')
+      res.render('select',{list:rows}) // 데이터 포함
+    }else{
+      console.log('검색 실패!!!')
+      res.render('select') //데이터 포함 X
+    }
+  })
+})
 
 // 서버 시작
 const port = 3000;
