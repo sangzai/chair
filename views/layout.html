@@ -60,9 +60,15 @@
                         <i class="bi bi-heart-pulse-fill"></i> 건강 생활 지식
                      </a></li>
                      <li>
+                        {% if obj === undefined or obj === "" %}
+                        <a href="/login">
+                           <i class="bi bi-person-gear"></i> 마이페이지
+                        </a>
+                        {% else%}
                         <a href="/mypage">
                            <i class="bi bi-person-gear"></i> 마이페이지
                         </a>
+                        {%endif%}
                      </li>
                   </ul>
                </li>

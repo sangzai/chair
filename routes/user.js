@@ -35,16 +35,22 @@ router.post('/checkid', (req, res) => {
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
   let { userId, userPw } = req.body
-
   console.log(userId + ',' + userPw)
-
   // SQL 정의
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
-
-    console.log('rows ', rows)
     if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지
-      req.session.user= rows[0].userId
+      req.session.user= {
+        'userId': rows[0].userId,
+        'userName': rows[0].userName,
+        'userEmail': rows[0].userEmail,
+        'userGender': rows[0].userGender,
+        'userBirthdate': rows[0].userBirthdate,
+        'userWeight': rows[0].userWeight,
+        'userHeight': rows[0].userHeight,
+        'createdAt': rows[0].createdAt
+      }
+      
       req.session.save(() => {
         res.send('<script>alert("환영합니다!");location.href="/"</script>')
       })
@@ -54,6 +60,26 @@ router.post('/handleLogin', (req, res) => {
     }
   })
 })
+
+// 마이페이지 회원정보
+// router.get("/searchmypage", (req, res) => {
+//   // console.log(req.session.user);
+//   //  
+//   let sql = 'select * from users where userId=?'
+//   conn.query(sql, [req.session.user], (err, rows)=>{
+//     if(rows.length>0){   
+//       console.log("검색 성공",{list:rows});
+//       // res.render('mypage') // 데이터 포함
+//       res.send('<script>location.href="/mypage"</script>')
+//       // res.send('<script>alert("환영합니다!");location.href="/mypage"</script>')
+      
+//     }else{
+//       console.log('검색 실패!!!')
+//       // res.render('select') //데이터 포함 X
+//     }
+//   })
+//   console.log('mypage접속')
+// });
 // router.post('/handleLogin', (req, res) => {
 //   let { userId, userPw } = req.body
 //   console.log(userId + ',' + userPw)
@@ -138,22 +164,7 @@ const app = express();
 //     }
 //   });
 // });
-// 한명의 회원 정보 검색
-router.get('/mypage',(req,res)=>{
-  // req.session.user
-  // let id = req.query.userId
-  console.log('mypage접속'+req.session.user)
-  let sql = 'select id from nodejs_member where id=?'
-  conn.query(sql, [req.session.user], (err, rows)=>{
-    if(rows.length>0){
-      console.log('검색 성공!')
-      res.render('select',{list:rows}) // 데이터 포함
-    }else{
-      console.log('검색 실패!!!')
-      res.render('select') //데이터 포함 X
-    }
-  })
-})
+
 
 // 서버 시작
 const port = 3000;

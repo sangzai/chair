@@ -3,6 +3,30 @@
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
     <h1 style="font-size: 40px;">마이페이지</h1>
-    <p>{{obj}}</p>
-    </section>
+</section>
+<!-- <form action="/user/searchmypage" method="post">
+    <div class="d-grid gap-2">
+        <input type="password" class="form-control" name="userPw" placeholder="비밀번호를 적어주세요"
+            >
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div> -->
+<h1>회원정보</h1>
+<form action="/user/searchmypage" method="post">
+    <p>{{obj.userName}}</p>
+    <td colspan="2" bgcolor="lightgray">
+        <input type="submit" value="회원정보수정" style="width: 100px; height: 45px;">
+        <button id="checkButton">회원탈퇴</button>
+    </td>
+    <script>
+        document.getElementById('checkButton').addEventListener('click', () => {
+            event.preventDefault();
+        });
+      </script>
+</form>
+
+
+
+
+<!-- </form> -->
+
 {%endblock%}
