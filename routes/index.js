@@ -1,14 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const path = require('path');
 
 // 메인화면
 router.get("/", (req, res) => {
+  console.log('main')
   res.render("main",{obj : req.session.user});
 });
+router.get('/react', (req,res)=>{
+  res.sendFile( path.join(__dirname, '../react-chair/build/index.html') )
+  // res.sendFile(path.join(__dirname, 'react-chair', 
+  // 'build', 'index.html'))
+})
 
 // 마이페이지 화면
 router.get("/mypage", (req, res) => {
-  res.render('mypage');
+  console.log('mypage')
 });
 
 // 로그인 화면

@@ -10,10 +10,10 @@
 				<h2>스마트체어</h2>
 			</header>
 			<p>
-				{% if obj.userId === undefined or obj.userId === "" %}
+				{% if obj === undefined or obj === "" %}
 				<strong>비회원</strong>
 				{% else %}
-				<strong>{{obj.userId}}님 환영합니다</strong>
+				<strong>{{obj}}님 환영합니다</strong>
 				<li><a href="/user/logout">로그아웃</a></li>
 				{% endif %}
 			</p>

@@ -44,7 +44,7 @@ router.post('/handleLogin', (req, res) => {
 
     console.log('rows ', rows)
     if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지
-      req.session.user= rows[0]
+      req.session.user= rows[0].userId
       req.session.save(() => {
         res.send('<script>alert("환영합니다!");location.href="/"</script>')
       })

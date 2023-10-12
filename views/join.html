@@ -43,6 +43,21 @@
     <!-- 팁 : 처음에 tr td 넣을 때 헷갈리면 table 태그에 border 속성 넣기 -->
 
     <div class="container">
+        <script>
+            // 클라이언트 측 JavaScript
+                window.addEventListener('resize', function() {
+                    var div = document.getElementById('container');
+                    div.style.width = window.innerWidth + 'px';
+                    div.style.height = window.innerHeight + 'px';
+                });
+
+                // 페이지 로드 시 초기 크기 설정
+                window.addEventListener('load', function() {
+                    var div = document.getElementById('container');
+                    div.style.width = window.innerWidth + 'px';
+                    div.style.height = window.innerHeight + 'px';
+                });
+        </script>
         <form action="/user/handleJoin" method="post">
         <table width="400px">
             <tr height="50" bgcolor="gray">
