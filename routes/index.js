@@ -7,7 +7,8 @@ router.get("/", (req, res) => {
   console.log('main')
   res.render("main",{obj : req.session.user});
 });
-router.get('/react', (req,res)=>{
+// 리액트 + 유저 실시간 상태
+router.get('/userstate', (req,res)=>{
   res.sendFile( path.join(__dirname, '../react-chair/build/index.html') )
   // res.sendFile(path.join(__dirname, 'react-chair', 
   // 'build', 'index.html'))
