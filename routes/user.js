@@ -145,25 +145,33 @@ const app = express();
 // });
 
 // // ID 중복 확인 엔드포인트
-// app.post('/checkUsername', (req, res) => {
-//   const { username } = req.body;
+router.post('/checkUsername', (req, res) => {
+  const { username } = req.body;
 
-//   // 데이터베이스에서 중복 확인
-//   const sql = 'SELECT * FROM users WHERE username = ?';
-//   db.query(sql, [username], (err, results) => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).json({ error: 'Internal server error' });
-//       return;
-//     }
+  // 데이터베이스에서 중복 확인
+  const sql = 'select * from users where userId=?';
+  conn.query(sql, [username], (err, rows) => {
+    if (rows.length > 0){
+      res.json({ message: '이미 사용 중인 ID입니다.' })  
+    }
+    else{
+      res.json({ message: '사용 가능한 ID입니다.' })
+    }
 
-//     if (results.length > 0) {
-//       res.json({ message: '이미 사용 중인 ID입니다.' });
-//     } else {
-//       res.json({ message: '사용 가능한 ID입니다.' });
-//     }
-//   });
-// });
+    // if (err) {
+    //   console.error(err);
+    //   res.status(500).json({ error: 'Internal server error' });
+    //   return;
+    // }
+
+    // if (rows.length > 0) {
+    //   res.json({ message: '이미 사용 중인 ID입니다.' });
+    // } else {
+    //   console.log(rows)
+    //   res.json({ message: '사용 가능한 ID입니다.' });
+    // }
+  });
+});
 
 
 // 서버 시작
