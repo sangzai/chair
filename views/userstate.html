@@ -1,7 +1,130 @@
-{% extends 'layout.html'%}
-
-{% block content %}
-<section id="banner" style="height: 50px;" padding="3em;">
-    <h1 style="font-size: 40px;">유저상태</h1>
-    </section>
-{%endblock%}
+    {% extends 'layout.html'%} 
+    {% block content %} 
+    <section id="banner" style="height: 50px;" padding="3em;">
+        <h1 style="font-size: 40px;">유저상태</h1>
+        </section>
+    <head><script defer="defer" src="/userstate"></script><link href="../../views/layout.html" rel="stylesheet">
+        <style>
+        .container{
+            width: 1200px; 
+            display: inline-block; 
+            margin: auto;
+        }
+        
+        .content{
+            min-height: 500px;
+            width: 400px; 
+            display: inline-block;
+            border: 5px solid #5e53ec;
+            color: black;
+            margin: 5px;
+            padding: 0px 15px;
+            border-radius: 10px;
+        }
+        
+        .content:nth-child(1){
+            width: 855px;
+        }
+        
+        .top_text{
+            text-align: center;
+            font-size: larger;
+            font-weight: bold;
+            width: 103.5%;
+            margin: 10px 0 0 -15px;
+            background-color: aqua;
+            padding: 10px 0px;
+        }
+        
+        .text{
+            text-align: center;
+            font-size: larger;
+            font-weight: bold;
+            width: 107.5%;
+            margin: 10px 0 0 -15px;
+            background-color: aqua;
+            padding: 10px 0px;
+        }
+        table{
+            width: 90%;
+            margin:30px auto 0px;
+            border-collapse:collapse;
+            vertical-align: middle;
+        }
+        
+        tr:nth-child(2n){
+            background-color: rgb(118, 220, 228);
+        }
+        
+        tr:nth-child(1){
+            border-top: 1px solid rgb(173, 173, 156);
+        }
+        
+        th, td {
+            border-bottom: 1px solid rgb(173, 173, 156);
+            padding: 5px 10px;
+        }
+        </style>
+        </head>
+    <div class="container">
+    <div class="content" >
+    <p class="top_text">방석이미지</p>
+    
+    </div>
+    <div class="content">
+        <p class="text">유저체형정보</p>
+    <div id="pie-chart"></div>
+    </div>
+    
+    <div class="content">
+    <p class="text">사용자 앉은 자세 통계</p>
+    <table>
+        <tr>
+            <th>daily 앉은시간 : </th>
+            <td>10시간</td>
+        </tr>
+        <tr>
+            <th>가장많이앉은자세: </th>
+            <td>기마자세</td>
+        </tr>
+        <tr>
+            <th>바른 자세로 앉은시간:</th>
+            <td>5시간</td>
+        </tr>
+        <tr>
+            <th>잘못된 자세로 앉은시간:</th>
+            <td>5시간</td>
+        </tr>
+        <tr>
+            <th>1번:</th>
+            <td>1시간</td>
+        </tr>
+        <tr>
+            <th>2번:</th>
+            <td>1시간</td>
+        </tr>
+        <tr>
+            <th>3번:</th>
+            <td>1시간</td>
+        </tr>
+        <tr>
+            <th>4번:</th>
+            <td>1시간</td>
+        </tr>
+        <tr>
+            <th>5번:</th>
+            <td>1시간</td>
+        </tr>
+    
+        <tr>
+            <th>daily 누적 경고:</th>
+            <td>30번</td>
+        </tr>
+        <tr>
+            <th>최근 경고 시간:</th>
+            <td> 11시 40분 </td>
+        </tr>
+    </table>
+    </div>
+    </div>
+    {% endblock %}

@@ -6,32 +6,61 @@ const bcrypt = require('bcrypt');
 // 회원가입 기능
 router.post('/handleJoin', (req, res) => {
   console.log('handleJoin', req.body);
-  let { userId, userPw, userName, userGender, em, bloodType, userBirthdate, cm, kg } = req.body;
-  let userEmail = em + '@' + bloodType
-  let userHeight = parseFloat(cm)
-  let userWeight = parseFloat(kg)
-  const createdAt = new Date();
-  
-  // const saltRounds = 10;
-  // const salt = bcrypt.genSaltSync(saltRounds);
-  // const hashedPassword = bcrypt.hashSync(userPw, salt);
-  // 1) 내가 사용할 sql 쿼리문 작성
-  let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
-  // 2) DB 연동
-  // conn.query(sql구문, sql구문 속 가변데이터(선택),연동 됐을 때 실행될 콜백함수)
-  conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
-    if (rows) {
-      console.log('rows : ', rows)
-      res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
-    } else {
-      console.log('err : ', err)
+  const Pw = req.body.userPw
+  const rePw = req.body.repw
+  if (Pw != rePw){
+    res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
+  }else{
+    const emi = req.body.em
+    const blood = req.body.bloodType
+    const mail = req.body.ail
+    if (emi !=''&& mail==''&& blood!='none'){
+      let { userId, userPw,repw, userName, userGender, em, bloodType, userBirthdate, cm, kg } = req.body;
+      let userEmail = em + '@' + bloodType
+      let userHeight = parseFloat(cm)
+      let userWeight = parseFloat(kg)
+      const createdAt = new Date();
+      let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
+      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
+        if (rows) {
+          console.log('rows : ', rows)
+          res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
+          console.log('blood')
+        } else {
+          console.log('err : ', err)
+          res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
+        }
+      });
+    }else if(emi !=''&& mail !=''&& blood=='none'){
+      let { userId, userPw,repw, userName, userGender, em, ail, userBirthdate, cm, kg } = req.body;
+      let userEmail = em + '@' + ail
+      let userHeight = parseFloat(cm)
+      let userWeight = parseFloat(kg)
+      const createdAt = new Date();
+      let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
+      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
+        if (rows) {
+          console.log('rows : ', rows)
+          console.log('mail')
+          res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
+        } else {
+          console.log('err : ', err)
+          console.log('mail실패')
+
+          res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
+        }
+      });
+    }else{
+      console.log('최종단계실패')
       res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
     }
-  });
+
+  // 1) 내가 사용할 sql 쿼리문 작성
+  
+  // 2) DB 연동
+}
 })
-router.post('/checkid', (req, res) => {
-  console.log('/checkid', req.body);
-})
+
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
   let { userId, userPw } = req.body
@@ -120,29 +149,8 @@ router.get("/logout", (req, res) => {
     res.send('<script>location.href="http://localhost:3333/"</script>')
   })
 });
-// const express = require('express');
 const app = express();
-// const bodyParser = require('body-parser');
-// const mysql = require('mysql');
 
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-
-// // MySQL 연결 설정
-// const db = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'your_mysql_user',
-//   password: 'your_mysql_password',
-//   database: 'your_database_name',
-// });
-
-// db.connect(err => {
-//   if (err) {
-//     console.error('Database connection failed: ' + err.stack);
-//     return;
-//   }
-//   console.log('Connected to the database');
-// });
 
 // // ID 중복 확인 엔드포인트
 router.post('/checkUsername', (req, res) => {
@@ -151,11 +159,15 @@ router.post('/checkUsername', (req, res) => {
   // 데이터베이스에서 중복 확인
   const sql = 'select * from users where userId=?';
   conn.query(sql, [username], (err, rows) => {
-    if (rows.length > 0){
-      res.json({ message: '이미 사용 중인 ID입니다.' })  
-    }
-    else{
-      res.json({ message: '사용 가능한 ID입니다.' })
+    if (username.length >= 5){
+      if (rows.length > 0){
+        res.json({ message: '이미 사용 중인 ID입니다.' })  
+      }
+      else{
+        res.json({ message: '사용 가능한 ID입니다.' })
+      }
+    }else{
+      res.json({ message: '5글자 이상 입력해주세요.' })
     }
 
     // if (err) {
@@ -175,10 +187,10 @@ router.post('/checkUsername', (req, res) => {
 
 
 // 서버 시작
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// const port = 3000;
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
 
 
 module.exports = router;

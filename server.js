@@ -31,6 +31,7 @@ nunjucks.configure("views", {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
+// app.use(express.static(__dirname + "/react-chair/build"));
 
 app.use(
   session({
@@ -43,7 +44,7 @@ app.use(
 );
 
 app.use("/", indexRouter);
-app.use( '/react', express.static( path.join(__dirname, 'react-chair/build') ))
+// app.use( '/react', express.static( path.join(__dirname, 'react-chair/build') ))
 app.use("/user", userRouter);
 
 app.listen(app.get("port"), () => {

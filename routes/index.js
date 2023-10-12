@@ -9,9 +9,8 @@ router.get("/", (req, res) => {
 });
 // 리액트 + 유저 실시간 상태
 router.get('/userstate', (req,res)=>{
-  res.sendFile( path.join(__dirname, '../react-chair/build/index.html') )
-  // res.sendFile(path.join(__dirname, 'react-chair', 
-  // 'build', 'index.html'))
+  console.log('userState')
+  res.render("userstate",{obj : req.session.user});
 })
 // 마이페이지 화면
 router.get("/mypage", (req, res) => {
