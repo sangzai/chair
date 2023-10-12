@@ -1,130 +1,141 @@
-    {% extends 'layout.html'%} 
-    {% block content %} 
-    <section id="banner" style="height: 50px;" padding="3em;">
-        <h1 style="font-size: 40px;">유저상태</h1>
-        </section>
-    <head><script defer="defer" src="/userstate"></script><link href="../../views/layout.html" rel="stylesheet">
-        <style>
-        .container{
-            width: 1200px; 
-            display: inline-block; 
-            margin: auto;
+{% extends 'layout.html'%}
+{% block content %}
+<section id="banner" style="height: 50px;" padding="3em;">
+    <h1 style="font-size: 40px;">유저상태</h1>
+</section>
+
+<head>
+    <script defer="defer" src="/userstate"></script>
+    <link href="../../views/layout.html" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 3%;
+            width: 100%;
+            /* 컨테이너가 화면 너비 전체를 차지하도록 설정합니다. */
+            display: flex;
+            justify-content: center;
         }
-        
-        .content{
+
+        .content {
             min-height: 500px;
-            width: 400px; 
-            display: inline-block;
-            border: 5px solid #5e53ec;
-            color: black;
-            margin: 5px;
+            width: 48%;
+            /* 컨텐츠가 화면 너비의 절반을 차지하도록 설정합니다. */
+            margin: 10px;
+            /* 컨텐츠 간의 간격을 조정합니다. */
             padding: 0px 15px;
-            border-radius: 10px;
+            border: 5px solid #a3a0d5;
+            border-radius: 20px;
         }
-        
-        .content:nth-child(1){
-            width: 855px;
-        }
-        
-        .top_text{
+
+        .top_text,
+        .text {
+            margin-top: 10px;
             text-align: center;
             font-size: larger;
             font-weight: bold;
-            width: 103.5%;
-            margin: 10px 0 0 -15px;
-            background-color: aqua;
-            padding: 10px 0px;
+            background: linear-gradient(45deg, rgba(171, 85, 140, 0.7), rgb(79, 72, 104));
+            background-size: 200% 150%;
+            padding: 10px 0;
+            border-radius: 15px;
+            /* 라운드 처리 추가 */
+            color: white;
         }
-        
-        .text{
-            text-align: center;
-            font-size: larger;
-            font-weight: bold;
-            width: 107.5%;
-            margin: 10px 0 0 -15px;
-            background-color: aqua;
-            padding: 10px 0px;
+
+        .top_text {
+            margin-top: 10px;
+            /* 상단 텍스트 마진을 조정합니다. */
         }
-        table{
-            width: 90%;
-            margin:30px auto 0px;
-            border-collapse:collapse;
+
+        table {
+            width: 100%;
+            /* 테이블을 컨테이너 너비에 맞게 설정합니다. */
+            margin: 30px auto 0px;
+            border-collapse: collapse;
             vertical-align: middle;
         }
-        
-        tr:nth-child(2n){
-            background-color: rgb(118, 220, 228);
+
+        tr:nth-child(2n) {
+            background: linear-gradient(45deg, rgba(171, 85, 130, 0.7), rgba(7, 72, 104, 0.7));
+            background-size: 150% 150%;
         }
-        
-        tr:nth-child(1){
-            border-top: 1px solid rgb(173, 173, 156);
+
+        tr:nth-child(odd) {
+            background-size: 150% 150%;
         }
-        
-        th, td {
+
+
+
+        th,
+        td {
             border-bottom: 1px solid rgb(173, 173, 156);
             padding: 5px 10px;
+            font-weight: bolder;
         }
-        </style>
-        </head>
-    <div class="container">
-    <div class="content" >
-    <p class="top_text">방석이미지</p>
-    
+    </style>
+
+    </style>
+</head>
+<div class="container">
+    <div class="content">
+        <p class="top_text">방석 이미지</p>
+
     </div>
     <div class="content">
-        <p class="text">유저체형정보</p>
-    <div id="pie-chart"></div>
+        <p class="text">체형 분석</p>
+        <div id="pie-chart"></div>
+        <br>
+        <p class="text">조언</p>
     </div>
-    
+
     <div class="content">
-    <p class="text">사용자 앉은 자세 통계</p>
-    <table>
-        <tr>
-            <th>daily 앉은시간 : </th>
-            <td>10시간</td>
-        </tr>
-        <tr>
-            <th>가장많이앉은자세: </th>
-            <td>기마자세</td>
-        </tr>
-        <tr>
-            <th>바른 자세로 앉은시간:</th>
-            <td>5시간</td>
-        </tr>
-        <tr>
-            <th>잘못된 자세로 앉은시간:</th>
-            <td>5시간</td>
-        </tr>
-        <tr>
-            <th>1번:</th>
-            <td>1시간</td>
-        </tr>
-        <tr>
-            <th>2번:</th>
-            <td>1시간</td>
-        </tr>
-        <tr>
-            <th>3번:</th>
-            <td>1시간</td>
-        </tr>
-        <tr>
-            <th>4번:</th>
-            <td>1시간</td>
-        </tr>
-        <tr>
-            <th>5번:</th>
-            <td>1시간</td>
-        </tr>
-    
-        <tr>
-            <th>daily 누적 경고:</th>
-            <td>30번</td>
-        </tr>
-        <tr>
-            <th>최근 경고 시간:</th>
-            <td> 11시 40분 </td>
-        </tr>
-    </table>
+        <p class="text">사용자 통계</p>
+        <table>
+            <tr>
+                <th>오늘 총 앉은시간 : </th>
+                <td>10시간</td>
+            </tr>
+            <tr>
+                <th>가장 많이 앉은자세: </th>
+                <td>기마자세</td>
+            </tr>
+            <tr>
+                <th>바른 자세로 앉은시간:</th>
+                <td>5시간</td>
+            </tr>
+            <tr>
+                <th>잘못된 자세로 앉은시간:</th>
+                <td>5시간</td>
+            </tr>
+            <tr>
+                <th>다리를 왼쪽으로 꼬아앉은시간:</th>
+                <td>1시간</td>
+            </tr>
+            <tr>
+                <th>다리를 오른쪽으로 꼬아앉은시간</th>
+                <td>1시간</td>
+            </tr>
+            <tr>
+                <th>앞으로 기울여서 앉은시간:</th>
+                <td>1시간</td>
+            </tr>
+            <tr>
+                <th>뒤로 누워서 앉은시간:</th>
+                <td>1시간</td>
+            </tr>
+            <tr>
+                <th>양반다리를 하고 앉은시간:</th>
+                <td>1시간</td>
+            </tr>
+
+            <tr>
+                <th>daily 누적 경고:</th>
+                <td>30번</td>
+            </tr>
+            <tr>
+                <th>최근 경고 시간:</th>
+                <td> 11시 40분 </td>
+            </tr>
+        </table>
     </div>
-    </div>
-    {% endblock %}
+</div>
+{% endblock %}
