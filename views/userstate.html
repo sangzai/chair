@@ -1,17 +1,19 @@
 {% extends 'layout.html'%}
+
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
     <h1 style="font-size: 40px;">유저상태</h1>
 </section>
+<!DOCTYPE html>
+<html>
 
 <head>
-    <script defer="defer" src="/userstate"></script>
-    <link href="../../views/layout.html" rel="stylesheet">
+    <title>유저 상태 페이지</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .container {
             margin-top: 3%;
             width: 100%;
-            /* 컨테이너가 화면 너비 전체를 차지하도록 설정합니다. */
             display: flex;
             justify-content: center;
         }
@@ -19,9 +21,7 @@
         .content {
             min-height: 500px;
             width: 48%;
-            /* 컨텐츠가 화면 너비의 절반을 차지하도록 설정합니다. */
             margin: 10px;
-            /* 컨텐츠 간의 간격을 조정합니다. */
             padding: 0px 15px;
             border: 5px solid #a3a0d5;
             border-radius: 20px;
@@ -37,18 +37,15 @@
             background-size: 200% 150%;
             padding: 10px 0;
             border-radius: 15px;
-            /* 라운드 처리 추가 */
             color: white;
         }
 
         .top_text {
             margin-top: 10px;
-            /* 상단 텍스트 마진을 조정합니다. */
         }
 
         table {
             width: 100%;
-            /* 테이블을 컨테이너 너비에 맞게 설정합니다. */
             margin: 30px auto 0px;
             border-collapse: collapse;
             vertical-align: middle;
@@ -63,8 +60,6 @@
             background-size: 150% 150%;
         }
 
-
-
         th,
         td {
             border-bottom: 1px solid rgb(173, 173, 156);
@@ -72,70 +67,92 @@
             font-weight: bolder;
         }
     </style>
-
-    </style>
 </head>
-<div class="container">
-    <div class="content">
-        <p class="top_text">방석 이미지</p>
 
+<body>
+    <div class="container">
+        <div class="content">
+            <p class="top_text">방석 이미지</p>
+        </div>
+        <div class="content">
+            <p class="text">체형 분석</p>
+            <canvas id="pie-chart" style="width: auto; height: auto;"></canvas>
+            <br>
+            <p class="text">조언</p>
+        </div>
+        <div class="content">
+            <p class="text">사용자 통계</p>
+            <table>
+                <tr>
+                    <th>오늘 총 앉은 시간:</th>
+                    <td >10시간</td>
+                </tr>
+                <tr>
+                    <th>가장 많이 앉은 자세:</th>
+                    <td>기마자세</td>
+                </tr>
+                <tr>
+                    <th>바른 자세로 앉은 시간:</th>
+                    <td>5시간</td>
+                </tr>
+                <tr>
+                    <th>잘못된 자세로 앉은 시간:</th>
+                    <td>5시간</td>
+                </tr>
+                <tr>
+                    <th>다리를 왼쪽으로 꼬아 앉은 시간:</th>
+                    <td>1시간</td>
+                </tr>
+                <tr>
+                    <th>다리를 오른쪽으로 꼬아 앉은 시간:</th>
+                    <td>1시간</td>
+                </tr>
+                <tr>
+                    <th>앞으로 기울여서 앉은 시간:</th>
+                    <td>1시간</td>
+                </tr>
+                <tr>
+                    <th>뒤로 눕혀 앉은 시간:</th>
+                    <td>1시간</td>
+                </tr>
+                <tr>
+                    <th>양반다리를 하고 앉은 시간:</th>
+                    <td>1시간</td>
+                </tr>
+                <tr>
+                    <th>Daily 누적 경고:</th>
+                    <td>30번</td>
+                </tr>
+                <tr>
+                    <th>최근 경고 시간:</th>
+                    <td>11시 40분</td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="content">
-        <p class="text">체형 분석</p>
-        <div id="pie-chart"></div>
-        <br>
-        <p class="text">조언</p>
-    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // 원형 그래프를 그릴 데이터와 초기화 스크립트
+        var data = {
+            labels: ["바른 자세로 앉은 시간", "잘못된 자세로 앉은 시간"],
+            datasets: [{
+                data: [5, 5], // 바른 자세와 잘못된 자세에 해당하는 시간을 데이터로 넣으세요
+                backgroundColor: ["#36A2EB", "#FFCE56"] // 각 섹션의 색상 설정
+            }]
+        };
 
-    <div class="content">
-        <p class="text">사용자 통계</p>
-        <table>
-            <tr>
-                <th>오늘 총 앉은시간 : </th>
-                <td>10시간</td>
-            </tr>
-            <tr>
-                <th>가장 많이 앉은자세: </th>
-                <td>기마자세</td>
-            </tr>
-            <tr>
-                <th>바른 자세로 앉은시간:</th>
-                <td>5시간</td>
-            </tr>
-            <tr>
-                <th>잘못된 자세로 앉은시간:</th>
-                <td>5시간</td>
-            </tr>
-            <tr>
-                <th>다리를 왼쪽으로 꼬아앉은시간:</th>
-                <td>1시간</td>
-            </tr>
-            <tr>
-                <th>다리를 오른쪽으로 꼬아앉은시간</th>
-                <td>1시간</td>
-            </tr>
-            <tr>
-                <th>앞으로 기울여서 앉은시간:</th>
-                <td>1시간</td>
-            </tr>
-            <tr>
-                <th>뒤로 누워서 앉은시간:</th>
-                <td>1시간</td>
-            </tr>
-            <tr>
-                <th>양반다리를 하고 앉은시간:</th>
-                <td>1시간</td>
-            </tr>
+        var ctx = document.getElementById('pie-chart').getContext('2d');
 
-            <tr>
-                <th>daily 누적 경고:</th>
-                <td>30번</td>
-            </tr>
-            <tr>
-                <th>최근 경고 시간:</th>
-                <td> 11시 40분 </td>
-            </tr>
-        </table>
-    </div>
-</div>
-{% endblock %}
+        var pieChart = new Chart(ctx, {
+            type: 'doughnut', // 원형 또는 도넛 그래프 중 선택
+            data: data,
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+
+</html>
+{%endblock%}
