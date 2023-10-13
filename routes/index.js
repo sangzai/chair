@@ -12,6 +12,11 @@ router.get('/userstate', (req,res)=>{
   console.log('userState')
   res.render("userstate",{obj : req.session.user});
 })
+// 리액트 + 유저 통계 상태
+router.get('/statistics', (req,res)=>{
+  console.log('statistics')
+  res.render("statistics",{obj : req.session.user});
+})
 // 마이페이지 화면
 router.get("/mypage", (req, res) => {
   res.render("mypage",{obj : req.session.user});
@@ -49,6 +54,7 @@ router.get("/seat", (req, res) => {
 router.get("/userstate", (req, res) => {
   res.render("userstate",{obj : req.session.user});
 });
+
 
 // 환경설정 화면
 router.get("/option", (req, res) => {

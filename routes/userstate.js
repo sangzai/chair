@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router();
 const userstate = require("../userstate.js"); // userstate 모듈 불러오기
 
-router.get("/userstate", (req, res) => {
+router.get("/userstatistics", (req, res) => {
   userstate.conn((error, dataFromDatabase) => {
     if (error) {
       // 오류 처리
