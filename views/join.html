@@ -18,7 +18,8 @@
 
         /* 배경 이미지 설정 */
         body {
-            background-image: url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MjRfMjMw%2FMDAxNjkyODQ0NzY2OTU0.0SG4bIAAwzTJ1pF9A-TMnRESTe2w5hc-IQZHyVWpeH8g.lSlKu-48_DFLGgmpScxgltG3uzcSKRCME-YRFGVMgagg.PNG.gywls147147%2Fimage.png&type=sc960_832'); /* 배경 이미지 경로를 여기에 입력하세요 */
+            /* background-image: url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MjRfMjMw%2FMDAxNjkyODQ0NzY2OTU0.0SG4bIAAwzTJ1pF9A-TMnRESTe2w5hc-IQZHyVWpeH8g.lSlKu-48_DFLGgmpScxgltG3uzcSKRCME-YRFGVMgagg.PNG.gywls147147%2Fimage.png&type=sc960_832'); 배경 이미지 경로를 여기에 입력하세요 */
+            background-color: rgb(231, 228, 223);
             background-size: cover; /* 배경 이미지를 화면 크기에 맞게 조절합니다. */
             background-repeat: no-repeat; /* 배경 이미지 반복 없음 */
             background-attachment: fixed; /* 배경 이미지 고정 */
@@ -38,38 +39,8 @@
 </head>
 
 <body>
-    <!-- 회원가입 폼 만들기 -->
-    <!-- form 태그 안에 테이블 넣어서 보기 좋게 정렬해보자 -->
-    <!-- 팁 : 처음에 tr td 넣을 때 헷갈리면 table 태그에 border 속성 넣기 -->
-
     <div class="container">
 
-        <script>
-            //리액트 + axios 
-            // ->js fetch 
-            fetch(url)
-            /*
-                fetch(url)
-                .then(res => res.json())
-                .then ( res ~ )
-            */
-
-        </script>
-        <!-- <script>
-            // 클라이언트 측 JavaScript
-                window.addEventListener('resize', function() {
-                    var div = document.getElementById('container');
-                    div.style.width = window.innerWidth + 'px';
-                    div.style.height = window.innerHeight + 'px';
-                });
-
-                // 페이지 로드 시 초기 크기 설정
-                window.addEventListener('load', function() {
-                    var div = document.getElementById('container');
-                    div.style.width = window.innerWidth + 'px';
-                    div.style.height = window.innerHeight + 'px';
-                });
-        </script> -->
         <form action="/user/handleJoin" method="post">
         <table width="700px">
             <tr height="50" bgcolor="gray">
@@ -91,9 +62,9 @@
                 </td>
                     <script>
                         document.getElementById('checkButton').addEventListener('click', () => {
-                           event.preventDefault(); // form 이벤트 방지                         
+                           event.preventDefault();                        
                           const username = document.getElementById('username').value;
-                        //  중복 아이디 검사를 서버로 보냄
+                        
                           fetch('/user/checkUsername', {
                             method: 'POST',
                             headers: {

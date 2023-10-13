@@ -3,10 +3,12 @@
 {% block content %}
 
 <div>
+
+<div id="FONTALL">
    <section id="banner">
       <div class="inner">
          <header>
-            <h2>스마트방석</h2>
+            <h2 id="AICUS">AICUS</h2>
          </header>
             {% if obj === undefined or obj === "" %}
             <p><strong>비회원</strong></p>
@@ -34,19 +36,25 @@
 
 
                   <br/>
-                  <h3>편안한 자세 유도</h3>
-                  <p>스마트 압력 센서 방석은 압력 센서를 통해 사용자의 자세를 모니터링하고,</p>
-                  <p>올바른 자세를 유도하여 몸의 피로를 감소시켜줍니다</p>
-                  
+                  <h2>✓ 편안한 자세 유도</h2>
                   <br/>
-                  <h3>자세 모니터링</h3>
+                  <p>          스마트 압력 센서 방석은 압력 센서를 통해 사용자의 자세를 모니터링하고,</p>
+                  <p>          올바른 자세를 유도하여 몸의 피로를 감소시켜줍니다</p>
+                  <br/><br/>
+
+                  <h2>✓ 자세 모니터링</h2>
+                  <br/>
                   <p>압력 센서 데이터를 통해 사용자는 앉은 자세의 분포를 실시간으로 확인하고 개선할 수 있으며,</p>
                   <p>잘못된 자세에 대한 경고를 받을 수 있습니다</p>
+                  <br/><br/>
+
+                  <h2>✓ 다양한 사용자에게 적합</h2>
                   <br/>
-                  <h3>다양한 사용자에게 적합</h3>
                   <p>사무직 종사자, 학생, 재택근무자 등 다양한 사용자에게 적합하며,</p>
                   <p>효과적인 자세 관리를 위한 최상의 도구입니다</p>
                   <br/>
+                  <br/><br/>
+
 
                </div>
                <div class="col-4 col-12-narrower imp-narrower">
@@ -66,14 +74,15 @@
 
       
          <section class="wrapper style1 container special">
+         <section class="wrapper style1 container special" >
             <div class="row">
                <div class="col-4 col-12-narrower">
 
                   <section>
                      <span class="icon solid featured fa-check"></span>
                      <header>
-                        <h5>장시간 좌식생활하는</h5>
-                        <h5>사무실 근무자</h5>
+                        <h5 class="recommend">장시간 좌식생활하는</h5>
+                        <h5 class="recommend">사무실 근무자</h5>
                      </header>
                      <p></p>
                   </section>
@@ -84,8 +93,8 @@
                   <section>
                      <span class="icon solid featured fa-check"></span>
                      <header>
-                        <h5>온라인 강의를 듣는</h5>
-                        <h5>학생</h5>
+                        <h5 class="recommend">온라인 강의를 듣는</h5>
+                        <h5 class="recommend">학생</h5>
                      </header>
                      <p></p>
                   </section>
@@ -96,8 +105,8 @@
                   <section>
                      <span class="icon solid featured fa-check"></span>
                      <header>
-                        <h5>재택근무하는</h5>
-                        <h5>프리랜서</h5>
+                        <h5 class="recommend">재택근무하는</h5>
+                        <h5 class="recommend">프리랜서</h5>
                      </header>
                      <p></p>
                   </section>
@@ -119,7 +128,7 @@
                   <section>
                      <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" style="height: 400px;"/></a>
                      <header>
-                        <h3>요방근형 스트레칭</h3>
+                        <h3 class="stretching">요방근형 스트레칭</h3>
                      </header>
                      <p>양반다리로 앉아서 오른쪽 팔은 바닥에 대고, 왼쪽 손을 오른쪽으로 허리 근육이 늘어나게 쭉 뻗어 준다.</p>
                      <p>30초 동안 실시하고, 손을 반댁록 바꿔서 또 30초 동안 실시한다.</p>
@@ -132,7 +141,7 @@
                   <section>
                      <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" style="height: 400px;"/></a>
                      <header>
-                        <h3>스완</h3>
+                        <h3 class="stretching">스완</h3>
                      </header>
                      <p>바닥에 엎드려 손바닥을 바닥에 붙이고, 손으로 바닥을 밀면서 허리를 뒤로 젖혀준다.</p>
                      <p>이때 손과 어깨를 일직선으로 놓으면서 팔꿈치를 쫙 펴주고, 심호흡을 하면서 60초 유지한다.</p>
@@ -146,7 +155,7 @@
                   <section>
                      <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" style="height: 400px;"/></a>
                      <header>
-                        <h3>버그 도그 운동</h3>
+                        <h3 class="stretching">버드 도그 운동</h3>
                      </header>
                      <p>무릎과 손바닥을 바닥에 붙이고, 머리부터 엉덩이까지 일직선이 되게 한다.</p>
                      <p>오른손과 왼발을 앞뒤로 쭉 뻗고, 총 10회씩 3세트 한다.</p>
@@ -159,7 +168,7 @@
                   <section>
                      <a href="#" class="image featured"><img src="images/pic04.jpg" alt="" style="height: 400px;"/></a>
                      <header>
-                        <h3>고양이 자세 스트레칭</h3>
+                        <h3 class="stretching">고양이 자세 스트레칭</h3>
                      </header>
                      <p>엎드려서 무릎과 손바닥을 바닥에 위치시키고, 머리와 어깨 그리고 엉덩이가 일자가 되도록 유지한다.</p>
                      <p>숨을 마시며 머리를 들고 허리를 박다으로 내리고, 숨을 내쉬며 등을 둥글게 말아준다.</p>
