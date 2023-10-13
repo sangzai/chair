@@ -2281,8 +2281,8 @@ input[type="submit"].primary,
 input[type="reset"].primary,
 button.primary,
 .button.primary {
-	background: #83d3c9;
-	border-color: #83d3c9;
+	background: #1e1caf;
+	border-color: #1e1caf;
 	color: #fff !important;
 }
 
@@ -2940,7 +2940,7 @@ body.index #main {
 	/* Banner */
 
 	#banner {
-		background-size: 15em, 15em, auto, cover;
+		/* background-size: 15em, 15em, auto, cover; */
 	}
 
 	/* Main */
@@ -3399,7 +3399,7 @@ body.index #main {
 	/* Banner */
 
 	#banner {
-		background-size: 10em, 10em, auto, cover;
+		/* background-size: 10em, 10em, auto, cover; */
 		padding: 6em 0;
 	}
 
@@ -3574,4 +3574,8 @@ input[type="radio"]:checked+label.radio-label {
 
 .col-8.col-12-narrower p{
 	padding: 0px 45px;
+}
+
+tbody tr:nth-child(2){
+	padding-top: 20px;
 }

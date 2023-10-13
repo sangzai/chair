@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
-<h1 style="font-size: 40px;">회원가입</h1>
+    <h1 style="font-size: 40px; color: #524d58;">회원가입</h1>
 </section>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,21 +13,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* 뷰포트 높이에 맞게 설정하여 화면 중앙에 폼이 위치하도록 합니다. */
+            height: 100vh;
+            /* 뷰포트 높이에 맞게 설정하여 화면 중앙에 폼이 위치하도록 합니다. */
         }
 
         /* 배경 이미지 설정 */
         body {
-            /* background-image: url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MjRfMjMw%2FMDAxNjkyODQ0NzY2OTU0.0SG4bIAAwzTJ1pF9A-TMnRESTe2w5hc-IQZHyVWpeH8g.lSlKu-48_DFLGgmpScxgltG3uzcSKRCME-YRFGVMgagg.PNG.gywls147147%2Fimage.png&type=sc960_832'); 배경 이미지 경로를 여기에 입력하세요 */
-            background-color: rgb(231, 228, 223);
-            background-size: cover; /* 배경 이미지를 화면 크기에 맞게 조절합니다. */
-            background-repeat: no-repeat; /* 배경 이미지 반복 없음 */
-            background-attachment: fixed; /* 배경 이미지 고정 */
-            
+            background-color: rgb(240, 239, 243);
+            background-size: cover;
+            /* 배경 이미지를 화면 크기에 맞게 조절합니다. */
+            background-repeat: no-repeat;
+            /* 배경 이미지 반복 없음 */
+            background-attachment: fixed;
+            /* 배경 이미지 고정 */
+
         }
+
         table {
             background-color: whitesmoke;
         }
+
         /* 폼 요소 스타일 */
         form {
             width: 700px;
@@ -38,7 +43,7 @@
     </style>
 </head>
 
-<body>
+<body id="FONTALL">
     <!-- 회원가입 폼 만들기 -->
     <!-- form 태그 안에 테이블 넣어서 보기 좋게 정렬해보자 -->
     <!-- 팁 : 처음에 tr td 넣을 때 헷갈리면 table 태그에 border 속성 넣기 -->
@@ -72,147 +77,147 @@
                 });
         </script> -->
         <form action="/user/handleJoin" method="post">
-        <table width="700px">
-            <tr height="50" bgcolor="gray">
-                <th colspan="2" align="left">회원가입 </th>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">아이디</td>
-                <td style="display: flex;">
-                  <input
-                    type="text"
-                    name="userId"
-                    id="username"
-                    style="width: 150px; height: 10px; margin-right: 10px; margin-left: 20px;"
-                    maxlength="15"
-                  />
-                  
-                  <button id="checkButton" style="font-size: 13px;">아이디 중복 검사</button>
-                  <div id="result" style="margin-left: 13px; height: 25px;"> </div>
-                </td>
+            <table width="700px">
+                <tr style="height: 50px; background-color: #43419696;">
+                    <th colspan="2" style="text-align: center; vertical-align: middle; height: 50px;">회원가입</th>
+                </tr>
+                <tr><td style="height: 35px;"></td></tr>
+                <tr style="margin-top: 20px;">
+                    <td height="35" bgcolor="whitesmoke" align="right">아이디</td>
+                    <td style="display: flex;">
+                        <input type="text" name="userId" id="username"
+                            style="width: 150px; height: 10px; margin-right: 10px; margin-left: 20px;" maxlength="15" />
+
+                        <button id="checkButton" style="font-size: 13px;">* 아이디 중복 검사</button>
+                        <div id="result" style="margin-left: 13px; height: 25px;"> </div>
+                    </td>
                     <script>
                         document.getElementById('checkButton').addEventListener('click', () => {
-                           event.preventDefault(); // form 이벤트 방지                         
-                          const username = document.getElementById('username').value;
-                        //  중복 아이디 검사를 서버로 보냄
-                          fetch('/user/checkUsername', {
-                            method: 'POST',
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ username }),
-                          })
-                            .then((response) => response.json())
-                            .then((data) => {
-                              const resultDiv = document.getElementById('result');
-                              if (data.error) {
-                                resultDiv.innerHTML = `<p>${data.error}</p>`;
-                              } else {
-                                resultDiv.innerHTML = `<p>${data.message}</p>`;
-                              }
+                            event.preventDefault(); // form 이벤트 방지                         
+                            const username = document.getElementById('username').value;
+                            //  중복 아이디 검사를 서버로 보냄
+                            fetch('/user/checkUsername', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ username }),
                             })
-                            .catch((error) => console.error(error));
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    const resultDiv = document.getElementById('result');
+                                    if (data.error) {
+                                        resultDiv.innerHTML = `<p>${data.error}</p>`;
+                                    } else {
+                                        resultDiv.innerHTML = `<p>${data.message}</p>`;
+                                    }
+                                })
+                                .catch((error) => console.error(error));
                         });
-                      </script>
+                    </script>
                     </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">비밀번호</td>
-                <td>
-                    <input type="password" name="userPw" maxlength="8" style="width: 150px; height: 10px; margin-left: 20px;"
-                    maxlength = "15" id="myPw">
-                </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">비밀번호 확인</td>
-                <td>
-                    <input type="password" name="repw" maxlength="8" style="width: 150px; height: 10px; margin-left: 20px;"
-                    maxlength = "15" id="chPw"> <span id="ChPw" style="color: red;"> </span>
-                </td>
-                <script>
-                    var inputElement = document.getElementById("chPw");
-                    var MyElement = document.getElementById("myPw");
-                    var charCountElement = document.getElementById("ChPw");
-                    inputElement.addEventListener("input", function() {
-                        var inputValue = inputElement.value;
-                        if (inputValue!=myPw.value){
-                            charCountElement.innerHTML = "비밀번호가 다릅니다";
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">비밀번호</td>
+                    <td>
+                        <input type="password" name="userPw" maxlength="8"
+                            style="width: 150px; height: 10px; margin-left: 20px;" maxlength="15" id="myPw">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">비밀번호 확인</td>
+                    <td>
+                        <input type="password" name="repw" maxlength="8"
+                            style="width: 150px; height: 10px; margin-left: 20px;" maxlength="15" id="chPw"> <span
+                            id="ChPw" style="color: red;"> </span>
+                    </td>
+                    <script>
+                        var inputElement = document.getElementById("chPw");
+                        var MyElement = document.getElementById("myPw");
+                        var charCountElement = document.getElementById("ChPw");
+                        inputElement.addEventListener("input", function () {
+                            var inputValue = inputElement.value;
+                            if (inputValue != myPw.value) {
+                                charCountElement.innerHTML = "비밀번호가 다릅니다";
 
-                        }else{
-                            charCountElement.innerHTML = " ";
-                        }
-                    });
-                </script>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">이름</td>
-                <td>
-                    <input type="text" name="userName" style="width: 150px; height: 10px; margin-left: 20px;">
-                </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">성별</td>
-                <td>
-                    <input type="radio" id="radio1" name="userGender" value="m" style="margin-left: 20px;">
-                    <label for="radio1" class="radio-label">남</label>
-                      
-                    <input type="radio"  id="radio2" name="userGender" value="f">
-                    <label for="radio2" class="radio-label">여</label>
-                </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">이메일</td>
-                <td style="display: flex;" >
-                    <input type="text" style="width: 150px; height: 10px; margin-left: 20px;" name="em">
-                    <span style="margin-left: 10px; margin-right: 10px;">@</span>
-                    <select name="bloodType">
-                        <option value="none">선택　　　▼</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="daum.net">daum.net</option>
-                    </select>
-                    <input type="text" style="width: 150px; height: 10px; margin-left: 10px;"
-                    placeholder="직접입력하세요" name="ail">
+                            } else {
+                                charCountElement.innerHTML = " ";
+                            }
+                        });
+                    </script>
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">이름</td>
+                    <td>
+                        <input type="text" name="userName" style="width: 150px; height: 10px; margin-left: 20px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">성별</td>
+                    <td>
+                        <input type="radio" id="radio1" name="userGender" value="m" style="margin-left: 20px;">
+                        <label for="radio1" class="radio-label">남</label>
 
-                </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">생일</td>
-                <td>
-                    <input type="date" name="userBirthdate" style="margin-left: 20px;" >
-                </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">
-                    몸무게
-                </td>
-                <td>
-                    <input type="text" placeholder="소수점둘째자리" name="kg" style="width: 150px; height: 10px; margin-left: 20px;">
-                </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right" >
-                    키
-                </td>
-                <td>
-                    <input type="text" placeholder="소수점둘째자리" name="cm" style="width: 150px; height: 10px; margin-left: 20px;">
-                </td>
-            </tr>
-            <!-- ... 이후 코드 ... -->
-            
-            <tr align="center">
-                <td colspan="2">
-                    <input type="submit" value="가입" style="width: 100px;">
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
+                        <input type="radio" id="radio2" name="userGender" value="f">
+                        <label for="radio2" class="radio-label">여</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">이메일</td>
+                    <td style="display: flex;">
+                        <input type="text" style="width: 150px; height: 10px; margin-left: 20px;" name="em">
+                        <span style="margin-left: 10px; margin-right: 10px;">@</span>
+                        <select name="bloodType">
+                            <option value="none">선택　　　▼</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="daum.net">daum.net</option>
+                        </select>
+                        <input type="text" style="width: 150px; height: 10px; margin-left: 10px;" placeholder="직접입력하세요"
+                            name="ail">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">생일</td>
+                    <td>
+                        <input type="date" name="userBirthdate" style="margin-left: 20px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">
+                        몸무게
+                    </td>
+                    <td>
+                        <input type="text" placeholder="소수점둘째자리" name="kg"
+                            style="width: 150px; height: 10px; margin-left: 20px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35" bgcolor="whitesmoke" align="right">
+                        키
+                    </td>
+                    <td>
+                        <input type="text" placeholder="소수점둘째자리" name="cm"
+                            style="width: 150px; height: 10px; margin-left: 20px;">
+                    </td>
+                </tr>
+                <!-- ... 이후 코드 ... -->
+                <tr><td style="height: 35px;"></td></tr>
+                <tr align="center">
+                    <td colspan="2">
+                        <input type="submit" value="가 입"
+                            style="width: 100px; height: 50px; font-size: 16px; text-align: center; vertical-align: middle; line-height: 50px;">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </body>
 
 </html>
 
 
 
-   
+
 {% endblock %}
