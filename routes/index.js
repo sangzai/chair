@@ -41,7 +41,10 @@ router.get("/iot", (req, res) => {
 router.get("/userstate", (req, res) => {
   res.render("userstate",{obj : req.session.user});
 });
-
+// 유저상태 화면
+router.get("/statistics", (req, res) => {
+  res.render("statistics",{obj : req.session.user});
+});
 
 // 환경설정 화면
 router.get("/option", (req, res) => {

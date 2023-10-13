@@ -2,7 +2,7 @@
 
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
-    <h1 style="font-size: 40px;">유저 통계</h1>
+    <h1 style="font-size: 40px;" color="black">유저 통계</h1>
 </section>
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,7 @@
 <head>
     <title>유저 통계 페이지</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <style>
         .container {
             margin-top: 3%;
@@ -77,6 +78,29 @@
 </head>
 
 <body>
+    <div>
+        <script>
+          
+            document.getElementById("reset").addEventListener("click", () => {
+                fetch('/statistics', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const sensorCountResult = document.getElementById('sensorCountResult');
+                    if (data.error) {
+                        sensorCountResult.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount}</p>`;
+                    }
+                })
+                .catch(error => console.error(error));
+            });
+        </script>
+    </div>
     <div class="container">
         <div class="content">
             <p class="text">체형 분석</p>
@@ -110,7 +134,7 @@
             <table>
                 <tr>
                     <th>오늘 총 앉은 시간:</th>
-                    <td>10시간</td>
+                    <td>{{data.sensorCount}}</td>
                 </tr>
                 <tr>
                     <th>가장 많이 앉은 자세:</th>
@@ -162,7 +186,7 @@
         var data = {
             labels: ["바른 자세로 앉은 시간", "잘못된 자세로 앉은 시간"],
             datasets: [{
-                data: [5, 5], // 바른 자세와 잘못된 자세에 해당하는 시간을 데이터로 넣으세요
+                data: [6, 4], // 바른 자세와 잘못된 자세에 해당하는 시간을 데이터로 넣으세요
                 backgroundColor: ["#36A2EB", "#FFCE56"] // 각 섹션의 색상 설정
             }]
         };

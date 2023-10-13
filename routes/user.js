@@ -8,20 +8,20 @@ router.post('/handleJoin', (req, res) => {
   console.log('handleJoin', req.body);
   const Pw = req.body.userPw
   const rePw = req.body.repw
-  if (Pw != rePw){
+  if (Pw != rePw) {
     res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
-  }else{
+  } else {
     const emi = req.body.em
     const blood = req.body.bloodType
     const mail = req.body.ail
-    if (emi !=''&& mail==''&& blood!='none'){
-      let { userId, userPw,repw, userName, userGender, em, bloodType, userBirthdate, cm, kg } = req.body;
+    if (emi != '' && mail == '' && blood != 'none') {
+      let { userId, userPw, repw, userName, userGender, em, bloodType, userBirthdate, cm, kg } = req.body;
       let userEmail = em + '@' + bloodType
       let userHeight = parseFloat(cm)
       let userWeight = parseFloat(kg)
       const createdAt = new Date();
       let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
-      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
+      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight, createdAt], (err, rows) => {
         if (rows) {
           console.log('rows : ', rows)
           res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
@@ -31,14 +31,14 @@ router.post('/handleJoin', (req, res) => {
           res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
         }
       });
-    }else if(emi !=''&& mail !=''&& blood=='none'){
-      let { userId, userPw,repw, userName, userGender, em, ail, userBirthdate, cm, kg } = req.body;
+    } else if (emi != '' && mail != '' && blood == 'none') {
+      let { userId, userPw, repw, userName, userGender, em, ail, userBirthdate, cm, kg } = req.body;
       let userEmail = em + '@' + ail
       let userHeight = parseFloat(cm)
       let userWeight = parseFloat(kg)
       const createdAt = new Date();
       let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
-      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
+      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight, createdAt], (err, rows) => {
         if (rows) {
           console.log('rows : ', rows)
           console.log('mail')
@@ -50,11 +50,11 @@ router.post('/handleJoin', (req, res) => {
           res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
         }
       });
-    }else{
+    } else {
       console.log('최종단계실패')
       res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
     }
-}
+  }
 })
 
 // 로그인 기능
@@ -64,7 +64,7 @@ router.post('/handleLogin', (req, res) => {
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
     if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지
-      req.session.user= {
+      req.session.user = {
         'userId': rows[0].userId,
         'userName': rows[0].userName,
         'userEmail': rows[0].userEmail,
@@ -72,7 +72,7 @@ router.post('/handleLogin', (req, res) => {
         'userBirthdate': rows[0].userBirthdate,
         'userWeight': rows[0].userWeight,
         'userHeight': rows[0].userHeight,
-        'createdAt': rows[0].createdAt  
+        'createdAt': rows[0].createdAt
       }
       req.session.user.userBirthdate = req.session.user.userBirthdate.toLocaleDateString()
       req.session.user.createdAt = req.session.user.createdAt.toLocaleDateString()
@@ -89,12 +89,12 @@ router.post('/handleLogin', (req, res) => {
 // 비밀번호 확인
 router.post("/searchmypage", (req, res) => {
   // console.log(req.session.user);
-  let {userPw} = req.body
+  let { userPw } = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
-  conn.query(sql, [req.session.user.userId,userPw], (err, rows)=>{
-    if(rows.length>0){   
+  conn.query(sql, [req.session.user.userId, userPw], (err, rows) => {
+    if (rows.length > 0) {
       res.send('<script>location.href="/updatemypage"</script>')
-    }else{
+    } else {
       console.log('검색 실패!!!')
     }
   })
@@ -123,15 +123,15 @@ router.post("/updateuser", (req, res) => {
     } else {
       if (rows.affectedRows > 0) {
         console.log('수정 성공!');
-        
+
         req.session.user.userName = upuserName
         req.session.user.userEmail = upuserEmail
-        req.session.user.userWeight= upuserWeight
-        req.session.user.userHeight = upuserHeight 
+        req.session.user.userWeight = upuserWeight
+        req.session.user.userHeight = upuserHeight
         req.session.save(() => {
           res.send('<script>location.href="/mypage"</script>')
         })
-        
+
       } else {
         console.log('수정 실패!!!');
         res.status(400).send('수정 실패!!!');
@@ -147,7 +147,7 @@ router.post("/updateuser", (req, res) => {
 router.get("/logout", (req, res) => {
   req.session.user = "";
 
-  req.session.save(()=>{
+  req.session.save(() => {
     res.send('<script>location.href="http://localhost:3333/"</script>')
   })
 });
@@ -159,17 +159,20 @@ router.post('/checkUsername', (req, res) => {
   // 데이터베이스에서 중복 확인
   const sql = 'select * from users where userId=?';
   conn.query(sql, [username], (err, rows) => {
-    if (username.length >= 5){
-      if (rows.length > 0){
-        res.json({ message: '이미 사용 중인 ID입니다.' })  
+    if (username.length >= 5) {
+      if (rows.length > 0) {
+        res.json({ message: '이미 사용 중인 ID입니다.' })
       }
-      else{
+      else {
         res.json({ message: '사용 가능한 ID입니다.' })
       }
-    }else{
+    } else {
       res.json({ message: '5글자 이상 입력해주세요.' })
     }
   });
 });
+
+// 통계
+
 
 module.exports = router;
