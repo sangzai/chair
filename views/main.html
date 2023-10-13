@@ -1,46 +1,38 @@
 {% extends 'layout.html'%}
 
 {% block content %}
-<!-- Banner -->
+
 <div>
    <section id="banner">
       <div class="inner">
-
          <header>
             <h2>스마트방석</h2>
          </header>
-         <p>
             {% if obj === undefined or obj === "" %}
-            <strong>비회원</strong>
+            <p><strong>비회원</strong></p>
+            <footer> 
+               <ul class="buttons stacked">
+                  <li><a href="/join" class="button fit scrolly">회원가입</a></li>
+               </ul>
+            </footer>
             {% else %}
-            <strong>{{obj.userId}}님 환영합니다</strong>
-            <li><a href="/user/logout">로그아웃</a></li>
+            <p><strong>{{obj.userId}}님 환영합니다</strong></p>
+            <footer> 
+               <ul class="buttons stacked">
+                  <li><a href="/mypage" class="button fit scrolly">마이페이지</a></li>
+               </ul>
+            </footer>
             {% endif %}
-         </p>
-         <footer>
-            <ul class="buttons stacked">
-               <li><a href="/join" class="button fit scrolly">회원가입</a></li>
-            </ul>
-         </footer>
       </div>
    </section>
 
-<!-- Main -->
    <article id="main">
 
-      <!-- <header class="special container">
-         <span class="icon solid fa-chart-bar"></span>
-         <h2>척추를구해조팀소개</h2>
-      </header> -->
-
-      <!-- One -->
          <section class="wrapper style2 container special-alt">
             <div class="row gtr-50">
                <div class="col-8 col-12-narrower">
 
-                  <header>
-                     <!-- <h1>제품상세설명</h1> -->
-                  </header>
+
                   <br/>
                   <h3>편안한 자세 유도</h3>
                   <p>스마트 압력 센서 방석은 압력 센서를 통해 사용자의 자세를 모니터링하고,</p>
@@ -55,11 +47,6 @@
                   <p>사무직 종사자, 학생, 재택근무자 등 다양한 사용자에게 적합하며,</p>
                   <p>효과적인 자세 관리를 위한 최상의 도구입니다</p>
                   <br/>
-                  <!-- <footer>
-                     <ul class="buttons">
-                        <li><a href="/join" class="button">회원가입</a></li>
-                     </ul>
-                  </footer> -->
 
                </div>
                <div class="col-4 col-12-narrower imp-narrower">
@@ -77,7 +64,7 @@
             </div>
          </section>
 
-      <!-- Two -->
+      
          <section class="wrapper style1 container special">
             <div class="row">
                <div class="col-4 col-12-narrower">
@@ -119,7 +106,7 @@
             </div>
          </section>
 
-      <!-- Three -->
+      
          <section class="wrapper style3 container special">
 
             <header class="major">
@@ -187,9 +174,7 @@
                   <li><a href="/info" class="button">건강생활지식 페이지</a></li>
                </ul>
             </footer>
-
          </section>
-
    </article>
 </div>
 {% endblock %}

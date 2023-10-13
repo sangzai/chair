@@ -1,22 +1,13 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-
 const nunjucks = require("nunjucks");
 const session = require("express-session");
 const fileStore = require("session-file-store")(session);
 const indexRouter = require("./routes");
 const userRouter = require("./routes/user");
-// 5-1. 리액트 프로젝트 경로 설정
-
 const path = require('path');
-// app.use(express.static(path.join(__dirname, 
-//      'react-chair', 'build')));
-// app.use(express.json());
-
-
 const cors = require("cors");
-
 const http = require('http');
 const server = http.createServer(app);
 
@@ -34,8 +25,7 @@ nunjucks.configure("views", {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
-// app.use(express.static(__dirname + "/react-chair/build"));
--
+
 app.use(
   session({
     httpOnly: true,
@@ -47,7 +37,6 @@ app.use(
 );
 
 app.use("/", indexRouter);
-// app.use( '/react', express.static( path.join(__dirname, 'react-chair/build') ))
 app.use("/user", userRouter);
 
 app.listen(app.get("port"), () => {

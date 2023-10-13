@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 
 // 회원가입 기능
 router.post('/handleJoin', (req, res) => {
-  console.log('handleJoin', req.body);
   const Pw = req.body.userPw
   const rePw = req.body.repw
   if (Pw != rePw){
@@ -23,11 +22,8 @@ router.post('/handleJoin', (req, res) => {
       let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
       conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
         if (rows) {
-          console.log('rows : ', rows)
           res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
-          console.log('blood')
         } else {
-          console.log('err : ', err)
           res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
         }
       });
@@ -40,30 +36,39 @@ router.post('/handleJoin', (req, res) => {
       let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
       conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
         if (rows) {
-          console.log('rows : ', rows)
-          console.log('mail')
           res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
-        } else {
-          console.log('err : ', err)
-          console.log('mail실패')
-
+        }else {
           res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
         }
       });
     }else{
-      console.log('최종단계실패')
       res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
     }
 }
 })
-
+// // ID 중복 확인 
+router.post('/checkUsername', (req, res) => {
+  const { username } = req.body;
+  const sql = 'select * from users where userId=?';
+  conn.query(sql, [username], (err, rows) => {
+    if (username.length >= 5){
+      if (rows.length > 0){
+        res.json({ message: '이미 사용 중인 ID입니다.' })  
+      }
+      else{
+        res.json({ message: '사용 가능한 ID입니다.' })
+      }
+    }else{
+      res.json({ message: '5글자 이상 입력해주세요.' })
+    }
+  });
+});
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
   let { userId, userPw } = req.body
-  console.log(userId + ',' + userPw)
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
-    if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지
+    if (rows.length > 0) {
       req.session.user= {
         'userId': rows[0].userId,
         'userName': rows[0].userName,
@@ -80,50 +85,32 @@ router.post('/handleLogin', (req, res) => {
         res.send('<script>alert("환영합니다!");location.href="/"</script>')
       })
     } else {
-      console.log('로그인 실패')
       res.send('<script>alert("아이디 혹은 비밀번호를 잘못입력하셨습니다!");location.href="/login"</script>')
     }
   })
 })
 
-// 비밀번호 확인
+// 회원탈퇴 + 정보수정 비밀번호 확인
 router.post("/searchmypage", (req, res) => {
-  // console.log(req.session.user);
   let {userPw} = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [req.session.user.userId,userPw], (err, rows)=>{
     if(rows.length>0){   
       res.send('<script>location.href="/updatemypage"</script>')
     }else{
-      console.log('검색 실패!!!')
+      res.send('<script>alert("비밀번호가 다릅니다.");location.href="/pwCheck?button=1"</script>')
     }
   })
 })
-// 마이페이지 회원정보 수정
-// router.post("/updateuser",(req,res)=>{
-// let {userName,userEmail,userHeight,userWeight} = req.body;
-// let sql = "UPDATE users SET userName = ?, userEmail = ?, userHeight = ?, userWeight = ? WHERE userId = ?";
-
-// conn.query(sql, [userName,userEmail,userHeight,userWeight,req.session.user.userId], (err, rows)=>{
-//   if (rows.affectedRows > 0){   
-//     console.log('수정 성공!')
-//   }else{
-//     console.log('수정 실패!!!')
-//   }
-// })
-// })
+// 회원정보 수정
 router.post("/updateuser", (req, res) => {
   let { upuserName, upuserEmail, upuserHeight, upuserWeight } = req.body;
-  console.log(req.body);
   let sql = "UPDATE users SET userName = ?, userEmail = ?, userWeight = ?, userHeight = ?  WHERE userId = ?";
   conn.query(sql, [upuserName, upuserEmail, upuserWeight, upuserHeight, req.session.user.userId], (err, rows) => {
     if (err) {
-      console.error('수정 실패!!!', err);
       res.status(500).send('수정 실패!!!');
     } else {
       if (rows.affectedRows > 0) {
-        console.log('수정 성공!');
-        
         req.session.user.userName = upuserName
         req.session.user.userEmail = upuserEmail
         req.session.user.userWeight= upuserWeight
@@ -131,45 +118,42 @@ router.post("/updateuser", (req, res) => {
         req.session.save(() => {
           res.send('<script>location.href="/mypage"</script>')
         })
-        
       } else {
-        console.log('수정 실패!!!');
         res.status(400).send('수정 실패!!!');
       }
     }
   });
 });
-
-
-
-
+// 회원탈퇴
+router.post("/deleteinfo", (req, res) => {
+  let { userPw } = req.body;
+  let sql = 'delete from users where userId=? and userPw=MD5(?)';
+  conn.query(sql, [req.session.user.userId, userPw], (err, rows) => {
+    if (err) {   
+      console.error('데이터베이스 오류:', err);
+      res.redirect('/');
+    } else if (rows.affectedRows > 0) {
+      req.session.destroy(err => {
+        if (err) {
+          console.error('세션 삭제 오류:', err);
+          res.redirect('/');
+        } else {
+          console.log('세션 삭제 성공');
+          res.redirect('/');
+        }
+      });
+    } else {
+      console.log('삭제실패');
+      res.send('<script>alert("비밀번호가 다릅니다.");location.href="/pwCheck?button=2"</script>')
+    }
+  });
+});
 // 로그아웃
 router.get("/logout", (req, res) => {
   req.session.user = "";
-
   req.session.save(()=>{
     res.send('<script>location.href="http://localhost:3333/"</script>')
   })
 });
 const app = express();
-
-// // ID 중복 확인 엔드포인트
-router.post('/checkUsername', (req, res) => {
-  const { username } = req.body;
-  // 데이터베이스에서 중복 확인
-  const sql = 'select * from users where userId=?';
-  conn.query(sql, [username], (err, rows) => {
-    if (username.length >= 5){
-      if (rows.length > 0){
-        res.json({ message: '이미 사용 중인 ID입니다.' })  
-      }
-      else{
-        res.json({ message: '사용 가능한 ID입니다.' })
-      }
-    }else{
-      res.json({ message: '5글자 이상 입력해주세요.' })
-    }
-  });
-});
-
 module.exports = router;

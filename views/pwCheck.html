@@ -2,33 +2,38 @@
 
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
-    <h1 style="font-size: 40px;">myupdate</h1>
+    <h1 style="font-size: 40px;">비밀번호 확인</h1>
 </section>
   <div id="content1">
-    <h1>첫 번째 화면</h1>
-    <!-- 첫 번째 화면의 내용 -->
+    <h1>회원정보수정</h1>
     <form action="/user/searchmypage" method="post" style="width: 500px;height: 500px;">
         <tr style="width: 200px; height: 200px;">
-            <td style = "width: 100px;height: 100px;" bgcolor="whitesmoke" align="right" name="userPw">비밀번호</td>
+            <td style = "width: 100px;height: 100px;" bgcolor="whitesmoke" align="right" name="userPw"
+            >비밀번호</td>
             <td bgcolor="whitesmoke">
-        
-                <input type="password" name="userPw" maxlength="8" style="width: 150px; height: 50px; margin-left: 30px;">
+                <input type="password" name="userPw" maxlength = "15" style="width: 150px; height: 50px; margin-left: 30px;">
                 <input type="submit">
             </td>
         </tr>
-        
     </form>
   </div>
   <div id="content2">
-    <h1>두 번째 화면</h1>
-    <!-- 두 번째 화면의 내용 -->
-  </div>
-  
+    <h1>회원탈퇴</h1>
+    <form action="/user/deleteinfo" method="post" style="width: 500px;height: 500px;">
+      <tr style="width: 200px; height: 200px;">
+          <td style = "width: 100px;height: 100px;" bgcolor="whitesmoke" align="right" name="userPw"
+          >비밀번호</td>
+          <td bgcolor="whitesmoke">
+              <input type="password" name="userPw" style="width: 150px; height: 50px; margin-left: 30px;"
+              maxlength = "15">
+              <input type="submit">
+          </td>
+      </tr>
+  </form>
+  </div> 
   <script>
-    // 현재 URL 가져오기
+    // 두 개의 화면 분할
     const currentURL = window.location.href;
-
-    // URL에 따라 다른 화면 보여주기
     if (currentURL.includes('button=1')) {
       document.getElementById('content1').style.display = 'block';
       document.getElementById('content2').style.display = 'none';
@@ -36,7 +41,6 @@
       document.getElementById('content1').style.display = 'none';
       document.getElementById('content2').style.display = 'block';
     } else {
-      // URL이 일치하지 않을 경우 기본 화면 설정
       document.getElementById('content1').style.display = 'block';
       document.getElementById('content2').style.display = 'none';
     }
