@@ -3,177 +3,193 @@
 {% block content %}
 <!-- Banner -->
 <div>
-	<section id="banner">
-		<div class="inner">
+   <section id="banner">
+      <div class="inner">
 
-			<header>
-				<h2>스마트방석</h2>
-			</header>
-			<p>
-				{% if obj === undefined or obj === "" %}
-				<strong>비회원</strong>
-				{% else %}
-				<strong>{{obj.userId}}님 환영합니다</strong>
-				<li><a href="/user/logout">로그아웃</a></li>
-				{% endif %}
-			</p>
-			<footer>
-				<ul class="buttons stacked">
-					<li><a href="/join" class="button fit scrolly">회원가입</a></li>
-				</ul>
-			</footer>
-		</div>
-	</section>
+         <header>
+            <h2>스마트방석</h2>
+         </header>
+         <p>
+            {% if obj === undefined or obj === "" %}
+            <strong>비회원</strong>
+            {% else %}
+            <strong>{{obj.userId}}님 환영합니다</strong>
+            <li><a href="/user/logout">로그아웃</a></li>
+            {% endif %}
+         </p>
+         <footer>
+            <ul class="buttons stacked">
+               <li><a href="/join" class="button fit scrolly">회원가입</a></li>
+            </ul>
+         </footer>
+      </div>
+   </section>
 
 <!-- Main -->
-	<article id="main">
+   <article id="main">
 
-		<header class="special container">
-			<span class="icon solid fa-chart-bar"></span>
-			<h2>척추를구해조팀소개</h2>
-		</header>
+      <!-- <header class="special container">
+         <span class="icon solid fa-chart-bar"></span>
+         <h2>척추를구해조팀소개</h2>
+      </header> -->
 
-		<!-- One -->
-			<section class="wrapper style2 container special-alt">
-				<div class="row gtr-50">
-					<div class="col-8 col-12-narrower">
+      <!-- One -->
+         <section class="wrapper style2 container special-alt">
+            <div class="row gtr-50">
+               <div class="col-8 col-12-narrower">
 
-						<header>
-							<h2>제품상세설명</h2>
-						</header>
-						<p>
-							제품상세설명내용
-							<br/>
-							<br/>
-							<br/>
-							<br/>
-							<br/>
-						</p>
-						<footer>
-							<ul class="buttons">
-								<li><a href="/join" class="button">회원가입</a></li>
-							</ul>
-						</footer>
+                  <header>
+                     <!-- <h1>제품상세설명</h1> -->
+                  </header>
+                  <br/>
+                  <h3>편안한 자세 유도</h3>
+                  <p>스마트 압력 센서 방석은 압력 센서를 통해 사용자의 자세를 모니터링하고,</p>
+                  <p>올바른 자세를 유도하여 몸의 피로를 감소시켜줍니다</p>
+                  
+                  <br/>
+                  <h3>자세 모니터링</h3>
+                  <p>압력 센서 데이터를 통해 사용자는 앉은 자세의 분포를 실시간으로 확인하고 개선할 수 있으며,</p>
+                  <p>잘못된 자세에 대한 경고를 받을 수 있습니다</p>
+                  <br/>
+                  <h3>다양한 사용자에게 적합</h3>
+                  <p>사무직 종사자, 학생, 재택근무자 등 다양한 사용자에게 적합하며,</p>
+                  <p>효과적인 자세 관리를 위한 최상의 도구입니다</p>
+                  <br/>
+                  <!-- <footer>
+                     <ul class="buttons">
+                        <li><a href="/join" class="button">회원가입</a></li>
+                     </ul>
+                  </footer> -->
 
-					</div>
-					<div class="col-4 col-12-narrower imp-narrower">
+               </div>
+               <div class="col-4 col-12-narrower imp-narrower">
 
-						<ul class="featured-icons">
-							<li><span class="icon fa-clock"><span class="label">Feature 1</span></span></li>
-							<li><span class="icon solid fa-volume-up"><span class="label">Feature 2</span></span></li>
-							<li><span class="icon solid fa-laptop"><span class="label">Feature 3</span></span></li>
-							<li><span class="icon solid fa-inbox"><span class="label">Feature 4</span></span></li>
-							<li><span class="icon solid fa-lock"><span class="label">Feature 5</span></span></li>
-							<li><span class="icon solid fa-cog"><span class="label">Feature 6</span></span></li>
-						</ul>
+                  <ul class="featured-icons">
+                     <li><span class="icon fa-clock"><span class="label">Feature 1</span></span></li>
+                     <li><span class="icon solid fa-volume-up"><span class="label">Feature 2</span></span></li>
+                     <li><span class="icon solid fa-laptop"><span class="label">Feature 3</span></span></li>
+                     <li><span class="icon solid fa-inbox"><span class="label">Feature 4</span></span></li>
+                     <li><span class="icon solid fa-lock"><span class="label">Feature 5</span></span></li>
+                     <li><span class="icon solid fa-cog"><span class="label">Feature 6</span></span></li>
+                  </ul>
 
-					</div>
-				</div>
-			</section>
+               </div>
+            </div>
+         </section>
 
-		<!-- Two -->
-			<section class="wrapper style1 container special">
-				<div class="row">
-					<div class="col-4 col-12-narrower">
+      <!-- Two -->
+         <section class="wrapper style1 container special">
+            <div class="row">
+               <div class="col-4 col-12-narrower">
 
-						<section>
-							<span class="icon solid featured fa-check"></span>
-							<header>
-								<h3>이런분들에게 추천합니다.</h3>
-							</header>
-							<p></p>
-						</section>
+                  <section>
+                     <span class="icon solid featured fa-check"></span>
+                     <header>
+                        <h5>장시간 좌식생활하는</h5>
+                        <h5>사무실 근무자</h5>
+                     </header>
+                     <p></p>
+                  </section>
 
-					</div>
-					<div class="col-4 col-12-narrower">
+               </div>
+               <div class="col-4 col-12-narrower">
 
-						<section>
-							<span class="icon solid featured fa-check"></span>
-							<header>
-								<h3>이런분들에게 추천합니다.</h3>
-							</header>
-							<p></p>
-						</section>
+                  <section>
+                     <span class="icon solid featured fa-check"></span>
+                     <header>
+                        <h5>온라인 강의를 듣는</h5>
+                        <h5>학생</h5>
+                     </header>
+                     <p></p>
+                  </section>
 
-					</div>
-					<div class="col-4 col-12-narrower">
+               </div>
+               <div class="col-4 col-12-narrower">
 
-						<section>
-							<span class="icon solid featured fa-check"></span>
-							<header>
-								<h3>이런사람에게 추천3</h3>
-							</header>
-							<p></p>
-						</section>
+                  <section>
+                     <span class="icon solid featured fa-check"></span>
+                     <header>
+                        <h5>재택근무하는</h5>
+                        <h5>프리랜서</h5>
+                     </header>
+                     <p></p>
+                  </section>
 
-					</div>
-				</div>
-			</section>
+               </div>
+            </div>
+         </section>
 
-		<!-- Three -->
-			<section class="wrapper style3 container special">
+      <!-- Three -->
+         <section class="wrapper style3 container special">
 
-				<header class="major">
-					<h1><strong>건강 생활 지식</strong></h1>
-				</header>
+            <header class="major">
+               <h1><strong>생활 속 스트레칭</strong></h1>
+            </header>
 
-				<div class="row">
-					<div class="col-6 col-12-narrower">
+            <div class="row">
+               <div class="col-6 col-12-narrower">
 
-						<section>
-							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" style="height: 270px;"/></a>
-							<header>
-								<h3>거북목 증후군 스트레칭 운동</h3>
-							</header>
-							<p>거북목 증후군 스트레칭 운동</p>
-						</section>
+                  <section>
+                     <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" style="height: 400px;"/></a>
+                     <header>
+                        <h3>요방근형 스트레칭</h3>
+                     </header>
+                     <p>양반다리로 앉아서 오른쪽 팔은 바닥에 대고, 왼쪽 손을 오른쪽으로 허리 근육이 늘어나게 쭉 뻗어 준다.</p>
+                     <p>30초 동안 실시하고, 손을 반댁록 바꿔서 또 30초 동안 실시한다.</p>
+                     <p>총 3세트 진행한다.</p>
+                  </section>
 
-					</div>
-					<div class="col-6 col-12-narrower">
+               </div>
+               <div class="col-6 col-12-narrower">
 
-						<section>
-							<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" style="height: 270px;"/></a>
-							<header>
-								<h3>목갈비근 이완 운동</h3>
-							</header>
-							<p>목갈비근 이완 운동</p>
-						</section>
+                  <section>
+                     <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" style="height: 400px;"/></a>
+                     <header>
+                        <h3>스완</h3>
+                     </header>
+                     <p>바닥에 엎드려 손바닥을 바닥에 붙이고, 손으로 바닥을 밀면서 허리를 뒤로 젖혀준다.</p>
+                     <p>이때 손과 어깨를 일직선으로 놓으면서 팔꿈치를 쫙 펴주고, 심호흡을 하면서 60초 유지한다.</p>
+                  </section>
 
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-6 col-12-narrower">
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-6 col-12-narrower">
 
-						<section>
-							<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-							<header>
-								<h3>Hyperspace Travel</h3>
-							</header>
-							<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper sed blandit lorem ipsum dolore.</p>
-						</section>
+                  <section>
+                     <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" style="height: 400px;"/></a>
+                     <header>
+                        <h3>버그 도그 운동</h3>
+                     </header>
+                     <p>무릎과 손바닥을 바닥에 붙이고, 머리부터 엉덩이까지 일직선이 되게 한다.</p>
+                     <p>오른손과 왼발을 앞뒤로 쭉 뻗고, 총 10회씩 3세트 한다.</p>
+                     <p>반대쪽도 똑같이 진행한다.</p>
+                  </section>
 
-					</div>
-					<div class="col-6 col-12-narrower">
+               </div>
+               <div class="col-6 col-12-narrower">
 
-						<section>
-							<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-							<header>
-								<h3>And Another Train</h3>
-							</header>
-							<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper sed blandit lorem ipsum dolore.</p>
-						</section>
+                  <section>
+                     <a href="#" class="image featured"><img src="images/pic04.jpg" alt="" style="height: 400px;"/></a>
+                     <header>
+                        <h3>고양이 자세 스트레칭</h3>
+                     </header>
+                     <p>엎드려서 무릎과 손바닥을 바닥에 위치시키고, 머리와 어깨 그리고 엉덩이가 일자가 되도록 유지한다.</p>
+                     <p>숨을 마시며 머리를 들고 허리를 박다으로 내리고, 숨을 내쉬며 등을 둥글게 말아준다.</p>
+                     <p>10회 반복한다.</p>
+                  </section>
 
-					</div>
-				</div>
+               </div>
+            </div>
 
-				<footer class="major">
-					<ul class="buttons">
-						<li><a href="/info" class="button">건강생활지식 페이지</a></li>
-					</ul>
-				</footer>
+            <footer class="major">
+               <ul class="buttons">
+                  <li><a href="/info" class="button">건강생활지식 페이지</a></li>
+               </ul>
+            </footer>
 
-			</section>
+         </section>
 
-	</article>
+   </article>
 </div>
 {% endblock %}
