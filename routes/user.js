@@ -54,10 +54,6 @@ router.post('/handleJoin', (req, res) => {
       console.log('최종단계실패')
       res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
     }
-
-  // 1) 내가 사용할 sql 쿼리문 작성
-  
-  // 2) DB 연동
 }
 })
 
@@ -65,7 +61,6 @@ router.post('/handleJoin', (req, res) => {
 router.post('/handleLogin', (req, res) => {
   let { userId, userPw } = req.body
   console.log(userId + ',' + userPw)
-  // SQL 정의
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
     if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지
@@ -77,9 +72,10 @@ router.post('/handleLogin', (req, res) => {
         'userBirthdate': rows[0].userBirthdate,
         'userWeight': rows[0].userWeight,
         'userHeight': rows[0].userHeight,
-        'createdAt': rows[0].createdAt
+        'createdAt': rows[0].createdAt  
       }
-      
+      req.session.user.userBirthdate = req.session.user.userBirthdate.toLocaleDateString()
+      req.session.user.createdAt = req.session.user.createdAt.toLocaleDateString()
       req.session.save(() => {
         res.send('<script>alert("환영합니다!");location.href="/"</script>')
       })
@@ -90,59 +86,65 @@ router.post('/handleLogin', (req, res) => {
   })
 })
 
-// 마이페이지 회원정보
-// router.get("/searchmypage", (req, res) => {
-//   // console.log(req.session.user);
-//   //  
-//   let sql = 'select * from users where userId=?'
-//   conn.query(sql, [req.session.user], (err, rows)=>{
-//     if(rows.length>0){   
-//       console.log("검색 성공",{list:rows});
-//       // res.render('mypage') // 데이터 포함
-//       res.send('<script>location.href="/mypage"</script>')
-//       // res.send('<script>alert("환영합니다!");location.href="/mypage"</script>')
-      
-//     }else{
-//       console.log('검색 실패!!!')
-//       // res.render('select') //데이터 포함 X
-//     }
-//   })
-//   console.log('mypage접속')
-// });
-// router.post('/handleLogin', (req, res) => {
-//   let { userId, userPw } = req.body
-//   console.log(userId + ',' + userPw)
+// 비밀번호 확인
+router.post("/searchmypage", (req, res) => {
+  // console.log(req.session.user);
+  let {userPw} = req.body
+  let sql = 'select * from users where userId=? and userPw=MD5(?)'
+  conn.query(sql, [req.session.user.userId,userPw], (err, rows)=>{
+    if(rows.length>0){   
+      res.send('<script>location.href="/updatemypage"</script>')
+    }else{
+      console.log('검색 실패!!!')
+    }
+  })
+})
+// 마이페이지 회원정보 수정
+// router.post("/updateuser",(req,res)=>{
+// let {userName,userEmail,userHeight,userWeight} = req.body;
+// let sql = "UPDATE users SET userName = ?, userEmail = ?, userHeight = ?, userWeight = ? WHERE userId = ?";
 
-//   // SQL 정의
-//   let sql = 'select * from users where userId=?'
-//   conn.query(sql, [userId], (err, rows) => {
-
-//     console.log('rows ', rows)
-//     if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지 
-//       const userPassword = userPw
-//       const storedHashedPassword = rows.userPw
-//       bcrypt.compare(userPassword, storedHashedPassword, (err, result) => {
-//         if (result === true) {
-//             // 비밀번호 일치, 로그인 승인
-//             req.session.user= rows[0]
-//             req.session.save(() => {
-//               res.send('<script>alert("환영합니다!");location.href="/"</script>')
-//             })
-//         } else {
-//             // 비밀번호 불일치, 로그인 거부
-//         }
-//     });
-
-//     } else {
-//       console.log('로그인 실패')
-//       res.send('<script>alert("아이디 혹은 비밀번호를 잘못입력하셨습니다!");location.href="/login"</script>')
-//     }
-//   })
+// conn.query(sql, [userName,userEmail,userHeight,userWeight,req.session.user.userId], (err, rows)=>{
+//   if (rows.affectedRows > 0){   
+//     console.log('수정 성공!')
+//   }else{
+//     console.log('수정 실패!!!')
+//   }
 // })
-router.get("/logout", (req, res) => {
+// })
+router.post("/updateuser", (req, res) => {
+  let { upuserName, upuserEmail, upuserHeight, upuserWeight } = req.body;
+  console.log(req.body);
+  let sql = "UPDATE users SET userName = ?, userEmail = ?, userWeight = ?, userHeight = ?  WHERE userId = ?";
+  conn.query(sql, [upuserName, upuserEmail, upuserWeight, upuserHeight, req.session.user.userId], (err, rows) => {
+    if (err) {
+      console.error('수정 실패!!!', err);
+      res.status(500).send('수정 실패!!!');
+    } else {
+      if (rows.affectedRows > 0) {
+        console.log('수정 성공!');
+        
+        req.session.user.userName = upuserName
+        req.session.user.userEmail = upuserEmail
+        req.session.user.userWeight= upuserWeight
+        req.session.user.userHeight = upuserHeight 
+        req.session.save(() => {
+          res.send('<script>location.href="/mypage"</script>')
+        })
+        
+      } else {
+        console.log('수정 실패!!!');
+        res.status(400).send('수정 실패!!!');
+      }
+    }
+  });
+});
 
-  // 1. 세션 삭제
-  // 2. 메인페이지에 다시 접근
+
+
+
+// 로그아웃
+router.get("/logout", (req, res) => {
   req.session.user = "";
 
   req.session.save(()=>{
@@ -151,11 +153,9 @@ router.get("/logout", (req, res) => {
 });
 const app = express();
 
-
 // // ID 중복 확인 엔드포인트
 router.post('/checkUsername', (req, res) => {
   const { username } = req.body;
-
   // 데이터베이스에서 중복 확인
   const sql = 'select * from users where userId=?';
   conn.query(sql, [username], (err, rows) => {
@@ -169,28 +169,7 @@ router.post('/checkUsername', (req, res) => {
     }else{
       res.json({ message: '5글자 이상 입력해주세요.' })
     }
-
-    // if (err) {
-    //   console.error(err);
-    //   res.status(500).json({ error: 'Internal server error' });
-    //   return;
-    // }
-
-    // if (rows.length > 0) {
-    //   res.json({ message: '이미 사용 중인 ID입니다.' });
-    // } else {
-    //   console.log(rows)
-    //   res.json({ message: '사용 가능한 ID입니다.' });
-    // }
   });
 });
-
-
-// 서버 시작
-// const port = 3000;
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-
 
 module.exports = router;
