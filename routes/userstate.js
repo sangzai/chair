@@ -1,3 +1,6 @@
+const http = require('http');
+const server = http.createServer(app);
+
 const conn = require("../config/database");
 const express = require("express");
 const router = express.Router();
