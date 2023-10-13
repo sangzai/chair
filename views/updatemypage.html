@@ -2,38 +2,51 @@
 
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
-    <h1 style="font-size: 40px;">회원 정보 수정</h1>
+    <h1 style="font-size: 40px; color: #524d58;">회원정보 수정</h1>
 </section>
-<h1>11111</h1>
-<form action="/user/updateuser" method="post">
-    <table style="width: 500px">
-        <tr>
-            <td>ID</td>
-            <td><input type="text" value={{obj.userId}} name="upuserId" style="width: 200px;"></td>
-        </tr>
-        <tr>
-            <td>이름</td>
-            <td><input type="text" value={{obj.userName}} name="upuserName" style="width: 200px;"></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <!-- <td>{{obj.userEmail}}</td> -->
-            <td><input type="text" value={{obj.userEmail}} name="upuserEmail" style="width: 200px;"></td>
 
-        <tr>
-            <td>몸무게</td>
-            <td><input type="text" value={{obj.userHeight}} name="upuserHeight" style="width: 200px;"></td>
-        </tr>
-        <tr>
-            <td>키</td>
-            <td><input type="text" value={{obj.userWeight}} name="upuserWeight" style="width: 200px;"></td>
-        </tr>
-    </table>
+<div id="FONTALL" class="container">
+    <form action="/user/updateuser" method="post">
+        <table style="width: 500px; margin: 0 auto;">
+
+            <tr style="height: 50px; background-color: #43419696;">
+                <th colspan="2" style="text-align: center; vertical-align: middle;"><strong>회원정보 수정</strong></th>
+            </tr>
+
+            <tr>
+                <td style="width: 30%; text-align: center;">ID</td>
+                <td style="width: 70%;"><input type="text" value={{obj.userId}} name="upuserId" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 30%; text-align: center;">이름</td>
+                <td style="width: 70%;"><input type="text" value={{obj.userName}} name="upuserName"
+                        style="width: 100%;"></td>
+            </tr>
+            <tr>
+                <td style="width: 30%; text-align: center;">Email</td>
+                <td style="width: 70%;"><input type="text" value={{obj.userEmail}} name="upuserEmail"
+                        style="width: 100%;"></td>
+
+            <tr>
+                <td style="width: 30%; text-align: center;">몸무게</td>
+                <td style="width: 70%;"><input type="text" value={{obj.userHeight}} name="upuserHeight"
+                        style="width: 100%;"></td>
+            </tr>
+            <tr>
+                <td style="width: 30%; text-align: center;">키</td>
+                <td style="width: 70%;"><input type="text" value={{obj.userWeight}} name="upuserWeight"
+                        style="width: 100%;"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width: 100%; text-align: center;">
+                    <input type="submit" style="width: 30%;">
+                </td>
+            </tr>
+        </table>
 
 
 
-<input type="submit">
-
-
-</form>
+    </form>
+</div>
 {%endblock%}
