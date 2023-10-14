@@ -155,5 +155,25 @@ router.get("/logout", (req, res) => {
     res.send('<script>location.href="http://localhost:3333/"</script>')
   })
 });
+
+router.get("/iot",(req,res)=>{
+  console.log(req.session.user)
+  console.log('iot 버튼 클릭')
+  // 먼저 데이터 베이스를 카운트 시키고 이걸 내가 가지고 온다
+  // 이걸 다 더해서 시간을 표현하는 걸 적용시킨다
+  // 
+  req.session.user.userId
+  let sql = 'select createdAt from sensordata where userId=?';
+conn.query(sql, [req.session.user.userId], (err, rows) => {
+    if (rows.length > 0) {
+      console.log('데이터 연결 성공',rows)
+    }else{
+      console.log('데이터 못가져옴',err)
+    }
+  })
+
+})
+
+
 const app = express();
 module.exports = router;

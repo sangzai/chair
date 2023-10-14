@@ -42,10 +42,6 @@ router.get("/info", (req, res) => {
   res.render("infomation");
 });
 
-// 방석관리 화면
-router.get("/iot", (req, res) => {
-  res.render("iot",{obj : req.session.user});
-});
 
 // 유저상태 화면
 router.get("/userstate", (req, res) => {
@@ -56,4 +52,10 @@ router.get("/userstate", (req, res) => {
 router.get("/option", (req, res) => {
   res.render("option",{obj : req.session.user});
 });
+
+// 방석관리 화면
+// router.get("/iot", (req, res) => {
+//   res.render("iot",{obj : req.session.user});
+// });
+
 module.exports = router;
