@@ -40,8 +40,8 @@ router.get("/delete", (req, res) => {
 });
 
 // 건강정보 화면
-router.get("/info", (req, res) => {
-  res.render("infomation");
+router.get("/healthinfo", (req, res) => {
+  res.render("healthinfo");
 });
 
 // 방석관리 화면
