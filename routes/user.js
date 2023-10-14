@@ -7,45 +7,44 @@ const bcrypt = require('bcrypt');
 router.post('/handleJoin', (req, res) => {
   const Pw = req.body.userPw
   const rePw = req.body.repw
-  if (Pw != rePw) {
+  if (Pw != rePw){
     res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
-  } else {
+  }else{
     const emi = req.body.em
     const blood = req.body.bloodType
     const mail = req.body.ail
-    if (emi != '' && mail == '' && blood != 'none') {
-      let { userId, userPw, repw, userName, userGender, em, bloodType, userBirthdate, cm, kg } = req.body;
+    if (emi !=''&& mail==''&& blood!='none'){
+      let { userId, userPw,repw, userName, userGender, em, bloodType, userBirthdate, cm, kg } = req.body;
       let userEmail = em + '@' + bloodType
       let userHeight = parseFloat(cm)
       let userWeight = parseFloat(kg)
       const createdAt = new Date();
       let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
-      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight, createdAt], (err, rows) => {
+      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
         if (rows) {
           res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
         } else {
           res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
         }
       });
-    } else if (emi != '' && mail != '' && blood == 'none') {
-      let { userId, userPw, repw, userName, userGender, em, ail, userBirthdate, cm, kg } = req.body;
+    }else if(emi !=''&& mail !=''&& blood=='none'){
+      let { userId, userPw,repw, userName, userGender, em, ail, userBirthdate, cm, kg } = req.body;
       let userEmail = em + '@' + ail
       let userHeight = parseFloat(cm)
       let userWeight = parseFloat(kg)
       const createdAt = new Date();
       let sql = "insert into users values(?,MD5(?),?,?,?,?,?,?,?)";
-      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight, createdAt], (err, rows) => {
+      conn.query(sql, [userId, userPw, userName, userEmail, userGender, userBirthdate, userWeight, userHeight,createdAt], (err, rows) => {
         if (rows) {
           res.send('<script>alert("가입을 축하합니다!");location.href="/"</script>')
         }else {
           res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
         }
       });
-
     }else{
       res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
     }
-  }
+}
 })
 // // ID 중복 확인 
 router.post('/checkUsername', (req, res) => {
@@ -69,10 +68,8 @@ router.post('/handleLogin', (req, res) => {
   let { userId, userPw } = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
-
-    if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지
-      req.session.user = {
-
+    if (rows.length > 0) {
+      req.session.user= {
         'userId': rows[0].userId,
         'userName': rows[0].userName,
         'userEmail': rows[0].userEmail,
@@ -80,7 +77,7 @@ router.post('/handleLogin', (req, res) => {
         'userBirthdate': rows[0].userBirthdate,
         'userWeight': rows[0].userWeight,
         'userHeight': rows[0].userHeight,
-        'createdAt': rows[0].createdAt
+        'createdAt': rows[0].createdAt  
       }
       req.session.user.userBirthdate = req.session.user.userBirthdate.toLocaleDateString()
       req.session.user.createdAt = req.session.user.createdAt.toLocaleDateString()
@@ -95,37 +92,29 @@ router.post('/handleLogin', (req, res) => {
 
 // 회원탈퇴 + 정보수정 비밀번호 확인
 router.post("/searchmypage", (req, res) => {
-
-  // console.log(req.session.user);
-  let { userPw } = req.body
-
+  let {userPw} = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
-  conn.query(sql, [req.session.user.userId, userPw], (err, rows) => {
-    if (rows.length > 0) {
+  conn.query(sql, [req.session.user.userId,userPw], (err, rows)=>{
+    if(rows.length>0){   
       res.send('<script>location.href="/updatemypage"</script>')
     }else{
       res.send('<script>alert("비밀번호가 다릅니다.");location.href="/pwCheck?button=1"</script>')
-
     }
   })
 })
-
 // 회원정보 수정
 router.post("/updateuser", (req, res) => {
-  let { upuserName, upuserEmail, upuserWeight, upuserHeight } = req.body;
+  let { upuserName, upuserEmail, upuserHeight, upuserWeight } = req.body;
   let sql = "UPDATE users SET userName = ?, userEmail = ?, userWeight = ?, userHeight = ?  WHERE userId = ?";
   conn.query(sql, [upuserName, upuserEmail, upuserWeight, upuserHeight, req.session.user.userId], (err, rows) => {
     if (err) {
-      res.status(500).send('수정 바보야!!!');
+      res.status(500).send('수정 실패!!!');
     } else {
       if (rows.affectedRows > 0) {
-
-        console.log('수정 성공!');
-
         req.session.user.userName = upuserName
         req.session.user.userEmail = upuserEmail
-        req.session.user.userWeight = upuserWeight
-        req.session.user.userHeight = upuserHeight
+        req.session.user.userWeight= upuserWeight
+        req.session.user.userHeight = upuserHeight 
         req.session.save(() => {
           res.send('<script>location.href="/mypage"</script>')
         })
@@ -162,36 +151,29 @@ router.post("/deleteinfo", (req, res) => {
 // 로그아웃
 router.get("/logout", (req, res) => {
   req.session.user = "";
-
-
   req.session.save(()=>{
-
     res.send('<script>location.href="http://localhost:3333/"</script>')
   })
 });
-const app = express();
 
-// // ID 중복 확인 엔드포인트
-router.post('/checkUsername', (req, res) => {
-  const { username } = req.body;
-  // 데이터베이스에서 중복 확인
-  const sql = 'select * from users where userId=?';
-  conn.query(sql, [username], (err, rows) => {
-    if (username.length >= 5) {
-      if (rows.length > 0) {
-        res.json({ message: '이미 사용 중인 ID입니다.' })
-      }
-      else {
-        res.json({ message: '사용 가능한 ID입니다.' })
-      }
-    } else {
-      res.json({ message: '5글자 이상 입력해주세요.' })
+router.get("/iot",(req,res)=>{
+  console.log(req.session.user)
+  console.log('iot 버튼 클릭')
+  // 먼저 데이터 베이스를 카운트 시키고 이걸 내가 가지고 온다
+  // 이걸 다 더해서 시간을 표현하는 걸 적용시킨다
+  // 
+  req.session.user.userId
+  let sql = 'select createdAt from sensordata where userId=?';
+conn.query(sql, [req.session.user.userId], (err, rows) => {
+    if (rows.length > 0) {
+      console.log('데이터 연결 성공',rows)
+    }else{
+      console.log('데이터 못가져옴',err)
     }
-  });
-});
+  })
 
-// 통계
-
+})
 
 
+const app = express();
 module.exports = router;
