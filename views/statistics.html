@@ -87,15 +87,20 @@
         <button id="submitDate">확인</button>
         <p id="selectedDate"> 2023년 10월 13일</p> <!-- ID로 날짜정보보내면 출력되는 칸  -->
     </div>
-    <div>
+    <div id = "sensorCountResult">
+    </div>
         <script>
+            document.getElementById("submitDate").addEventListener("click", () => {
+                event.preventDefault();
+                const selDate = document.getElementById('date').value;
+                console.log(selDate)
 
-            document.getElementById("reset").addEventListener("click", () => {
-                fetch('/statistics', {
-                    method: 'GET',
+                fetch('/statistics/userstatistics', {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                    }
+                    },
+                    body: JSON.stringify({ selDate }),
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -103,13 +108,13 @@
                         if (data.error) {
                             sensorCountResult.innerHTML = `<p>${data.error}</p>`;
                         } else {
-                            sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount}</p>`;
+                            sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount} ${data.count}</p>`;
                         }
                     })
-                    .catch(error => console.error(error));
+                    .catch((error) => console.error(error));
             });
         </script>
-    </div>
+    
     <div class="container">
         <div class="content">
             <p class="text">체형 분석</p>

@@ -6,6 +6,7 @@ const session = require("express-session");
 const fileStore = require("session-file-store")(session);
 const indexRouter = require("./routes");
 const userRouter = require("./routes/user");
+const statisicsRouter = require("./routes/statistics");
 const path = require('path');
 const cors = require("cors");
 const http = require('http');
@@ -38,7 +39,7 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
-
+app.use("/statistics", statisicsRouter);
 app.listen(app.get("port"), () => {
   console.log(app.get("port") + "번 포트에서 대기 중..");
 });
