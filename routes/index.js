@@ -24,6 +24,8 @@ router.get("/mypage", (req, res) => {
 
 // 회원정보수정 + 탈퇴 비밀번호 입력
 router.get("/pwCheck", (req, res) => {
+  console.log("정보수정");
+  console.log(req.session.user);
   res.render("pwCheck",{obj : req.session.user});
 });
 
@@ -46,6 +48,11 @@ router.get("/info", (req, res) => {
 // 유저상태 화면
 router.get("/userstate", (req, res) => {
   res.render("userstate",{obj : req.session.user});
+});
+
+// 유저 통계 화면
+router.get("/statistics", (req, res) => {
+  res.render("statistics",{obj : req.session.user});
 });
 
 // 환경설정 화면
