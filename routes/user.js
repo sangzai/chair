@@ -41,12 +41,8 @@ router.post('/handleJoin', (req, res) => {
           res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
         }
       });
-<<<<<<< HEAD
-    } else {
-      console.log('최종단계실패')
-=======
+
     }else{
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
       res.send('<script>alert("회원가입에 실패했습니다..");location.href="/join"</script>')
     }
   }
@@ -73,13 +69,10 @@ router.post('/handleLogin', (req, res) => {
   let { userId, userPw } = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
-<<<<<<< HEAD
+
     if (rows.length > 0) {  // rows -> 배열 배열.length -> 배열안에 몇개의 데이터가 있는지
       req.session.user = {
-=======
-    if (rows.length > 0) {
-      req.session.user= {
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
+
         'userId': rows[0].userId,
         'userName': rows[0].userName,
         'userEmail': rows[0].userEmail,
@@ -102,23 +95,17 @@ router.post('/handleLogin', (req, res) => {
 
 // 회원탈퇴 + 정보수정 비밀번호 확인
 router.post("/searchmypage", (req, res) => {
-<<<<<<< HEAD
+
   // console.log(req.session.user);
   let { userPw } = req.body
-=======
-  let {userPw} = req.body
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
+
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [req.session.user.userId, userPw], (err, rows) => {
     if (rows.length > 0) {
       res.send('<script>location.href="/updatemypage"</script>')
-<<<<<<< HEAD
-    } else {
-      console.log('검색 실패!!!')
-=======
     }else{
       res.send('<script>alert("비밀번호가 다릅니다.");location.href="/pwCheck?button=1"</script>')
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
+
     }
   })
 })
@@ -132,11 +119,9 @@ router.post("/updateuser", (req, res) => {
       res.status(500).send('수정 바보야!!!');
     } else {
       if (rows.affectedRows > 0) {
-<<<<<<< HEAD
+
         console.log('수정 성공!');
 
-=======
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
         req.session.user.userName = upuserName
         req.session.user.userEmail = upuserEmail
         req.session.user.userWeight = upuserWeight
@@ -144,10 +129,6 @@ router.post("/updateuser", (req, res) => {
         req.session.save(() => {
           res.send('<script>location.href="/mypage"</script>')
         })
-<<<<<<< HEAD
-
-=======
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
       } else {
         res.status(400).send('수정 실패!!!');
       }
@@ -181,17 +162,14 @@ router.post("/deleteinfo", (req, res) => {
 // 로그아웃
 router.get("/logout", (req, res) => {
   req.session.user = "";
-<<<<<<< HEAD
 
-  req.session.save(() => {
-=======
+
   req.session.save(()=>{
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
+
     res.send('<script>location.href="http://localhost:3333/"</script>')
   })
 });
 const app = express();
-<<<<<<< HEAD
 
 // // ID 중복 확인 엔드포인트
 router.post('/checkUsername', (req, res) => {
@@ -215,6 +193,5 @@ router.post('/checkUsername', (req, res) => {
 // 통계
 
 
-=======
->>>>>>> 2c06a12b4d07e339916abb677788239a3bdf46b9
+
 module.exports = router;

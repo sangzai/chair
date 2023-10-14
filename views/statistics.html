@@ -8,6 +8,7 @@
 <html>
 
 <head>
+
     <title>유저 통계 페이지</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -77,10 +78,18 @@
     </style>
 </head>
 
+
 <body>
+    <!-- 사용자 날짜입력란  폼으로 바꾸든 백엔드수행하기쉬운걸로 교체해도됨 -->
+    <div>
+        <label for="date">날짜 선택:</label>
+        <input type="date" id="date" name="date">
+        <button id="submitDate">확인</button>
+        <p id="selectedDate"> 2023년 10월 13일</p> <!-- ID로 날짜정보보내면 출력되는 칸  -->
+    </div>
     <div>
         <script>
-          
+
             document.getElementById("reset").addEventListener("click", () => {
                 fetch('/statistics', {
                     method: 'GET',
@@ -88,16 +97,16 @@
                         'Content-Type': 'application/json',
                     }
                 })
-                .then(response => response.json())
-                .then(data => {
-                    const sensorCountResult = document.getElementById('sensorCountResult');
-                    if (data.error) {
-                        sensorCountResult.innerHTML = `<p>${data.error}</p>`;
-                    } else {
-                        sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount}</p>`;
-                    }
-                })
-                .catch(error => console.error(error));
+                    .then(response => response.json())
+                    .then(data => {
+                        const sensorCountResult = document.getElementById('sensorCountResult');
+                        if (data.error) {
+                            sensorCountResult.innerHTML = `<p>${data.error}</p>`;
+                        } else {
+                            sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount}</p>`;
+                        }
+                    })
+                    .catch(error => console.error(error));
             });
         </script>
     </div>
