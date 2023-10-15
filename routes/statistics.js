@@ -57,6 +57,7 @@ router.post('/userstatistics', (req, res) => {
             const count = rows[0].count; // 레코드 수는 rows[0].count에 저장됨
             if (count > 0) {
                 res.json({ sensorCount: '정보 있음.', count: count });
+                
             } else {
                 res.json({ sensorCount: '정보 없음.', count: 0 });
             }
@@ -66,5 +67,9 @@ router.post('/userstatistics', (req, res) => {
         }
     });
   });
+  
+  //user정보 bmi 변환 
+  
 
-  module.exports = router;
+  module.exports = router; 
+

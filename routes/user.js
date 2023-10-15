@@ -133,17 +133,18 @@ router.post("/searchmypage", (req, res) => {
 })
 // 회원정보 수정
 router.post("/updateuser", (req, res) => {
-  let { upuserName, upuserEmail, upuserHeight, upuserWeight } = req.body;
+  let { upuserName, upuserEmail,userWeight, userHeight } = req.body;
+  console.log(req.body)
   let sql = "UPDATE users SET userName = ?, userEmail = ?, userWeight = ?, userHeight = ?  WHERE userId = ?";
-  conn.query(sql, [upuserName, upuserEmail, upuserWeight, upuserHeight, req.session.user.userId], (err, rows) => {
+  conn.query(sql, [upuserName, upuserEmail, userWeight, userHeight, req.session.user.userId], (err, rows) => {
     if (err) {
       res.status(500).send('수정 실패!!!');
     } else {
       if (rows.affectedRows > 0) {
         req.session.user.userName = upuserName
         req.session.user.userEmail = upuserEmail
-        req.session.user.userWeight= upuserWeight
-        req.session.user.userHeight = upuserHeight 
+        req.session.user.userWeight= userWeight
+        req.session.user.userHeight = userHeight
         req.session.save(() => {
           res.send('<script>location.href="/mypage"</script>')
         })

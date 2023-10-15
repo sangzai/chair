@@ -85,39 +85,72 @@
         <label for="date">날짜 선택:</label>
         <input type="date" id="date" name="date">
         <button id="submitDate">확인</button>
-        <p id="selectedDate"> 2023년 10월 13일</p> <!-- ID로 날짜정보보내면 출력되는 칸  -->
+        <p id="selectedDate"></p> <!-- ID로 날짜정보보내면 출력되는 칸  -->
     </div>
-    <div id = "sensorCountResult">
     </div>
-        <script>
-            document.getElementById("submitDate").addEventListener("click", () => {
-                event.preventDefault();
-                const selDate = document.getElementById('date').value;
-                console.log(selDate)
+    <!--  날짜를 바꾸면 그날짜로 랜더링 -->
+    <script>
+        document.getElementById("submitDate").addEventListener("click", () => {
+            event.preventDefault();
+            const selDate = document.getElementById('date').value;
+            console.log(selDate);
+            document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
 
-                fetch('/statistics/userstatistics', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ selDate }),
+            fetch('/statistics/userstatistics', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ selDate }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const sensorCountResult = document.getElementById('sensorCountResult');
+                    if (data.error) {
+                        sensorCountResult.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount} ${data.count}</p>`;
+                    }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        const sensorCountResult = document.getElementById('sensorCountResult');
-                        if (data.error) {
-                            sensorCountResult.innerHTML = `<p>${data.error}</p>`;
-                        } else {
-                            sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount} ${data.count}</p>`;
-                        }
-                    })
-                    .catch((error) => console.error(error));
-            });
-        </script>
-    
+                .catch((error) => console.error(error));
+        });
+
+    </script>
+
     <div class="container">
         <div class="content">
             <p class="text">체형 분석</p>
+            <p id="bmiResult"></p>
+
+            <script>
+            // 사용자의 체중과 신장 가져오기
+            const userWeight = {{obj.userWeight}}; // 사용자의 체중
+            const userHeight = {{obj.userHeight}}; // 사용자의 신장
+            
+            // BMI 계산
+            const weightInKg = parseFloat(userWeight); // 체중을 숫자로 변환
+            const heightInM = parseFloat(userHeight) / 100; // 신장을 미터로 변환
+            
+            const bmi = weightInKg / (heightInM * heightInM);
+            console.log('heightInM :' ,heightInM)
+            console.log('weightInKg :' ,weightInKg)
+            // 결과를 웹 페이지에 표시
+            const bmiResultElement = document.getElementById('bmiResult');
+            let message = "";
+
+            if (bmi.toFixed(2) < 18.5) {
+                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 저체중입니다.';
+            } else if (bmi.toFixed(2) < 24.9) {
+                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 정상체중입니다.';
+            } else if (bmi.toFixed(2) < 29.9) {
+                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 과체중입니다.';
+            } else if (bmi.toFixed(2) >= 30) {
+                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 비만입니다.';
+            }
+                
+            message += '\n해당 수치는 사용자의 근육량에 따라 상이할 수 있습니다.';
+            bmiResultElement.textContent = message;     
+            </script>
             <canvas id="pie-chart" style="width: auto; height: auto;"></canvas>
         </div>
         <div class="content">
@@ -148,7 +181,7 @@
             <table>
                 <tr>
                     <th>오늘 총 앉은 시간:</th>
-                    <td>{{data.sensorCount}}</td>
+                    <td id="totalsit"></td>
                 </tr>
                 <tr>
                     <th>가장 많이 앉은 자세:</th>
@@ -193,7 +226,47 @@
             </table>
         </div>
     </div>
-
+    <!-- 가져온 데이터를 앉은시간으로 변환 -->
+    <script>
+        document.getElementById("submitDate").addEventListener("click", () => {
+            event.preventDefault();
+            const selDate = document.getElementById('date').value;
+            console.log(selDate);
+            document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
+    
+            fetch('/statistics/userstatistics', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ selDate }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const sensorCountResult = document.getElementById('sensorCountResult');
+                if (data.error) {
+                    sensorCountResult.innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    const count = data.count;
+                    const totalSitTime = formatSecondsToTime(count);
+                    document.getElementById("totalsit").textContent = totalSitTime; // totalsit에 시간 업데이트
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                // 오류가 발생한 경우 클라이언트에 오류 메시지를 표시
+                const sensorCountResult = document.getElementById('sensorCountResult');
+                sensorCountResult.innerHTML = `<p>데이터 검색 중 오류가 발생했습니다.</p>`;
+            });
+        });
+    
+        function formatSecondsToTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours}시간 ${minutes}분 ${secs}초`;
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // 원형 그래프를 그릴 데이터와 초기화 스크립트

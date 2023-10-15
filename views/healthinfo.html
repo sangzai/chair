@@ -1,6 +1,269 @@
-{% extends 'layout.html'%}
+{% extends 'layout.html' %}
 {% block content %}
-<section id="banner" style="height: 50px;" padding="3em;">
-    <h1 style="font-size: 40px;">건강정보란</h1>
+<section id="banner" style="height: 50px; position: relative;">
+    <h1 style="font-size: 40px; color: #524d58; position: relative;">헬스 케어</h1>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 0.1px; background: #8e8e8f;"></div>
 </section>
-{%endblock%}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        /* 애니메이션 효과를 추가 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #f2f2f2;
+            border-radius: 20px;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+            transform: translateY(20px);
+            transition: opacity 1s, transform 1s;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 건강 정보 컨테이너 */
+        .health-tip-container {
+            background-color: #009688;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .health-tip-text {
+            font-size: 18px;
+            line-height: 1.6;
+            font-family: "Arial", sans-serif;
+            margin: 10px 0;
+        }
+
+        .health-tip-title {
+            font-size: 28px;
+            margin: 20px 0;
+        }
+
+        /* 추천 컨테이너 */
+        .recommend-container {
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 통증 관리 옵션 */
+        .pain-options {
+            margin: 20px;
+        }
+
+        /* 추천 컨텐츠 */
+        .recommended-content {
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .recommended-content:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 링크 스타일 */
+        a {
+            color: #009688;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #ff5a5f;
+        }
+
+        /* 선택 상자 스타일 */
+        select {
+            padding: 10px;
+            border: 1px solid #009688;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            color: #009688;
+            transition: border-color 0.3s;
+        }
+
+        select:hover {
+            border-color: #ff5a5f;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="health-tip-container">
+            <div class="health-tip-title">알고계셧나요?</div>
+            <div class="health-tip-text" id="health-tip-content">Loading...</div>
+        </div>
+        <hr>
+        <div class="recommend-container">
+            <h1>추천 운동 및 스트레칭</h1>
+            <div class="pain-options">
+                <label for="pain-selector">의심질병을 선택하세요:</label>
+                <select id="pain-selector">
+                    <option value="none">정보 없음</option>
+                    <option value="turtle">거북목</option>
+                    <option value="bent-back">굽은등</option>
+                    <option value="Pelvic asymmetry">골반뒤틀림</option>
+                    <!-- 다른 통증 옵션을 추가하세요 -->
+                </select>
+            </div>
+
+            <div class="recommended-content" id="recommended-exercises">
+                <h2>추천 운동</h2>
+                <ul>
+                    <li><a href="LinkToExercise1">운동 1</a></li>
+                    <li><a href="LinkToExercise2">운동 2</a></li>
+                    <!-- 다른 추천 운동을 추가하세요 -->
+                </ul>
+            </div>
+
+            <div class="recommended-content" id="recommended-stretches">
+                <h2>추천 스트레칭</h2>
+                <ul>
+                    <li><a href="LinkToStretch1">스트레칭 1</a></li>
+                    <li><a href="LinkToStretch2">스트레칭 2</a></li>
+                    <!-- 다른 추천 스트레칭을 추가하세요 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const painSelector = document.getElementById('pain-selector');
+        const recommendedExercises = document.getElementById('recommended-exercises');
+        const recommendedStretches = document.getElementById('recommended-stretches');
+
+        // 객체를 사용하여 각 의심질병에 해당하는 추천 운동 및 스트레칭 목록을 저장
+        const recommendations = {
+            'none': {
+                exercises: [],
+                stretches: []
+            },
+            'turtle': {
+                exercises: [
+                    { name: '운동 1: 거북목 운동', link: 'LinkToExercise1ForTurtle' },
+                    { name: '운동 2: 거북목 운동', link: 'LinkToExercise2ForTurtle' },
+                ],
+                stretches: [
+                    { name: '스트레칭 1: 거북목 스트레칭', link: 'LinkToStretch1ForTurtle' },
+                    { name: '스트레칭 2: 거북목 스트레칭', link: 'LinkToStretch2ForTurtle' },
+                ]
+            },
+            'bent-back': {
+                exercises: [
+                    { name: '운동 1: 굽은등 운동', link: 'LinkToExercise1ForBentBack' },
+                    { name: '운동 2: 굽은등 운동', link: 'LinkToExercise2ForBentBack' },
+                ],
+                stretches: [
+                    { name: '스트레칭 1: 굽은등 스트레칭', link: 'LinkToStretch1ForBentBack' },
+                    { name: '스트레칭 2: 굽은등 스트레칭', link: 'LinkToStretch2ForBentBack' },
+                ]
+            },
+            'Pelvic asymmetry': {
+                exercises: [
+                    { name: '운동 1: 골반비대칭 운동', link: 'LinkToExercise1ForPelvicAsymmetry' },
+                    { name: '운동 2: 골반비대칭 운동', link: 'LinkToExercise2ForPelvicAsymmetry' },
+                ],
+                stretches: [
+                    { name: '스트레칭 1: 골반 비대칭 스트레칭', link: 'LinkToStretch1ForPelvicAsymmetry' },
+                    { name: '스트레칭 2: 골반 비대칭 스트레칭', link: 'LinkToStretch2ForPelvicAsymmetry' },
+                ]
+            }
+            // 다른 의심질병에 대한 추천 운동 및 스트레칭 목록을 추가하세요
+        };
+
+
+        // 의심질병 선택 시, 해당 의심질병에 대한 추천 운동 및 스트레칭 표시
+        painSelector.addEventListener('change', function () {
+            const selectedPain = painSelector.value;
+
+            // 모든 추천 운동 및 스트레칭 숨김
+            recommendedExercises.style.display = 'none';
+            recommendedStretches.style.display = 'none';
+
+            if (recommendations[selectedPain]) {
+                // 선택한 의심질병에 대한 추천 운동 및 스트레칭 목록 가져오기
+                const selectedRecommendations = recommendations[selectedPain];
+
+                if (selectedRecommendations.exercises.length > 0) {
+                    // 추천 운동 목록 업데이트
+                    recommendedExercises.style.display = 'block';
+                    const exerciseUl = recommendedExercises.querySelector('ul');
+                    exerciseUl.innerHTML = ''; // 기존 목록 지우기
+                    selectedRecommendations.exercises.forEach((exercise) => {
+                        const exerciseLi = document.createElement('li');
+                        exerciseLi.innerHTML = `<a href="#">${exercise.name}</a>`;
+                        exerciseUl.appendChild(exerciseLi);
+                    });
+                }
+
+                if (selectedRecommendations.stretches.length > 0) {
+                    // 추천 스트레칭 목록 업데이트
+                    recommendedStretches.style.display = 'block';
+                    const stretchUl = recommendedStretches.querySelector('ul');
+                    stretchUl.innerHTML = ''; // 기존 목록 지우기
+                    selectedRecommendations.stretches.forEach((stretch) => {
+                        const stretchLi = document.createElement('li');
+                        stretchLi.innerHTML = `<a href="#">${stretch.name}</a>`;
+                        stretchUl.appendChild(stretchLi);
+                    });
+                }
+            }
+        });
+    </script>
+    <script>
+        const healthTips = [
+            "규칙적인 운동은 신체 건강을 유지하고 개선하는 데 필수적입니다. 주기적으로 운동을 하면 심장 건강, 근육 강화, 체지방 감소 등에 도움이 됩니다.",
+            "올바른 운동 자세를 유지하는 것은 부상을 예방하고 최적의 결과를 얻는 데 중요합니다. 올바른 자세를 연습하고 지속적으로 확인하세요.",
+            "올바른 영양은 운동 성과에 영향을 미칩니다. 균형 잡힌 식사는 운동 성과를 향상시키고 신체 회복을 돕습니다.",
+            "올바른 기술과 동작을 익히고, 너무 급한 운동을 피하고 부상을 예방하기 위해 적절한 스포츠 장비를 착용하세요.",
+            "운동 중에 수분을 잃으므로 충분한 물을 섭취하는 것이 중요합니다. 건강을 유지하려면 수분을 보충하세요.",
+            "걷기, 달리기, 수영 등의 유산소 운동은 심혈관 건강을 증진시키고 체지방을 감소시킵니다.",
+            "장시간의 앉은 자세는 건강에 해로울 수 있으므로 일어나 움직이고 스트레칭을 하세요.",
+            "근력 운동은 근육을 강화하고 대사율을 증가시켜 체지방을 태우는 데 도움을 줍니다. 또한 노화로 인한 근손실을 예방할 수 있습니다.",
+            "스트레스 관리가 중요합니다. 스트레스는 건강에 부정적인 영향을 미칠 수 있으므로 휴식과 리라잭스를 취하세요.",
+            "수면은 신체 회복에 중요합니다. 충분한 수면을 취하고 규칙적인 수면 패턴을 유지하세요.",
+            "탄수화물, 단백질, 지방을 균형 있게 섭취하세요. 영양 균형을 유지하여 에너지 수준을 안정화시킵니다.",
+        ];
+
+        function displayRandomHealthTip() {
+            const tipElement = document.getElementById('health-tip-content');
+            const randomIndex = Math.floor(Math.random() * healthTips.length);
+            tipElement.textContent = healthTips[randomIndex];
+        }
+        displayRandomHealthTip();
+    </script>
+</body>
+
+</html>
+{% endblock %}

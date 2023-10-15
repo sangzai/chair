@@ -2,48 +2,62 @@
 
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
-    <h1 style="font-size: 40px;">비밀번호 확인</h1>
+  <h1 style="font-size: 40px; color: #524d58;">회원정보 수정</h1>
 </section>
-  <div id="content1">
-    <h1>회원정보수정</h1>
-    <form action="/user/searchmypage" method="post" style="width: 500px;height: 500px;">
-        <tr style="width: 200px; height: 200px;">
-            <td style = "width: 100px;height: 100px;" bgcolor="whitesmoke" align="right" name="userPw"
-            >비밀번호</td>
-            <td bgcolor="whitesmoke">
-              <input type="password" name="userPw" style="width: 150px; height: 50px; margin-left: 30px;"
-              maxlength = "15">
-              <input type="submit">
-            </td>
-        </tr>
-    </form>
-  </div>
-  <div id="content2">
-    <h1>회원탈퇴</h1>
-    <form action="/user/deleteinfo" method="post" style="width: 500px;height: 500px;">
+
+<div id="content1" class="container" style="width: 500px;height: 500px; margin: 0 auto;">
+  <form action="/user/searchmypage" method="post">
+    <table style="width: 500px; margin: 0 auto;">
+      <tr style="height: 50px; background-color: #43419696;">
+        <th id="FONTALL" colspan="2" style="text-align: center; vertical-align: middle;"><strong>비밀번호 확인</strong></th>
+      </tr>
       <tr style="width: 200px; height: 200px;">
-          <td style = "width: 100px;height: 100px;" bgcolor="whitesmoke" align="right" name="userPw"
-          >비밀번호</td>
-          <td bgcolor="whitesmoke">
-              <input type="password" name="userPw" style="width: 150px; height: 50px; margin-left: 30px;"
-              maxlength = "15">
-              <input type="submit">
-          </td>
+        <td id="FONTALL" style="width: 100px;height: 100px;" bgcolor="whitesmoke" align="right" name="userPw">비밀번호</td>
+        <td bgcolor="whitesmoke">
+          <input id="FONTALL" type="password" name="userPw" style="width: 300px; height: 50px; margin-left: 30px; margin-top: 50px;" maxlength="15">
+        </td>
+      </tr>
+      <tr>
+        <td id="FONTALL" colspan="2" style="width: 100%; text-align: center;">
+          <input type="submit" style="width: 30%;">
+        </td>
       </tr>
   </form>
-  </div> 
-  <script>
-    // 두 개의 화면 분할
-    const currentURL = window.location.href;
-    if (currentURL.includes('button=1')) {
-      document.getElementById('content1').style.display = 'block';
-      document.getElementById('content2').style.display = 'none';
-    } else if (currentURL.includes('button=2')) {
-      document.getElementById('content1').style.display = 'none';
-      document.getElementById('content2').style.display = 'block';
-    } else {
-      document.getElementById('content1').style.display = 'block';
-      document.getElementById('content2').style.display = 'none';
-    }
-  </script>
+  </table>
+</div>
+
+<div id="content2" class="container" style="width: 500px;height: 500px; margin: 0 auto;">
+  <form action="/user/deleteinfo" method="post">
+    <table style="width: 500px; margin: 0 auto;">
+      <tr style="height: 50px; background-color: #43419696;">
+        <th id="FONTALL" colspan="2" style="text-align: center; vertical-align: middle;"><strong>비밀번호 확인</strong></th>
+      </tr>
+      <tr style="width: 200px; height: 200px;">
+        <td id="FONTALL" style="width: 100px;height: 100px;" bgcolor="whitesmoke" align="right" name="userPw">비밀번호</td>
+        <td bgcolor="whitesmoke">
+          <input type="password" name="userPw" style="width: 150px; height: 50px; margin-left: 30px;  margin-top: 50px;" maxlength="15">
+        </td>
+      </tr>
+      <tr>
+        <td id="FONTALL" colspan="2" style="width: 100%; text-align: center;">
+          <input type="submit" style="width: 30%;">
+        </td>
+      </tr>
+  </form>
+  </table>
+</div>
+<script>
+  // 두 개의 화면 분할
+  const currentURL = window.location.href;
+  if (currentURL.includes('button=1')) {
+    document.getElementById('content1').style.display = 'block';
+    document.getElementById('content2').style.display = 'none';
+  } else if (currentURL.includes('button=2')) {
+    document.getElementById('content1').style.display = 'none';
+    document.getElementById('content2').style.display = 'block';
+  } else {
+    document.getElementById('content1').style.display = 'block';
+    document.getElementById('content2').style.display = 'none';
+  }
+</script>
 {%endblock%}
