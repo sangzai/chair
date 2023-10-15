@@ -63,6 +63,35 @@ router.post('/checkUsername', (req, res) => {
     }
   });
 });
+// ID 찾기 searchUserId
+router.post('/searchUserId', (req, res) => {
+  const { username, userBirthdate } = req.body;
+  const pattern = '%' + userBirthdate + '%';
+  const sql = 'select userId from users where userName=? and userBirthdate LIKE ?';
+  
+  conn.query(sql, [username,pattern], (err, rows) => {
+    if (rows.length > 0){
+      res.json({ message: '가입된 ID는 ' + rows[0].userId + ' 입니다' });
+    }
+    else{
+      res.json({ message: '가입된 정보가 없습니다.' })
+    }
+  });
+});
+// 비밀번호 재설정 pwReset
+router.post('/pwReset', (req, res) => {
+  const { userId,username, userBirthdate,userPw } = req.body;
+  const pattern = '%' + userBirthdate + '%';
+  const sql = 'UPDATE users SET userPw=MD5(?) where userId = ? and userName=? and userBirthdate LIKE ?';
+  conn.query(sql, [userPw ,userId, username, pattern], (err, rows) => {
+    if (rows.affectedRows > 0){
+      res.json({ message: '비밀번호 변경성공!' });
+    }
+    else{
+      res.json({ message: '잘못된 입력입니다.' })
+    }
+  });
+});
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
   let { userId, userPw } = req.body

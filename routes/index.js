@@ -44,7 +44,6 @@ router.get("/info", (req, res) => {
   res.render("infomation");
 });
 
-
 // 유저상태 화면
 router.get("/userstate", (req, res) => {
   res.render("userstate",{obj : req.session.user});
@@ -60,6 +59,10 @@ router.get("/option", (req, res) => {
   res.render("option",{obj : req.session.user});
 });
 
+// ID 찾기
+router.get("/idSearch",(req, res) => {
+  res.render("idSearch");
+});
 // 방석관리 화면
 // router.get("/iot", (req, res) => {
 //   res.render("iot",{obj : req.session.user});
