@@ -68,4 +68,11 @@ router.get("/idSearch",(req, res) => {
 //   res.render("iot",{obj : req.session.user});
 // });
 
+router.get("/buyitem",(req, res) => {
+  res.render("buyitem");
+});
+
+router.get("/order",(req, res) => {
+  res.render("order");
+});
 module.exports = router;

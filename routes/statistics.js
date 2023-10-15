@@ -50,9 +50,9 @@ const bcrypt = require('bcrypt');
 router.post('/userstatistics', (req, res) => {
     const { selDate } = req.body;
     const pattern = '%' + selDate + '%';
-    const sql = 'SELECT COUNT(*) AS count FROM sensordata WHERE createdAt LIKE ?'; // COUNT(*)를 사용하여 레코드 수를 가져옴
+    const sql = 'SELECT COUNT(*) AS count FROM sensordata WHERE createdAt LIKE ? and userId = ?'; // COUNT(*)를 사용하여 레코드 수를 가져옴
     console.log(selDate)
-    conn.query(sql, [pattern], (err, rows) => {
+    conn.query(sql, [pattern, req.session.user.userId], (err, rows) => {
         if (!err) {
             const count = rows[0].count; // 레코드 수는 rows[0].count에 저장됨
             if (count > 0) {
