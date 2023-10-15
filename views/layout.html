@@ -27,7 +27,6 @@
 
 <body class="index is-preload">
    <div id="page-wrapper">
-
       <!-- Header -->
       <header id="header" class="alt">
          <h1 id="logo" style="font-family: 'PilseungGothic'; font-size: 20px;">
@@ -42,47 +41,68 @@
                <li class="submenu">
                   <a href="#">Menu</a>
                   <ul>
-                     <li class="submenu">
-                        <form action="/user/iot">
-                           
-                           <input type="submit" value="iot장치관리" style="width: 100px; height: 45px;">
-                        </form>
-                        
-                           
-
-                        </from>
+                        {% if obj === undefined or obj === "" %}
+                        <li>
+                        <a href="/login" onclick="loginAlert()">
+                           <i class="bi bi-clipboard-check-fill"></i> IOT 장치 관리
+                        </a>
                         <ul>
-                           <li><a href="#">
+                           <li><a href="/login" onclick="loginAlert()">
                                  <i class="bi bi-shuffle"></i> 연결상태관리
                               </a></li>
-                           <li><a href="#">
+                           <li><a href="/login" onclick="loginAlert()">
                                  <i class="bi bi-droplet"></i> 진동 및 알람 설정
                               </a></li>
                         </ul>
-                     </li>
-                     <li class="submenu">
-                        <a href="/userstate">
+                        </li>
+                        <li>
+                        <a href="/login" onclick="loginAlert()">
                            <i class="bi bi-person-fill-check"></i> 사용자 상태
                         </a>
                         <ul>
-                           <li><a href="/userstate">실시간</a></li>
-                           <li><a href="/statistics">통계</a></li>
+                           <li><a href="/login" onclick="loginAlert()">실시간</a></li>
+                           <li><a href="/login" onclick="loginAlert()">통계</a></li>
                         </ul>
                      </li>
-                     <li><a href="/healthinfo">
-                           <i class="bi bi-heart-pulse-fill"></i> 건강 생활 지식
+                        <li>
+                        <a href="/login" onclick="loginAlert()">
+                           <i class="bi bi-heart-pulse-fill"></i> 헬스케어
                         </a></li>
-                     <li>
-                        {% if obj === undefined or obj === "" %}
-                        <a href="/login">
+                        <li>
+                        <a href="/login" onclick="loginAlert()">
                            <i class="bi bi-person-gear"></i> 마이페이지
-                        </a>
+                        </a></li>
                         {% else%}
+                        <li class="submenu">
+                           <a href="/iot">
+                              <i class="bi bi-clipboard-check-fill"></i> IOT 장치 관리
+                           </a>
+                           <ul>
+                              <li><a href="#">
+                                    <i class="bi bi-shuffle"></i> 연결상태관리
+                                 </a></li>
+                              <li><a href="#">
+                                    <i class="bi bi-droplet"></i> 진동 및 알람 설정
+                                 </a></li>
+                           </ul>
+                        </li>
+                        <li class="submenu">
+                           <a href="/userstate">
+                              <i class="bi bi-person-fill-check"></i> 사용자 상태
+                           </a>
+                           <ul>
+                              <li><a href="/userstate">실시간</a></li>
+                              <li><a href="/statistics">통계</a></li>
+                           </ul>
+                        </li>
+                        <li><a href="/healthinfo">
+                              <i class="bi bi-heart-pulse-fill"></i> 헬스케어
+                           </a></li>
+                        <li>
                         <a href="/mypage">
                            <i class="bi bi-person-gear"></i> 마이페이지
-                        </a>
+                        </a></li>
                         {%endif%}
-                     </li>
                   </ul>
                </li>
                {% if obj === undefined or obj === "" %}
@@ -90,6 +110,7 @@
                      로그인
                   </a></li>
                {% else %}
+               
                <li><a href="/user/logout" class="button primary">로그아웃</a></li>
                {% endif %}
             </ul>
@@ -121,6 +142,11 @@
    <script src="assets/js/breakpoints.min.js"></script>
    <script src="assets/js/util.js"></script>
    <script src="assets/js/main.js"></script>
+   <script>
+       function loginAlert() {
+            alert("로그인이 필요한 서비스입니다.");
+        }
+   </script>
 
 
 </body>
