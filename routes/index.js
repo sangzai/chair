@@ -41,7 +41,7 @@ router.get("/delete", (req, res) => {
 
 // 건강정보 화면
 router.get("/healthinfo", (req, res) => {
-  res.render("healthinfo");
+  res.render("healthinfo",{obj : req.session.user});
 });
 
 // 방석관리 화면
