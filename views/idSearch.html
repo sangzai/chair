@@ -1,31 +1,78 @@
 {% extends 'layout.html'%}
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
+    <h1 style="font-size: 40px; color: #524d58;">id 찾기 / 비밀번호 재설정</h1>
 </section>
-<h1>아이디 찾기</h1>
-<table style="width: 300px; height: 100px;">
-<tr style="margin-top: 20px;">
-    <td height="35" bgcolor="whitesmoke" align="right">이름</td>
-    <td style="display: flex;">
-        <input type="text" name="username" id="username"
-            style="width: 150px; height: 20px; margin-right: 20px; margin-left: 20px; 
-            border: 2px solid red; /* 외각선 두께와 색상 설정 */"
-            maxlength="15" />
-    </td>
-</tr>
-<tr>
-    <td height="35" bgcolor="whitesmoke" align="right">생년월일</td>
-    <td>
-        <input type="date" name="userBirthdate" id = "userBirthdate" style="margin-left: 20px;">
-    </td>
-</tr>
-<tr>
-    <td>
-    <button id="checkButton" style="font-size: 13px;">찾기</button>
-    </td>
-</tr>
-    </table>
-    <div id="result" style="margin-left: 13px; height: 25px;"> 
+
+<!DOCTYPE html>
+
+<head>
+    <style>
+        .container {
+            margin-top: 3%;
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        .content {
+            min-height: 300px;
+            width: 500px;
+            /* height: 300px; */
+            margin: 10px;
+            padding: 0px 15px;
+            border: 5px solid #a3a0d5;
+            border-radius: 20px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+
+        }
+
+        .text {
+            margin-top: 10px;
+            text-align: center;
+            font-size: larger;
+            font-weight: bold;
+            background: #43419696;
+            ;
+            background-size: 200% 150%;
+            padding: 10px 0;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .btn {
+            margin-left: 13px;
+            height: 25px;
+
+        }
+    </style>
+</head>
+<div id="FONTALL" class="container">
+    <div class="content">
+        <p class="text">ID 찾기</p>
+        <table style="width: 300px; height: 60px;margin: 50px auto 0px;">
+            <tr style="margin-top: 20px;">
+                <td height="35" align="right">이름</td>
+                <td>
+                    <input type="text" name="username" id="username" style="width: 140px; height: 20px; margin-left: 20px; 
+            border: 1px solid rgb(90, 90, 90)" maxlength="15" />
+                </td>
+            </tr>
+            <tr>
+                <td height="35" align="right">생년월일</td>
+                <td>
+                    <input type="date" name="userBirthdate" id="userBirthdate"
+                        style=" width: 140px; border :1px solid rgb(90, 90, 90);margin-left: 20px; ">
+                </td>
+            </tr>
+        </table>
+        <div style="display: inline-block;text-align: center;width: 100%;margin:10px 0 0">
+            <button id="checkButton" style="font-size: 15px;">찾기</button>
+        </div>
+        <div id="result" class="btn" style="display: inline-block;text-align: center;width: 100%;margin:10px 0 0">
+        </div>
     </div>
 
     <script>
@@ -37,7 +84,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, userBirthdate}),
+                body: JSON.stringify({ username, userBirthdate }),
             })
                 .then((response) => response.json())
                 .then((data) => {
@@ -51,77 +98,74 @@
                 .catch((error) => console.error(error));
         });
     </script>
-    <hr>
-    <hr>
-    <hr>
-    <h1>비밀번호 재설정</h1>
-    <table style="width: 300px; height: 100px;">
-    <tr style="margin-top: 20px;">
-        <td height="35" bgcolor="whitesmoke" align="right">아이디</td>
-        <td style="display: flex;">
-            <input type="text" name="userId" id="userId"
-                style="width: 150px; height: 10px; margin-right: 10px; margin-left: 20px;
-                border: 2px solid red; /* 외각선 두께와 색상 설정 */"
-                maxlength="15" />
-        </tr>
-        <tr>
-    <td height="35" bgcolor="whitesmoke" align="right">이름</td>
-    <td style="display: flex;">
-        <input type="text" name="username" id="username_pw"
-            style="width: 150px; height: 20px; margin-right: 20px; margin-left: 20px;
-            border: 2px solid red; /* 외각선 두께와 색상 설정 */"
-            maxlength="15" />
-    </td>
-    </tr>
-    <tr>
-    <td height="35" bgcolor="whitesmoke" align="right">생년월일</td>
-    <td>
-        <input type="date" name="userBirthdate" id = "userBirthdate_pw" style="margin-left: 20px;">
-    </td>
-    </tr>
-    <tr>
-        <td height="60" bgcolor="whitesmoke" align="right" name="userPw">새로운 비밀번호</td>
-        <td bgcolor="whitesmoke">
-            <input type="password" name="userPw" id = "newPw" maxlength = "15" style="width: 150px; height: 10px; margin-left: 20px;
-            border: 2px solid red; /* 외각선 두께와 색상 설정 */">
-        </td>
-    </tr>
-    <tr>
-        <td>
-    <button id="pwButton" style="font-size: 13px;">비밀번호 재설정</button>
-    <div id="result" style="margin-left: 13px; height: 25px;">
-    </td>
-    </tr>
-    </table>
+
+    <div class="content">
+        <p class="text">비밀번호 재설정</p>
+        <table style="width: 300px; height: 60px;margin: 0 auto;">
+            <tr style="margin-top: 20px;">
+                <td height="35" align="right">아이디</td>
+                <td style="display: flex;">
+                    <input type="text" name="userId" id="userId" style="width: 140px; height: 10px; margin-right: 10px; margin-left: 20px;
+                border:1px solid rgb(90, 90, 90)" maxlength="15" />
+            </tr>
+            <tr>
+                <td height="35" align="right">이름</td>
+                <td style="display: flex;">
+                    <input type="text" name="username" id="username_pw" style="width: 140px; height: 20px; margin-right: 20px; margin-left: 20px;
+            border: 1px solid rgb(90, 90, 90)" maxlength="15" />
+                </td>
+            </tr>
+            <tr>
+                <td height="35" align="right">생년월일</td>
+                <td>
+                    <input type="date" name="userBirthdate" id="userBirthdate_pw"
+                        style=" width: 140px; border :1px solid rgb(90, 90, 90); margin-left: 20px;">
+                </td>
+            </tr>
+            <tr>
+                <td height="60" align="right" name="userPw">새로운 비밀번호</td>
+                <td bgcolor="whitesmoke">
+                    <input type="password" name="userPw" id="newPw" maxlength="15" style="width: 140px; height: 10px; margin-left: 20px;
+            border: 1px solid rgb(90, 90, 90)">
+                </td>
+            </tr>
+        </table>
+        <div style="display: inline-block;text-align: center;width: 100%;margin:5px 0 0">
+            <button id="pwButton" style="font-size: 15px;">비밀번호 재설정</button>
+        </div>
+        <div id="result" class="btn"></div>
+        <div style="display: inline-block;text-align: center;width: 100%;margin:10px 0 0">
+            <div id="result2"></div>
+        </div>
     </div>
+</div>
+<script>
+    document.getElementById('pwButton').addEventListener('click', () => {
+        const userId = document.getElementById('userId').value;
+        const username = document.getElementById('username_pw').value;
+        const userBirthdate = document.getElementById('userBirthdate_pw').value;
+        const userPw = document.getElementById('newPw').value;
 
-    <script>
-        document.getElementById('pwButton').addEventListener('click', () => {
-            const userId = document.getElementById('userId').value;
-            const username = document.getElementById('username_pw').value;
-            const userBirthdate = document.getElementById('userBirthdate_pw').value;
-            const userPw = document.getElementById('newPw').value;
-
-            fetch('/user/pwReset', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userId,username, userBirthdate,userPw}),
+        fetch('/user/pwReset', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId, username, userBirthdate, userPw }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const resultDiv = document.getElementById('result2');
+                if (data.error) {
+                    resultDiv.innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p>${data.message}</p>`;
+                }
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    const resultDiv = document.getElementById('result2');
-                    if (data.error) {
-                        resultDiv.innerHTML = `<p>${data.error}</p>`;
-                    } else {
-                        resultDiv.innerHTML = `<p>${data.message}</p>`;
-                    }
-                })
-                .catch((error) => console.error(error));
-        });
-    </script>
-    <div id="result2"></div>
+            .catch((error) => console.error(error));
+    });
+</script>
+
 
 
 {%endblock%}
