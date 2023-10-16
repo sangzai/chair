@@ -49,7 +49,41 @@
     <div class="container">
         <div class="content">
             <p class="top_text">방석 이미지</p>
+            <div id ="sensorCountResult">
+                <p id="dataParagraph"></p>
+                <p id=""
+            </div>
         </div>
+
+        <script>
+            function fetchDataFromServer() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/statistics/data", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = JSON.parse(xhr.responseText);
+                // 데이터를 사용하여 웹페이지를 업데이트
+                updatePageWithData(data);
+                console.log(data.sensorSeq)
+                }
+            };
+            xhr.send();
+            }
+            
+            function updatePageWithData(data) {
+            // 데이터를 <p> 태그에 추가
+            var pTag = document.getElementById('dataParagraph'); // 'dataParagraph'는 <p> 태그의 id입니다
+            pTag.textContent = 'Data: ' + data.p1; // 데이터를 <p> 태그에 추가
+                if (data.p1 > 10) {
+                    pTag.style.color = 'red'; // 데이터가 10보다 큰 경우 글자색을 빨간색으로 변경
+                } else {
+                    pTag.style.color = 'blue'; // 데이터가 10 이하인 경우 글자색을 파란색으로 변경
+                }
+            }
+            
+            // 5초마다 fetchDataFromServer 함수를 호출
+            setInterval(fetchDataFromServer, 2000);
+    </script>
     </div>
 </body>
 
