@@ -176,8 +176,8 @@
                     paymentMethod = paymentMethod.value;
                 }
 
-                document.getElementById("total-price").textContent = "총 가격: " + total.toLocaleString() + "원";
-                document.getElementById("order-details").textContent = "주문 정보: " + name + ", " + contact + ", " + address + ", " + (paymentMethod || "-");
+                document.getElementById("total-price").textContent = "총 가격: " + total.toLocaleString() + "원" +"    "+ "총 갯수:"+ quantity;
+                document.getElementById("order-details").textContent = "주문 정보: " +  name + ", " + contact + ", " + address + ", " + (paymentMethod || "-");
 
                 var creditCardInfo = document.getElementById("credit-card-info");
                 var bankTransferInfo = document.getElementById("bank-transfer-info");
