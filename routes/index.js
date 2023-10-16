@@ -69,10 +69,10 @@ router.get("/idSearch",(req, res) => {
 // });
 
 router.get("/buyitem",(req, res) => {
-  res.render("buyitem");
+  res.render("buyitem",{obj : req.session.user});
 });
 
 router.get("/order",(req, res) => {
-  res.render("order");
+  res.render("order",{obj : req.session.user});
 });
 module.exports = router;
