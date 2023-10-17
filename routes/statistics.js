@@ -1,46 +1,3 @@
-// const express = require("express");
-// const router = express.Router();
-// const conn = require("../config/database");
-// const bcrypt = require('bcrypt');
-// const { Connection } = require("mysql2/typings/mysql/lib/Connection");
-
-// router.get("/statistics", (req, res) => {
-//     conn.query("SELECT * FROM sensordata", (err, rows, fields) => {
-//         if (err) {
-//             console.log("Database error: " + err);
-//             return res.status(500).json({ error: "데이터베이스 오류" });
-//         }
-
-//         if (rows.length > 0) {
-//             res.json({ data: rows }); // 데이터를 JSON 형식으로 클라이언트에 반환
-//         } else {
-//             res.json({ data: [] }); // 빈 배열 반환 또는 다른 처리
-//         }
-//     });
-// });
-
-// // router.post('/checkUsername', (req, res) => {
-// //     const { username } = req.body;
-// //     // 데이터베이스에서 중복 확인
-// //     const sql = 'select * from users where userId=?';
-// //     conn.query(sql, [username], (err, rows) => {
-// //       if (username.length >= 5){
-// //         if (rows.length > 0){
-// //           res.json({ message: '이미 사용 중인 ID입니다.' })  
-// //         }
-// //         else{
-// //           res.json({ message: '사용 가능한 ID입니다.' })
-// //         }
-// //       }else{
-// //         res.json({ message: '5글자 이상 입력해주세요.' })
-// //       }
-// //     });
-// //   });
-
-
-// module.exports = router;
-
-// 10-14 데이터 연결 시험
 const express = require("express");
 const router = express.Router();
 const conn = require("../config/database");
@@ -67,9 +24,19 @@ router.post('/userstatistics', (req, res) => {
         }
     });
   });
+   
+// 실시간 연결
+router.get('/data', (req, res) => {
+    const userId = req.session.user.userId; // 원하는 userID로 설정
   
-  //user정보 bmi 변환 
-  
+    conn.query('SELECT * FROM sensordata WHERE userId = ? ORDER BY createdAt DESC LIMIT 1', [userId], (err, result) => {
+      if (err) {
+        console.error('데이터베이스 쿼리 오류:', err);
+        return res.status(500).json({ error: '데이터를 가져오는 중 오류가 발생했습니다.' });
+      }
+      res.json(result[0]);
+    });
+  });
 
   module.exports = router; 
 
