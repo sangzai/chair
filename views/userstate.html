@@ -8,6 +8,8 @@
 <html>
 
 <head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heatmap.js/build/heatmap.min.js"></script>
     <title>유저 상태 페이지</title>
     <style>
         .container {
@@ -42,6 +44,12 @@
         .top_text {
             margin-top: 10px;
         }
+
+        #heatmapContainer {
+            width: 1200px;
+            height: 800px;
+            position: relative;
+        }
     </style>
 </head>
 
@@ -49,42 +57,166 @@
     <div class="container">
         <div class="content">
             <p class="top_text">방석 이미지</p>
-            <div id ="sensorCountResult">
-                <p id="dataParagraph"></p>
-                <p id=""
-            </div>
+            <div id="sensorCountResult"></div>
+            <div id="heatmapContainer"></div>
         </div>
-
-        <script>
-            function fetchDataFromServer() {
+    </div>
+    <script>
+        function fetchDataFromServer() {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "/statistics/data", true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                var data = JSON.parse(xhr.responseText);
-                // 데이터를 사용하여 웹페이지를 업데이트
-                updatePageWithData(data);
-                console.log(data.sensorSeq)
+                    var data = JSON.parse(xhr.responseText);
+                    updatePageWithData(data);
+                    updateHeatmap(data);
                 }
             };
             xhr.send();
-            }
-            
-            function updatePageWithData(data) {
-            // 데이터를 <p> 태그에 추가
-            var pTag = document.getElementById('dataParagraph'); // 'dataParagraph'는 <p> 태그의 id입니다
-            pTag.textContent = 'Data: ' + data.p1; // 데이터를 <p> 태그에 추가
-                if (data.p1 > 10) {
-                    pTag.style.color = 'red'; // 데이터가 10보다 큰 경우 글자색을 빨간색으로 변경
-                } else {
-                    pTag.style.color = 'blue'; // 데이터가 10 이하인 경우 글자색을 파란색으로 변경
-                }
-            }
-            
-            // 5초마다 fetchDataFromServer 함수를 호출
-            setInterval(fetchDataFromServer, 2000);
+        }
+
+        function updatePageWithData(data) {
+            // 페이지 데이터 업데이트 로직
+        }
+
+        function updateHeatmap(data) {
+            // 히트맵 데이터
+            const heatmapData = [
+        { x: 300, y: 120, value: data.p11 },
+        { x: 300, y: 180, value: data.p11 },
+        { x: 300, y: 240, value: data.p11 },
+        { x: 350, y: 120, value: data.p13 },
+        { x: 350, y: 180, value: data.p13 },
+        { x: 350, y: 240, value: data.p13 },
+        { x: 400, y: 120, value: data.p15 },
+        { x: 400, y: 180, value: data.p15 },
+        { x: 400, y: 240, value: data.p15 },
+        { x: 800, y: 120, value: data.p17 },
+        { x: 800, y: 180, value: data.p17 },
+        { x: 800, y: 240, value: data.p17 },
+        { x: 850, y: 120, value: data.p19 },
+        { x: 850, y: 180, value: data.p19 },
+        { x: 850, y: 240, value: data.p19 },
+        { x: 900, y: 120, value: data.p21 },
+        { x: 900, y: 180, value: data.p21 },
+        { x: 900, y: 240, value: data.p21 },
+        // 2번째 줄
+        { x: 302, y: 300, value: data.p6 },
+        { x: 302, y: 360, value: data.p6 },
+        { x: 302, y: 420, value: data.p6 },
+
+        { x: 344, y: 300, value: data.p7 },
+        { x: 344, y: 360, value: data.p7 },
+        { x: 344, y: 420, value: data.p7 },
+
+        { x: 386, y: 300, value: data.p8 },
+        { x: 386, y: 360, value: data.p8 },
+        { x: 386, y: 420, value: data.p8 },
+
+        { x: 428, y: 300, value: data.p9 },
+        { x: 428, y: 360, value: data.p9 },
+        { x: 428, y: 420, value: data.p9 },
+
+        { x: 470, y: 300, value: data.p12 },
+        { x: 470, y: 360, value: data.p12 },
+        { x: 470, y: 420, value: data.p12 },
+
+        { x: 512, y: 300, value: data.p14 },
+        { x: 512, y: 360, value: data.p14 },
+        { x: 512, y: 420, value: data.p14 },
+
+        { x: 554, y: 300, value: data.p16 },
+        { x: 554, y: 360, value: data.p16 },
+        { x: 554, y: 420, value: data.p16 },
+
+        { x: 596, y: 300, value: data.p18 },
+        { x: 596, y: 360, value: data.p18 },
+        { x: 596, y: 420, value: data.p18 },
+
+        { x: 638, y: 300, value: data.p20 },
+        { x: 638, y: 360, value: data.p20 },
+        { x: 638, y: 420, value: data.p20 },
+
+        { x: 680, y: 300, value: data.p21 },
+        { x: 680, y: 360, value: data.p21 },
+        { x: 680, y: 420, value: data.p21 },
+
+        { x: 722, y: 300, value: data.p22 },
+        { x: 722, y: 360, value: data.p22 },
+        { x: 722, y: 420, value: data.p22 },
+
+        { x: 764, y: 300, value: data.p23 },
+        { x: 764, y: 360, value: data.p23 },
+        { x: 764, y: 420, value: data.p23 },
+
+        { x: 806, y: 300, value: data.p24 },
+        { x: 806, y: 360, value: data.p24 },
+        { x: 806, y: 420, value: data.p24 },
+
+        { x: 848, y: 300, value: data.p25 },
+        { x: 848, y: 360, value: data.p25 },
+        { x: 848, y: 420, value: data.p25 },
+
+        { x: 890, y: 300, value: data.p26 },
+        { x: 890, y: 360, value: data.p26 },
+        { x: 890, y: 420, value: data.p26 },
+
+        // 3번째줄
+        { x: 300, y: 480, value: data.p1 },
+        { x: 300, y: 540, value: data.p1 },
+        { x: 300, y: 600, value: data.p1 },
+        { x: 350, y: 480, value: data.p2 },
+        { x: 350, y: 540, value: data.p2 },
+        { x: 350, y: 600, value: data.p2 },
+        { x: 400, y: 480, value: data.p3 },
+        { x: 400, y: 540, value: data.p3 },
+        { x: 400, y: 600, value: data.p3 },
+        { x: 450, y: 480, value: data.p4 },
+        { x: 450, y: 540, value: data.p4 },
+        { x: 450, y: 600, value: data.p4 },
+        { x: 500, y: 480, value: data.p5 },
+        { x: 500, y: 540, value: data.p5 },
+        { x: 500, y: 600, value: data.p5 },
+        { x: 550, y: 480, value: data.p5 },
+        { x: 550, y: 540, value: data.p5 },
+        { x: 550, y: 600, value: data.p5 },
+
+        { x: 650, y: 480, value: data.p27 },
+        { x: 650, y: 540, value: data.p27 },
+        { x: 650, y: 600, value: data.p27 },
+        { x: 700, y: 480, value: data.p27 },
+        { x: 700, y: 540, value: data.p27 },
+        { x: 700, y: 600, value: data.p27 },
+        { x: 750, y: 480, value: data.p28 },
+        { x: 750, y: 540, value: data.p28 },
+        { x: 750, y: 600, value: data.p28 },
+        { x: 800, y: 480, value: data.p29 },
+        { x: 800, y: 540, value: data.p29 },
+        { x: 800, y: 600, value: data.p29 },
+        { x: 850, y: 480, value: data.p30 },
+        { x: 850, y: 540, value: data.p30 },
+        { x: 850, y: 600, value: data.p30 },
+        { x: 900, y: 480, value: data.p31 },
+        { x: 900, y: 540, value: data.p31 },
+        { x: 900, y: 600, value: data.p31 },
+
+        ];
+
+            const heatmapInstance = h337.create({
+                container: document.getElementById('heatmapContainer'),
+                radius: 110 // 히트맵의 크기를 조절
+            });
+
+            heatmapInstance.setData({
+                max: 310, // 최대 값 설정
+                data: heatmapData,
+            });
+        }
+
+        // 초기 데이터 로드 및 주기적 업데이트
+        fetchDataFromServer();
+        setInterval(fetchDataFromServer, 2000);
     </script>
-    </div>
 </body>
 
 </html>

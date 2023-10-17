@@ -2,7 +2,7 @@
 
 {% block content %}
 <section id="banner" style="height: 50px;" padding="3em;">
-    <h1 style="font-size: 40px;" color="black">유저 통계</h1>
+    <h1 style="font-size: 40px; color: #524d58;">사용자 통계</h1>
 </section>
 <!DOCTYPE html>
 <html>
@@ -29,6 +29,7 @@
             padding: 0px 15px;
             border: 5px solid #a3a0d5;
             border-radius: 20px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
         }
 
         .top_text,
@@ -37,7 +38,8 @@
             text-align: center;
             font-size: larger;
             font-weight: bold;
-            background: linear-gradient(45deg, rgba(171, 85, 140, 0.7), rgb(79, 72, 104));
+            background: #43419696;
+            ;
             background-size: 200% 150%;
             padding: 10px 0;
             border-radius: 15px;
@@ -56,7 +58,7 @@
         }
 
         tr:nth-child(2n) {
-            background: linear-gradient(45deg, rgba(171, 85, 130, 0.7), rgba(7, 72, 104, 0.7));
+            background: #c9c9c996;
             background-size: 150% 150%;
         }
 
@@ -75,18 +77,18 @@
             width: 48%;
             /* 변경: 48%로 반으로 나눔 */
         }
+
+        .adfont {
+            font-size: larger;
+            font-weight: bolder;
+        }
     </style>
 </head>
 
 
 <body>
-    <!-- 사용자 날짜입력란  폼으로 바꾸든 백엔드수행하기쉬운걸로 교체해도됨 -->
-    <div>
-        <label for="date">날짜 선택:</label>
-        <input type="date" id="date" name="date">
-        <button id="submitDate">확인</button>
-        <p id="selectedDate"></p> <!-- ID로 날짜정보보내면 출력되는 칸  -->
-    </div>
+
+
     </div>
     <div id ="sensorCountResult"></div>
     <!--  날짜를 바꾸면 그날짜로 랜더링 -->
@@ -119,64 +121,86 @@
     </script>
 
     <div class="container">
-        <div class="content">
+        <!-- 사용자 날짜입력란  폼으로 바꾸든 백엔드수행하기쉬운걸로 교체해도됨 -->
+        <div id="FONTALL" style="margin: 10px; padding: 10px 15px; border: 5px solid #a3a0d5; 
+    border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); display: flex; justify-content: center;width: 100%;">
+            <label style="font-size: large;padding: 10px 8px 0px;" for="date">날짜 선택 :</label>
+            <input type="date" id="date" name="date"style="padding: 0px 5px;">
+            <button id="submitDate">확인</button>
+            <p id="selectedDate"></p>
+        </div>
+        <div id="FONTALL" class="content">
             <p class="text">체형 분석</p>
             <p id="bmiResult"></p>
 
             <script>
-            // 사용자의 체중과 신장 가져오기
-            const userWeight = {{obj.userWeight}}; // 사용자의 체중
-            const userHeight = {{obj.userHeight}}; // 사용자의 신장
-            
-            // BMI 계산
-            const weightInKg = parseFloat(userWeight); // 체중을 숫자로 변환
-            const heightInM = parseFloat(userHeight) / 100; // 신장을 미터로 변환
-            
-            const bmi = weightInKg / (heightInM * heightInM);
-            console.log('heightInM :' ,heightInM)
-            console.log('weightInKg :' ,weightInKg)
-            // 결과를 웹 페이지에 표시
-            const bmiResultElement = document.getElementById('bmiResult');
-            let message = "";
+                // 사용자의 체중과 신장 가져오기
+                const userWeight = {{ obj.userWeight }}; // 사용자의 체중
+                const userHeight = {{ obj.userHeight }}; // 사용자의 신장
 
-            if (bmi.toFixed(2) < 18.5) {
-                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 저체중입니다.';
-            } else if (bmi.toFixed(2) < 24.9) {
-                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 정상체중입니다.';
-            } else if (bmi.toFixed(2) < 29.9) {
-                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 과체중입니다.';
-            } else if (bmi.toFixed(2) >= 30) {
-                message = 'BMI 지수: ' + bmi.toFixed(2) + ' 비만입니다.';
-            }
-                
-            message += '\n해당 수치는 사용자의 근육량에 따라 상이할 수 있습니다.';
-            bmiResultElement.textContent = message;     
+                // BMI 계산
+                const weightInKg = parseFloat(userWeight); // 체중을 숫자로 변환
+                const heightInM = parseFloat(userHeight) / 100; // 신장을 미터로 변환
+
+                const bmi = weightInKg / (heightInM * heightInM);
+                console.log('heightInM :', heightInM)
+                console.log('weightInKg :', weightInKg)
+                // 결과를 웹 페이지에 표시
+                const bmiResultElement = document.getElementById('bmiResult');
+                let message = "";
+
+                if (bmi.toFixed(2) < 18.5) {
+                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 저체중입니다.';
+                } else if (bmi.toFixed(2) < 24.9) {
+                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 정상체중입니다.';
+                } else if (bmi.toFixed(2) < 29.9) {
+                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 과체중입니다.';
+                } else if (bmi.toFixed(2) >= 30) {
+                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 비만입니다.';
+                }
+
+                message += '\n해당 수치는 사용자의 근육량에 따라 상이할 수 있습니다.';
+                bmiResultElement.textContent = message;     
             </script>
             <canvas id="pie-chart" style="width: auto; height: auto;"></canvas>
         </div>
+
         <div class="content">
-            <table>
-
-                <p class="text"> 체형조언</p>
+            <p style="height: 50px;" class="text"> 체형 조언</p>
+            <p class="text" style="background-color: beige; color: #524d58; font-size: medium;">양반다리 자세가 지속될 시 생기는
+                질병</p>
+            <div id="FONTALL" class="advice" style="margin-top: 70px;">
                 <tr>
-
-                    양반다리를 하고 앉은자세가 지속될시 생기는 질병
-
-                    신경학적 문제: 양반다리 자세로 앉은 동안 신경에 압력이 가해질 수 있으며, 이로 인해 통증, 저림, 무감각과 같은 신경학적 문제가 발생할 수 있습니다.
-
-
-                    근육 및 척추 문제: 양반다리 자세는 척추와 하체 근육에 부담을 줄 수 있으며, 척추 통증 및 근육 긴장을 초래할 수 있습니다.
-
-
-                    관절 문제: 다리를 교차하는 동안 관절에 압력이 가해질 수 있으며, 관절 통증 또는 퇴행성 관절질환의 위험이 증가할 수 있습니다.
-
-
-                    양반다리 자세는 휴식 시간이나 짧은 기간에 사용할 수는 있지만, 오랜 시간 동안 이 자세를 유지하는 것은 건강에 부정적인 영향을 미칠 수 있으므로 권장되지 않습니다. 건강을
-                    유지하려면 자주 자세를 바꾸고, 일어나 움직이며 스트레칭을 통해 몸을 풀어주는 것이 중요합니다.
-
+                    <th class="adfont">✔️ 신경학적 문제</th>
+                    <br />
                 </tr>
-            </table>
+                <tr>
+                    <td>양반다리 자세로 앉은 동안 신경에 압력이 가해질 수 있으며, 이로 인해 통증, 저림, 무감각과 같은 신경학적 문제가 발생할 수 있습니다.</td>
+                </tr>
+                <br /><br />
+                <tr>
+                    <th class="adfont">✔️ 근육 및 척추 문제</th>
+                    <br />
+                </tr>
+                <tr>
+                    <td>양반다리 자세는 척추와 하체 근육에 부담을 줄 수 있으며, 척추 통증 및 근육 긴장을 초래할 수 있습니다.</td>
+                </tr>
+                <br /><br />
+                <tr>
+                    <th class="adfont">✔️ 관절 문제</th>
+                    <br />
+                </tr>
+                <tr>
+                    <td>다리를 교차하는 동안 관절에 압력이 가해질 수 있으며, 관절 통증 또는 퇴행성 관절질환의 위험이 증가할 수 있습니다.</td>
+                </tr>
+            </div>
+            <p class="text"
+                style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
+                양반다리 자세는 휴식 시간이나 짧은 기간에 사용할 수는 있지만, 오랜 시간 동안 이 자세를 유지하는 것은 건강에 부정적인 영향을 미칠 수 있으므로 권장되지 않습니다.
+                건강을 유지하려면 자주 자세를 바꾸고, 일어나 움직이며 스트레칭을 통해 몸을 풀어주는 것이 중요합니다.
+            </p>
         </div>
+
         <div class="content">
             <p class="text">사용자 통계</p>
             <table>
@@ -234,7 +258,7 @@
             const selDate = document.getElementById('date').value;
             console.log(selDate);
             document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
-    
+
             fetch('/statistics/userstatistics', {
                 method: 'POST',
                 headers: {
@@ -242,25 +266,25 @@
                 },
                 body: JSON.stringify({ selDate }),
             })
-            .then(response => response.json())
-            .then(data => {
-                const sensorCountResult = document.getElementById('sensorCountResult');
-                if (data.error) {
-                    sensorCountResult.innerHTML = `<p>${data.error}</p>`;
-                } else {
-                    const count = data.count;
-                    const totalSitTime = formatSecondsToTime(count);
-                    document.getElementById("totalsit").textContent = totalSitTime; // totalsit에 시간 업데이트
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                // 오류가 발생한 경우 클라이언트에 오류 메시지를 표시
-                const sensorCountResult = document.getElementById('sensorCountResult');
-                sensorCountResult.innerHTML = `<p>데이터 검색 중 오류가 발생했습니다.</p>`;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    const sensorCountResult = document.getElementById('sensorCountResult');
+                    if (data.error) {
+                        sensorCountResult.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        const count = data.count;
+                        const totalSitTime = formatSecondsToTime(count);
+                        document.getElementById("totalsit").textContent = totalSitTime; // totalsit에 시간 업데이트
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    // 오류가 발생한 경우 클라이언트에 오류 메시지를 표시
+                    const sensorCountResult = document.getElementById('sensorCountResult');
+                    sensorCountResult.innerHTML = `<p>데이터 검색 중 오류가 발생했습니다.</p>`;
+                });
         });
-    
+
         function formatSecondsToTime(seconds) {
             const hours = Math.floor(seconds / 3600);
             const minutes = Math.floor((seconds % 3600) / 60);
