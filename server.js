@@ -37,6 +37,8 @@ app.use(
   })
 );
 
+
+
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/statistics", statisicsRouter);

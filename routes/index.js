@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const path = require('path');
 
+
+
 // 메인화면
 router.get("/", (req, res) => {
   res.render("main",{obj : req.session.user});

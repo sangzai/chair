@@ -3,6 +3,7 @@ const router = express.Router();
 const conn = require("../config/database");
 const bcrypt = require('bcrypt');
 
+
 // 회원가입 기능
 router.post('/handleJoin', (req, res) => {
   const Pw = req.body.userPw
@@ -92,8 +93,34 @@ router.post('/pwReset', (req, res) => {
     }
   });
 });
+
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
+  
+  console.log('100 line login data', req.body)
+  req.session.user = req.body;
+  const WebSocket = require('ws');
+  const wss = new WebSocket('ws://127.0.0.1:3333');  // Python 서버에 연결
+
+// 웹 소켓 연결이 열렸을 때
+wss.on('open', () => {
+  console.log('웹 소켓 연결 시작');
+  
+  // 세션 데이터 가져오기
+  const sessionData = req.session.user.userId;
+
+  // 데이터를 JSON 문자열로 변환
+  const sessionDataJSON = JSON.stringify(sessionData);
+  console.log('109 line session', sessionDataJSON)
+  
+  // 데이터 전송
+  wss.send(sessionDataJSON);
+});
+
+// 웹 소켓 연결이 끊겼을 때
+wss.on('close', () => {
+  console.log('웹 소켓 연결이 끊겼습니다.');
+});
   let { userId, userPw } = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
@@ -110,6 +137,7 @@ router.post('/handleLogin', (req, res) => {
       }
       req.session.user.userBirthdate = req.session.user.userBirthdate.toLocaleDateString()
       req.session.user.createdAt = req.session.user.createdAt.toLocaleDateString()
+
       req.session.save(() => {
         res.send('<script>alert("환영합니다!");location.href="/"</script>')
       })
@@ -118,6 +146,7 @@ router.post('/handleLogin', (req, res) => {
     }
   })
 })
+
 
 // 회원탈퇴 + 정보수정 비밀번호 확인
 router.post("/searchmypage", (req, res) => {
@@ -180,6 +209,11 @@ router.post("/deleteinfo", (req, res) => {
 });
 // 로그아웃
 router.get("/logout", (req, res) => {
+  const WebSocket = require('ws');
+  const wss = new WebSocket('ws://127.0.0.1:3333');  // Python 서버에 연결
+  wss.on('close', () => {
+    console.log('웹 소켓 연결이 끊겼습니다.');
+  });
   req.session.user = "";
   req.session.save(()=>{
     res.send('<script>location.href="http://localhost:3333/"</script>')
