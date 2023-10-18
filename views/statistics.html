@@ -133,6 +133,22 @@
             <p id="bmiResult"></p>
 
             <script>
+                // 현재 날짜를 가져오기
+                const currentDate = new Date();
+
+                // 하루를 빼서 이전 날짜 계산
+                currentDate.setDate(currentDate.getDate() - 1);
+
+                // 년, 월, 일을 추출
+                const year = currentDate.getFullYear();
+                const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 만듭니다.
+                const day = currentDate.getDate().toString().padStart(2, '0'); // 날짜를 두 자리로 만듭니다.
+
+                // yyyy-mm-dd 형식으로 날짜 문자열 생성
+                const previousDate = `${year}-${month}-${day}`;
+
+                // 날짜 입력란에 날짜 설정
+                document.getElementById('date').value = previousDate;
                 // 사용자의 체중과 신장 가져오기
                 const userWeight = {{ obj.userWeight }}; // 사용자의 체중
                 const userHeight = {{ obj.userHeight }}; // 사용자의 신장
