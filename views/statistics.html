@@ -1,7 +1,7 @@
-{% extends 'layout.html'%}
+{% extends 'layout.html' %}
 
 {% block content %}
-<section id="banner" style="height: 50px;" padding="3em;">
+<section id="banner" style="height: 50px; padding: 3em;">
     <h1 style="font-size: 40px; color: #524d58;">사용자 통계</h1>
 </section>
 <!DOCTYPE html>
@@ -19,7 +19,6 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            /* 내용이 화면에 맞게 여러 행으로 나열됨 */
         }
 
         .content {
@@ -39,7 +38,6 @@
             font-size: larger;
             font-weight: bold;
             background: #43419696;
-            ;
             background-size: 200% 150%;
             padding: 10px 0;
             border-radius: 15px;
@@ -75,7 +73,6 @@
 
         .half-width {
             width: 48%;
-            /* 변경: 48%로 반으로 나눔 */
         }
 
         .adfont {
@@ -85,109 +82,34 @@
     </style>
 </head>
 
-
 <body>
-
-    </div>
-    <div id ="sensorCountResult"></div>
-    <!--  날짜를 바꾸면 그날짜로 랜더링 -->
-    <script>
-        document.getElementById("submitDate").addEventListener("click", () => {
-            event.preventDefault();
-            const selDate = document.getElementById('date').value;
-            console.log(selDate);
-            document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
-
-            fetch('/statistics/userstatistics', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ selDate }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const sensorCountResult = document.getElementById('sensorCountResult');
-                    if (data.error) {
-                        sensorCountResult.innerHTML = `<p>${data.error}</p>`;
-                    } else {
-                        sensorCountResult.innerHTML = `<p>센서 데이터 수: ${data.sensorCount} ${data.count}</p>`;
-                    }
-                })
-                .catch((error) => console.error(error));
-        });
-
-    </script>
+    <div id="sensorCountResult"></div>
 
     <div class="container">
-        <!-- 사용자 날짜입력란  폼으로 바꾸든 백엔드수행하기쉬운걸로 교체해도됨 -->
-        <div id="FONTALL" style="margin: 10px; padding: 10px 15px; border: 5px solid #a3a0d5; 
-    border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); display: flex; justify-content: center;width: 100%;">
-            <label style="font-size: large;padding: 10px 8px 0px;" for="date">날짜 선택 :</label>
-            <input type="date" id="date" name="date"style="padding: 0px 5px;">
+        <div id="FONTALL"
+            style="margin: 10px; padding: 10px 15px; border: 5px solid #a3a0d5; 
+            border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); display: flex; justify-content: center; width: 100%;">
+            <label style="font-size: large; padding: 10px 8px 0px;" for="date">날짜 선택 :</label>
+            <input type="date" id="date" name="date" style="padding: 0px 5px;">
             <button id="submitDate">확인</button>
-            <p id="selectedDate"></p>
+            <br>
+            <div style="align-items:unset">
+                <p id="selectedDate"></p>
+            </div>
         </div>
         <div id="FONTALL" class="content">
             <p class="text">체형 분석</p>
             <p id="bmiResult"></p>
-
-            <script>
-                // 현재 날짜를 가져오기
-                const currentDate = new Date();
-
-                // 하루를 빼서 이전 날짜 계산
-                currentDate.setDate(currentDate.getDate() - 1);
-
-                // 년, 월, 일을 추출
-                const year = currentDate.getFullYear();
-                const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 만듭니다.
-                const day = currentDate.getDate().toString().padStart(2, '0'); // 날짜를 두 자리로 만듭니다.
-
-                // yyyy-mm-dd 형식으로 날짜 문자열 생성
-                const previousDate = `${year}-${month}-${day}`;
-
-                // 날짜 입력란에 날짜 설정
-                document.getElementById('date').value = previousDate;
-                // 사용자의 체중과 신장 가져오기
-                const userWeight = {{ obj.userWeight }}; // 사용자의 체중
-                const userHeight = {{ obj.userHeight }}; // 사용자의 신장
-
-                // BMI 계산
-                const weightInKg = parseFloat(userWeight); // 체중을 숫자로 변환
-                const heightInM = parseFloat(userHeight) / 100; // 신장을 미터로 변환
-
-                const bmi = weightInKg / (heightInM * heightInM);
-                console.log('heightInM :', heightInM)
-                console.log('weightInKg :', weightInKg)
-                // 결과를 웹 페이지에 표시
-                const bmiResultElement = document.getElementById('bmiResult');
-                let message = "";
-
-                if (bmi.toFixed(2) < 18.5) {
-                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 저체중입니다.';
-                } else if (bmi.toFixed(2) < 24.9) {
-                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 정상체중입니다.';
-                } else if (bmi.toFixed(2) < 29.9) {
-                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 과체중입니다.';
-                } else if (bmi.toFixed(2) >= 30) {
-                    message = 'BMI 지수: ' + bmi.toFixed(2) + ' 비만입니다.';
-                }
-
-                message += '\n해당 수치는 사용자의 근육량에 따라 상이할 수 있습니다.';
-                bmiResultElement.textContent = message;     
-            </script>
             <canvas id="pie-chart" style="width: auto; height: auto;"></canvas>
         </div>
 
         <div class="content">
             <p style="height: 50px;" class="text"> 체형 조언</p>
-            <p class="text" style="background-color: beige; color: #524d58; font-size: medium;">양반다리 자세가 지속될 시 생기는
-                질병</p>
+            <p class="text" style="background-color: beige; color: #524d58; font-size: medium;">양반다리 자세가 지속될 시 생기는 질병
+            </p>
             <div id="FONTALL" class="advice" style="margin-top: 70px;">
                 <tr>
                     <th class="adfont">✔️ 신경학적 문제</th>
-                    <br />
                 </tr>
                 <tr>
                     <td>양반다리 자세로 앉은 동안 신경에 압력이 가해질 수 있으며, 이로 인해 통증, 저림, 무감각과 같은 신경학적 문제가 발생할 수 있습니다.</td>
@@ -195,7 +117,6 @@
                 <br /><br />
                 <tr>
                     <th class="adfont">✔️ 근육 및 척추 문제</th>
-                    <br />
                 </tr>
                 <tr>
                     <td>양반다리 자세는 척추와 하체 근육에 부담을 줄 수 있으며, 척추 통증 및 근육 긴장을 초래할 수 있습니다.</td>
@@ -203,7 +124,6 @@
                 <br /><br />
                 <tr>
                     <th class="adfont">✔️ 관절 문제</th>
-                    <br />
                 </tr>
                 <tr>
                     <td>다리를 교차하는 동안 관절에 압력이 가해질 수 있으며, 관절 통증 또는 퇴행성 관절질환의 위험이 증가할 수 있습니다.</td>
@@ -211,8 +131,8 @@
             </div>
             <p class="text"
                 style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
-                양반다리 자세는 휴식 시간이나 짧은 기간에 사용할 수는 있지만, 오랜 시간 동안 이 자세를 유지하는 것은 건강에 부정적인 영향을 미칠 수 있으므로 권장되지 않습니다.
-                건강을 유지하려면 자주 자세를 바꾸고, 일어나 움직이며 스트레칭을 통해 몸을 풀어주는 것이 중요합니다.
+                양반다리 자세는 휴식 시간이나 짧은 기간에 사용할 수는 있지만, 오랜 시간 동안 이 자세를 유지하는 것은 건강에 부정적인 영향을 미칠 수 있으므로 권장되지 않습니다. 건강을 유지하려면
+                자주 자세를 바꾸고, 일어나 움직이며 스트레칭을 통해 몸을 풀어주는 것이 중요합니다.
             </p>
         </div>
 
@@ -225,35 +145,35 @@
                 </tr>
                 <tr>
                     <th>가장 많이 앉은 자세:</th>
-                    <td>기마자세</td>
+                    <td id="longtimesit"></td>
                 </tr>
                 <tr>
                     <th>바른 자세로 앉은 시간:</th>
-                    <td>5시간</td>
+                    <td id="correctsit"></td>
                 </tr>
                 <tr>
                     <th>잘못된 자세로 앉은 시간:</th>
-                    <td>5시간</td>
+                    <td id="wrongsit"></td>
                 </tr>
                 <tr>
                     <th>왼쪽으로 치우쳐져 앉은 시간:</th>
-                    <td>1시간</td>
+                    <td id="leftsit"></td>
                 </tr>
                 <tr>
                     <th>오른쪽으로 치우쳐져 앉은 시간:</th>
-                    <td>1시간</td>
+                    <td id="rightsit"></td>
                 </tr>
                 <tr>
                     <th>앞으로 목이빠져 앉은 시간:</th>
-                    <td>1시간</td>
+                    <td id="turtlesit"></td>
                 </tr>
                 <tr>
                     <th>뒤로 기대앉은 시간:</th>
-                    <td>1시간</td>
+                    <td id="bentsit"></td>
                 </tr>
                 <tr>
                     <th>압력분포가 불균형한 시간:</th>
-                    <td>1시간</td>
+                    <td id="unflatsit"></td>
                 </tr>
                 <tr>
                     <th>Daily 누적 경고:</th>
@@ -266,14 +186,39 @@
             </table>
         </div>
     </div>
-    <!-- 가져온 데이터를 앉은시간으로 변환 -->
+
     <script>
+        // 시간 변환 함수
+        function formatTime(timeInSeconds) {
+            const hours = Math.floor(timeInSeconds / 3600);
+            const minutes = Math.floor((timeInSeconds % 3600) / 60);
+            const seconds = timeInSeconds % 60;
+            return `${hours}시간 ${minutes}분 ${seconds}초`;
+        }
+        // 현재 날짜를 가져오기
+        const currentDate = new Date();
+
+        // 하루를 빼서 이전 날짜 계산
+        currentDate.setDate(currentDate.getDate() - 1);
+
+        // 년, 월, 일을 추출
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 만듭니다.
+        const day = currentDate.getDate().toString().padStart(2, '0'); // 날짜를 두 자리로 만듭니다.
+
+        // yyyy-mm-dd 형식으로 날짜 문자열 생성
+        const previousDate = `${year}-${month}-${day}`;
+
+        // 날짜 입력란에 날짜 설정
+        document.getElementById('date').value = previousDate;
+        // 사용자가 날짜를 선택하고 확인 버튼을 누를 때 실행되는 함수
         document.getElementById("submitDate").addEventListener("click", () => {
             event.preventDefault();
             const selDate = document.getElementById('date').value;
-            console.log(selDate);
+            console.log('203 line selDate', selDate);
             document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
 
+            // 서버로 POST 요청을 보내서 사용자 통계 데이터 가져오기
             fetch('/statistics/userstatistics', {
                 method: 'POST',
                 headers: {
@@ -283,31 +228,34 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    const sensorCountResult = document.getElementById('sensorCountResult');
-                    if (data.error) {
-                        sensorCountResult.innerHTML = `<p>${data.error}</p>`;
-                    } else {
-                        const count = data.count;
-                        const totalSitTime = formatSecondsToTime(count);
-                        document.getElementById("totalsit").textContent = totalSitTime; // totalsit에 시간 업데이트
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                    // 오류가 발생한 경우 클라이언트에 오류 메시지를 표시
-                    const sensorCountResult = document.getElementById('sensorCountResult');
-                    sensorCountResult.innerHTML = `<p>데이터 검색 중 오류가 발생했습니다.</p>`;
-                });
-        });
+                    console.log('216 line fetch data ', data.postureCounts);
 
-        function formatSecondsToTime(seconds) {
-            const hours = Math.floor(seconds / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            return `${hours}시간 ${minutes}분 ${secs}초`;
-        }
+                    const correct = data.postureCounts['correct'] || 0;
+                    const left = data.postureCounts['left'] || 0;
+                    const right = data.postureCounts['right'] || 0;
+                    const turtle = data.postureCounts['turtle'] || 0;
+                    const bent = data.postureCounts['bent'] || 0;
+                    const unflat = data.postureCounts['unflatsit'] || 0;
+                    
+                    const sensorCountResult = document.getElementById('sensorCountResult');
+                    console.log(data.postureCounts['correct']);
+                    // 이제 위에서 가져온 데이터를 HTML에 렌더링하실 수 있습니다.
+                    // 예를 들어, 아래와 같이 각 항목에 데이터를 추가할 수 있습니다.
+                    document.getElementById('correctsit').textContent = formatTime(correct);
+                    document.getElementById('leftsit').textContent = formatTime(left);
+                    document.getElementById('rightsit').textContent = formatTime(right);
+                    document.getElementById('turtlesit').textContent = formatTime(turtle);
+                    document.getElementById('bentsit').textContent = formatTime(bent);
+                    document.getElementById('unflatsit').textContent = formatTime(unflat);
+
+
+                    // 데이터를 받아온 후 다른 작업을 수행하고 싶다면 이곳에 추가 코드를 작성하시면 됩니다.
+                })
+                .catch((error) => console.error(error));
+        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     <script>
         // 원형 그래프를 그릴 데이터와 초기화 스크립트
         var data = {
@@ -331,4 +279,4 @@
 </body>
 
 </html>
-{%endblock%}
+{% endblock %}  
