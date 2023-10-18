@@ -100,9 +100,10 @@ router.post('/handleLogin', (req, res) => {
   console.log('100 line login data', req.body)
   req.session.user = req.body;
   const WebSocket = require('ws');
-  const wss = new WebSocket('ws://127.0.0.1:3333');  // Python 서버에 연결
+  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
 
 // 웹 소켓 연결이 열렸을 때
+
 wss.on('open', () => {
   console.log('웹 소켓 연결 시작');
   
@@ -118,9 +119,9 @@ wss.on('open', () => {
 });
 
 // 웹 소켓 연결이 끊겼을 때
-wss.on('close', () => {
-  console.log('웹 소켓 연결이 끊겼습니다.');
-});
+// wss.on('close', () => {
+//   console.log('웹 소켓 연결이 끊겼습니다.');
+// });
   let { userId, userPw } = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
@@ -210,7 +211,7 @@ router.post("/deleteinfo", (req, res) => {
 // 로그아웃
 router.get("/logout", (req, res) => {
   const WebSocket = require('ws');
-  const wss = new WebSocket('ws://127.0.0.1:3333');  // Python 서버에 연결
+  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
   wss.on('close', () => {
     console.log('웹 소켓 연결이 끊겼습니다.');
   });
