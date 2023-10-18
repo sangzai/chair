@@ -188,94 +188,129 @@
     </div>
 
     <script>
-        // 시간 변환 함수
-        function formatTime(timeInSeconds) {
-            const hours = Math.floor(timeInSeconds / 3600);
-            const minutes = Math.floor((timeInSeconds % 3600) / 60);
-            const seconds = timeInSeconds % 60;
-            return `${hours}시간 ${minutes}분 ${seconds}초`;
-        }
-        // 현재 날짜를 가져오기
-        const currentDate = new Date();
+// 시간 변환 함수
+function formatTime(timeInSeconds) {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+    return `${hours}시간 ${minutes}분 ${seconds}초`;
+}
 
-        // 하루를 빼서 이전 날짜 계산
-        currentDate.setDate(currentDate.getDate() - 1);
+// 현재 날짜를 가져오기
+const currentDate = new Date();
 
-        // 년, 월, 일을 추출
-        const year = currentDate.getFullYear();
-        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 만듭니다.
-        const day = currentDate.getDate().toString().padStart(2, '0'); // 날짜를 두 자리로 만듭니다.
+// 날짜 입력란에 날짜 설정
+document.getElementById('date').valueAsDate = currentDate;
 
-        // yyyy-mm-dd 형식으로 날짜 문자열 생성
-        const previousDate = `${year}-${month}-${day}`;
+// 사용자가 날짜를 선택하고 확인 버튼을 누를 때 실행되는 함수
+document.getElementById("submitDate").addEventListener("click", () => {
+    event.preventDefault();
+    const selDate = document.getElementById('date').value;
+    console.log('203 line selDate', selDate);
+    document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
 
-        // 날짜 입력란에 날짜 설정
-        document.getElementById('date').value = previousDate;
-        // 사용자가 날짜를 선택하고 확인 버튼을 누를 때 실행되는 함수
-        document.getElementById("submitDate").addEventListener("click", () => {
-            event.preventDefault();
-            const selDate = document.getElementById('date').value;
-            console.log('203 line selDate', selDate);
-            document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
+    // 서버로 POST 요청을 보내서 사용자 통계 데이터 가져오기
+    fetch('/statistics/userstatistics', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ selDate }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('216 line fetch data ', data.postureCounts);
 
-            // 서버로 POST 요청을 보내서 사용자 통계 데이터 가져오기
-            fetch('/statistics/userstatistics', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ selDate }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('216 line fetch data ', data.postureCounts);
+            const correct = data.postureCounts['correct'] || 0;
+            const left = data.postureCounts['left'] || 0;
+            const right = data.postureCounts['right'] || 0;
+            const turtle = data.postureCounts['turtle'] || 0;
+            const bent = data.postureCounts['bent'] || 0;
+            const unflat = data.postureCounts['unflatsit'] || 0;
+            const wrongsit = left + right + turtle + bent + unflat;
+            const totalsit = correct + wrongsit;
 
-                    const correct = data.postureCounts['correct'] || 0;
-                    const left = data.postureCounts['left'] || 0;
-                    const right = data.postureCounts['right'] || 0;
-                    const turtle = data.postureCounts['turtle'] || 0;
-                    const bent = data.postureCounts['bent'] || 0;
-                    const unflat = data.postureCounts['unflatsit'] || 0;
-                    
-                    const sensorCountResult = document.getElementById('sensorCountResult');
-                    console.log(data.postureCounts['correct']);
-                    // 이제 위에서 가져온 데이터를 HTML에 렌더링하실 수 있습니다.
-                    // 예를 들어, 아래와 같이 각 항목에 데이터를 추가할 수 있습니다.
-                    document.getElementById('correctsit').textContent = formatTime(correct);
-                    document.getElementById('leftsit').textContent = formatTime(left);
-                    document.getElementById('rightsit').textContent = formatTime(right);
-                    document.getElementById('turtlesit').textContent = formatTime(turtle);
-                    document.getElementById('bentsit').textContent = formatTime(bent);
-                    document.getElementById('unflatsit').textContent = formatTime(unflat);
-
-
-                    // 데이터를 받아온 후 다른 작업을 수행하고 싶다면 이곳에 추가 코드를 작성하시면 됩니다.
-                })
-                .catch((error) => console.error(error));
-        });
-    </script>
-
-
-    <script>
-        // 원형 그래프를 그릴 데이터와 초기화 스크립트
-        var data = {
-            labels: ["바른 자세로 앉은 시간", "잘못된 자세로 앉은 시간"],
-            datasets: [{
-                data: [6, 4], // 바른 자세와 잘못된 자세에 해당하는 시간을 데이터로 넣으세요
-                backgroundColor: ["#36A2EB", "#FFCE56"] // 각 섹션의 색상 설정
-            }]
-        };
-
-        var ctx = document.getElementById('pie-chart').getContext('2d');
-
-        var pieChart = new Chart(ctx, {
-            type: 'doughnut', // 원형 또는 도넛 그래프 중 선택
-            data: data,
-            options: {
-                responsive: true
+            // 배열로 변수들을 저장하여 Math.max() 함수로 최대값을 찾습니다.
+            const counts = [correct, left, right, turtle, bent, unflat];
+            const longtimesit = Math.max(...counts);
+            if (longtimesit == correct) {
+                document.getElementById('longtimesit').textContent = "바른자세";
+            } else if (longtimesit == left){
+                document.getElementById('longtimesit').textContent = "왼쪽으로 치우쳐져 앉은 자세";
+            }else if (longtimesit == right){
+                document.getElementById('longtimesit').textContent = "오른쪽으로 치우쳐져 앉은 자세";
+            }else if (longtimesit == turtle){
+                document.getElementById('longtimesit').textContent = "앞으로 목이빠져 앉은 자세";
+            }else if (longtimesit == bent){
+                document.getElementById('longtimesit').textContent = "뒤로 기대앉은 자세";
+            }else if (longtimesit == unflat){
+                document.getElementById('longtimesit').textContent = "압력분포가 불균형한 자세";
+            }else{
+                document.getElementById('longtimesit').textContent = "측정결과가 없습니다";
             }
-        });
+
+            const sensorCountResult = document.getElementById('sensorCountResult');
+            console.log(data.postureCounts['correct']);
+            // 이제 위에서 가져온 데이터를 HTML에 렌더링하실 수 있습니다.
+            // 예를 들어, 아래와 같이 각 항목에 데이터를 추가할 수 있습니다.
+            document.getElementById('correctsit').textContent = formatTime(correct);
+            document.getElementById('leftsit').textContent = formatTime(left);
+            document.getElementById('rightsit').textContent = formatTime(right);
+            document.getElementById('turtlesit').textContent = formatTime(turtle);
+            document.getElementById('bentsit').textContent = formatTime(bent);
+            document.getElementById('unflatsit').textContent = formatTime(unflat);
+            document.getElementById('wrongsit').textContent = formatTime(wrongsit);
+
+            document.getElementById('totalsit').textContent = formatTime(totalsit);
+
+            // 데이터를 받아온 후 다른 작업을 수행하고 싶다면 이곳에 추가 코드를 작성하시면 됩니다.
+            // 원형 그래프를 그릴 데이터와 초기화 스크립트
+            var data = {
+                labels: ["바른 자세로 앉은 시간", "잘못된 자세로 앉은 시간"],
+                datasets: [{
+                    data: [correct / (correct + wrongsit) * 100, wrongsit / (correct + wrongsit) * 100],
+                    backgroundColor: ["#36A2EB", "#FFCE56"]
+                }]
+
+            };
+
+            var ctx = document.getElementById('pie-chart').getContext('2d');
+                
+            var pieChart = new Chart(ctx, {
+                
+                type: 'doughnut',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                                    var value = dataset.data[tooltipItem.index];
+                                    var label = data.labels[tooltipItem.index];
+                                    return label + ': ' + value.toFixed(2) + '%'; // 원하는 형식으로 레이블 수정
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        })
+        .catch((error) => console.error(error));
+
+    // 버튼을 클릭했을 때 페이지가 맨 위로 스크롤되지 않도록
+    return false;
+});
+
     </script>
+
+
+
 </body>
 
 </html>

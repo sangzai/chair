@@ -61,7 +61,7 @@ router.post('/userstatistics', (req, res) => {
 
 // 실시간 연결
 router.get('/data', (req, res) => {
-
+    const userId = req.session.user.userId;
     conn.query('SELECT * FROM sensordata WHERE userId = ? ORDER BY createdAt DESC LIMIT 1', [userId], (err, result) => {
         if (err) {
             console.error('데이터베이스 쿼리 오류:', err);
