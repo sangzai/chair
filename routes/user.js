@@ -96,7 +96,6 @@ router.post('/pwReset', (req, res) => {
 
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
-  
   console.log('100 line login data', req.body)
   req.session.user = req.body;
   let { userId, userPw } = req.body
