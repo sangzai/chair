@@ -99,30 +99,51 @@ router.post('/handleLogin', (req, res) => {
   
   console.log('100 line login data', req.body)
   req.session.user = req.body;
-  const WebSocket = require('ws');
-  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
+  let { userId, userPw } = req.body
 
-// 웹 소켓 연결이 열렸을 때
+// 웹소켓 클라이언트
+const WebSocket = require('ws');
+const ws = new WebSocket('ws://localhost:3334'); // 서버 주소와 포트에 맞게 변경하세요.
 
-wss.on('open', () => {
-  console.log('웹 소켓 연결 시작');
-  
-  // 세션 데이터 가져오기
-  const sessionData = req.session.user.userId;
-
-  // 데이터를 JSON 문자열로 변환
-  const sessionDataJSON = JSON.stringify(sessionData);
-  console.log('109 line session', sessionDataJSON)
-  
-  // 데이터 전송
-  wss.send(sessionDataJSON);
+ws.on('open', () => {
+    console.log('WebSocket 연결이 열렸습니다.');
+    
+    // 클라이언트에서 서버로 메시지 보내기
+    ws.send(userId);
 });
 
-// 웹 소켓 연결이 끊겼을 때
-// wss.on('close', () => {
-//   console.log('웹 소켓 연결이 끊겼습니다.');
+ws.on('message', (message) => {
+    console.log(`LOGIN기능이 서버로부터 수신한 메시지: ${message}`);
+});
+
+ws.on('close', () => {
+    console.log('WebSocket 연결이 닫혔습니다.');
+});
+
+//   const WebSocket = require('ws');
+//   const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
+
+// // 웹 소켓 연결이 열렸을 때
+
+// wss.on('open', () => {
+//   console.log('웹 소켓 연결 시작');
+  
+//   // 세션 데이터 가져오기
+//   const sessionData = req.session.user.userId;
+
+//   // 데이터를 JSON 문자열로 변환
+//   const sessionDataJSON = JSON.stringify(sessionData);
+//   console.log('109 line session', sessionDataJSON)
+  
+//   // 데이터 전송
+//   wss.send(sessionDataJSON);
 // });
-  let { userId, userPw } = req.body
+
+  // 웹 소켓 연결이 끊겼을 때
+//   wss.on('close', () => {
+//     console.log('웹 소켓 연결이 끊겼습니다.');
+// });
+  
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
     if (rows.length > 0) {
@@ -147,7 +168,6 @@ wss.on('open', () => {
     }
   })
 })
-
 
 // 회원탈퇴 + 정보수정 비밀번호 확인
 router.post("/searchmypage", (req, res) => {
@@ -210,11 +230,6 @@ router.post("/deleteinfo", (req, res) => {
 });
 // 로그아웃
 router.get("/logout", (req, res) => {
-  const WebSocket = require('ws');
-  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
-  wss.on('close', () => {
-    console.log('웹 소켓 연결이 끊겼습니다.');
-  });
   req.session.user = "";
   req.session.save(()=>{
     res.send('<script>location.href="http://localhost:3333/"</script>')
