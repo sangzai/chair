@@ -10,8 +10,6 @@
 
 <head>
     <style>
-  
-
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f5f5f5;
@@ -30,7 +28,6 @@
             opacity: 1;
             transform: translateY(20px);
             transition: opacity 1s, transform 1s;
-            
         }
 
         .container.show {
@@ -48,22 +45,6 @@
             max-width: 600px;
             margin: 0 auto;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            /* 초기에 숨김 */
-            animation: fadeIn 1s ease-in-out forwards;
-            /* 나타나는 애니메이션 */
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .health-tip-text {
@@ -184,10 +165,17 @@
             </div>
 
             <div class="recommended-content" id="recommended-rightsit">
-                <h2>바르게 앉는법</h2>
-                <ul>
-                    <li><a href='LinkToRightsit1'>스트레칭 1</a></li>
-                    <!-- 다른 추천 바르게 앉는법을 추가하세요 -->
+                <ul>                    
+                    <li>
+                        <h2>바르게 앉는법</h2>
+                        <a href='LinkToStretch1'>
+                                <img src="" width="600px">
+                        </a>
+                        <h2>바르게 앉는법</h2>
+                        <a href='LinkToStretch'>
+                                <img src="" width="600px">
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -228,7 +216,14 @@
                     },
                 ],
                 rightsits: [
-                    { name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3' },
+                    { 
+                        name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3',
+                        image: 'images/howToSitDownCorrectly.png'
+                    },
+                    { 
+                        name: '바르게 서는법', link: 'https://www.youtube.com/watch?v=qa60AEAKmWQ',
+                        image: 'images/howToStandUpCorrectly.png'
+                    },
                 ]
 
             },
@@ -254,7 +249,14 @@
                     },
                 ],
                 rightsits: [
-                    { name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3' },
+                    { 
+                        name: '바르게 물건을 드는 방법', link: 'https://www.youtube.com/watch?v=i9F7noDYSmw',
+                        image: 'images/howToLiftingObjectCorrectly.png'
+                    },
+                    { 
+                        name: '바르게 눕는법', link: 'https://www.youtube.com/watch?v=Jrb5Gr2OQVM',
+                        image: 'images/howToLieCorrectly.png'
+                    }
                 ]
             },
             'Pelvic asymmetry': {
@@ -279,7 +281,14 @@
                     },
                 ],
                 rightsits: [
-                    { name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3' },
+                    { 
+                        name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3',
+                     image: 'images/howToSitDownCorrectly.png'
+                    },
+                    { 
+                        name: '바르게 걷는 방법', link: 'https://www.youtube.com/watch?v=Z7_jvuUersc',
+                        image: 'images/howToWalkCorrectly.png'
+                    },
                 ]
             }
             // 다른 의심질병에 대한 추천 운동 및 스트레칭 목록을 추가하세요
@@ -328,7 +337,8 @@
                     rightsitUl.innerHTML = ''; // 기존 목록 지우기
                     selectedRecommendations.rightsits.forEach((rightsit) => {
                         const rightsitLi = document.createElement('li');
-                        rightsitLi.innerHTML = `<a href="${rightsit.link}">${rightsit.name}</a>`;
+                        rightsitLi.innerHTML = `<h2>${rightsit.name}</h2><a href="${rightsit.link}"><img src="${rightsit.image}" alt="랜덤 이미지" width="600px"></a>`;
+                        
                         rightsitUl.appendChild(rightsitLi);
                     });
                 }
@@ -354,18 +364,6 @@
             const tipElement = document.getElementById('health-tip-content');
             const randomIndex = Math.floor(Math.random() * healthTips.length);
             tipElement.textContent = healthTips[randomIndex];
-        }
-        displayRandomHealthTip();
-        function displayRandomHealthTip() {
-            const tipElement = document.getElementById('health-tip-content');
-            const randomIndex = Math.floor(Math.random() * healthTips.length);
-            tipElement.textContent = healthTips[randomIndex];
-
-            // 팁 컨테이너의 애니메이션을 재생
-            const banner = document.getElementById('banner');
-            banner.style.animation = 'none'; // 애니메이션 초기화
-            void banner.offsetWidth; // 리플로우 트리거
-            banner.style.animation = null; // 애니메이션 다시 설정
         }
         displayRandomHealthTip();
     </script>

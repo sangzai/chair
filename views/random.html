@@ -1,0 +1,75 @@
+<!-- 
+
+    1. random 한 부분을 담당하는 친구들 여기로 이동 
+    2. healthinfo.html <- include random 
+    -- 목표는 조건에 관계 없이 무조건 random 이 뜨게 하는거니까 
+    random 에 걸려있는 조건 X 
+ -->
+{% extends 'layout.html'%}
+
+{% block content %}
+
+<body>
+    <script>
+        // 앉고, 서고, 물건옮기고, 눕고, 걷는 자세     
+        var imageFolder = 'images/';
+        var imageUrls = [
+            imageFolder + 'howToLieCorrectly.png',
+            imageFolder + 'howToStandUpCorrectly.png',
+            imageFolder + 'howToWalkCorrectly.png',
+            imageFolder + 'howToLiftingObjectCorrectly.png',
+            imageFolder + 'howToSitDownCorrectly.png'
+        ];
+
+
+        var imageFolder = 'images/';
+        var imageUrls = [
+            images/howToLieCorrectly.png',
+            images/howToStandUpCorrectly.png',
+            images/howToWalkCorrectly.png',
+            images/howToLiftingObjectCorrectly.png',
+            images/howToSitDownCorrectly.png'
+        ];
+
+        // YouTube 영상 ID 배열
+        var youtubeVideoIds = [
+            'https://www.youtube.com/watch?v=Jrb5Gr2OQVM',
+            'https://www.youtube.com/watch?v=qa60AEAKmWQ',
+            'https://www.youtube.com/watch?v=Z7_jvuUersc',
+            'https://www.youtube.com/watch?v=i9F7noDYSmw',
+            'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3'
+        ];
+
+        // 콘텐츠 제목 배열
+        var contentTitles = [
+            '바르게 눕는 방법',
+            '바르게 서는 방법',
+            '바르게 걷는 방법',
+            '바르게 물건을 드는 방법',
+            '바르게 앉는 방법'
+        ];
+
+        // 랜덤 이미지를 표시하는 함수
+        function showRandomRightPosture() {
+            var randomIndex = Math.floor(Math.random() * imageUrls.length);
+            var randomTitle = contentTitles[randomIndex];
+            var randomVideoId = youtubeVideoIds[randomIndex];
+            var randomImageUrl = imageUrls[randomIndex];
+
+            var contentTitleElement = document.getElementById('contentTitle');
+            contentTitleElement.textContent = randomTitle;
+
+            var randomImageElement = document.getElementById('randomImage');
+            randomImageElement.src = randomImageUrl;
+
+            var youtubeVideoElement = document.getElementById('youtubeVideo');
+            youtubeVideoElement.href = randomVideoId;
+        }
+
+        // 페이지 로드 시 처음 랜덤 이미지 표시
+        showRandomRightPosture();
+    </script>
+</body>
+
+
+{% endblock %}
