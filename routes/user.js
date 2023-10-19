@@ -96,27 +96,26 @@ router.post('/pwReset', (req, res) => {
 
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
-  
   console.log('100 line login data', req.body)
   req.session.user = req.body;
-  const WebSocket = require('ws');
-  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
+  // const WebSocket = require('ws');
+  // const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
 
 // 웹 소켓 연결이 열렸을 때
 
-wss.on('open', () => {
-  console.log('웹 소켓 연결 시작');
+// wss.on('open', () => {
+  // console.log('웹 소켓 연결 시작');
   
   // 세션 데이터 가져오기
-  const sessionData = req.session.user.userId;
+  // const sessionData = req.session.user.userId;
 
-  // 데이터를 JSON 문자열로 변환
-  const sessionDataJSON = JSON.stringify(sessionData);
-  console.log('109 line session', sessionDataJSON)
+  // // 데이터를 JSON 문자열로 변환
+  // const sessionDataJSON = JSON.stringify(sessionData);
+  // console.log('109 line session', sessionDataJSON)
   
   // 데이터 전송
-  wss.send(sessionDataJSON);
-});
+  // wss.send(sessionDataJSON);
+// });
 
 // 웹 소켓 연결이 끊겼을 때
 // wss.on('close', () => {
