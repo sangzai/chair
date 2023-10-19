@@ -208,6 +208,32 @@ router.post("/deleteinfo", (req, res) => {
     }
   });
 });
+
+// 주문내역 데이터베이스 등록
+ // 추가한 코드 주문정보 받아오기
+router.post('/user_oder',(req,res)=>{
+  console.log(req.body);
+  let orderName = req.body.name
+  let orderContact = req.body.contact
+  let orderPayment = req.body.checkpay
+  let orderAdd = req.body.address
+  let orderQuantity = req.body.quantity
+  const orderDate = new Date();
+  // let {orderName,orderContact,orderAdd,orderPayment,orderQuantity} = req.body
+  let orderseq = 0
+  orderseq += 1
+  let sql = "INSERT INTO `campus_23IS_IoT1_hack_1`.`orderinfo` (`orderName`, `orderContact`, `orderQuantity`, `orderAdd`, `orderPayment`, `orderDate`) VALUES (?,?,?,?,?,?);"
+  // let sql = "insert into orderinfo () values(?,?,?,?,?,?)"
+  console.log({orderName,orderContact,orderQuantity,orderAdd,orderPayment,orderDate})
+  
+  
+  conn.query(sql,[orderName,orderContact,orderQuantity,orderAdd,orderPayment,orderDate], (err,rows)=>{
+    if(rows == undefined){
+      res.send('<script>alert("주문정보를 다시 적어주세요.");location.href="/order"</script>')}
+  })
+})
+
+
 // 로그아웃
 router.get("/logout", (req, res) => {
   const WebSocket = require('ws');
