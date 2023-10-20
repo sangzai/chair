@@ -41,11 +41,18 @@
 
         /* 헤더 스타일 */
         header {
-            background-color: #009688;
+            background-color: #43419696;
             color: white;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            /* 원하는 높이 조정 */
         }
 
         /* 상품 스타일 */
@@ -54,8 +61,12 @@
             padding: 20px;
         }
 
+        .product p {
+            margin: 0px;
+        }
+
         .product img {
-            max-width: 100%;
+            /* width: 300px; */
             border: 1px solid #e5e5e5;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -63,7 +74,7 @@
 
         .product h2 {
             font-size: 32px;
-            color: #009688;
+            color: #451591;
             margin-top: 10px;
         }
 
@@ -75,12 +86,12 @@
 
         .product strong {
             font-size: 28px;
-            color: #009688;
+            color: #451591;
         }
 
         /* 버튼 스타일 */
         button {
-            background-color: #009688;
+            background-color: #451591;
             color: white;
             border: none;
             padding: 15px 30px;
@@ -89,6 +100,7 @@
             border-radius: 5px;
             transition: background-color 0.3s ease-in-out;
             margin: 20px 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         button:hover {
@@ -104,7 +116,7 @@
         /* 추가 정보 테이블 스타일 */
         div strong {
             font-size: 20px;
-            color: #009688;
+            color: #451591;
         }
 
         table {
@@ -121,7 +133,7 @@
 
         th {
             background-color: #f8f8f8;
-            color: #009688;
+            color: #451591;
         }
 
         caption {
@@ -132,51 +144,49 @@
         td {
             font-size: 18px;
         }
+
+        .characteristic {
+            background-color: rgba(208, 242, 250, 0.281);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div id="FONTALL" class="container">
         <header>
-            <h2>제품 구매 페이지</h2>
+            <h2 style="margin: 0px;">제품 구매 페이지</h2>
         </header>
         <div class="product">
-            <img
-                src="data:image/png;base64,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">
+            <img src="images/제품이미지.png">
             <h2>AICUS 인공지능 방석</h2>
-            <p>
-                AICUS 인공지능 방석은 바른 자세와 건강한 라이프스타일을 추구하는 분들을 위한 혁신적인 제품입니다.
-                이 인공지능 방석은 앉은 자세를 실시간으로 감지하고 개인화된 헬스케어 솔루션을 제공합니다.
-            </p>
+            <p> AICUS 인공지능 방석은 바른 자세와 건강한 라이프스타일을 추구하는 분들을 위한 혁신적인 제품입니다.</p>
+            <p>이 인공지능 방석은 앉은 자세를 실시간으로 감지하고 개인화된 헬스케어 솔루션을 제공합니다.</p>
+            
             <br>
-            <h5 style="font-weight: bolder;">왜 바른 자세가 중요한가요?</h5>
+            <h3 style="font-weight: bolder;">왜 바른 자세가 중요한가요?</h3>
             <h6 style="color: rgb(8, 64, 32);">
                 바른 자세는 건강을 유지하고 잘못된 자세로 비롯되는 질병인 굽은 등이나 거북목을 피하기 위해 중요합니다.
                 AICUS 인공지능 방석은 당신이 바른 자세를 유지하도록 도울 것입니다.
             </h6>
-            <br>
-            <h5>주요 특징:</h5>
-            <br>
-            <ul>
-                <li>✓ 인공지능의 자세분류 기능</li>
-                <br>
-                <li>✓ 측정된 자세에 따른 피드백 기능</li>
-                <br>
-                <li>✓ 개인화된 운동 및 스트레칭 안내</li>
-                <br>
-                <li>✓ 자세 통계 및 실시간 압력분포 이미지 제공</li>
-                <br>
-                <li>✓ 최적의 자세 유지를 돕는 스마트한 경고 및 알림 기능</li>
-            </ul>
-            <br>
-            <br>
+            <br><br>
+            <div class="characteristic">
+                <br><h4 style="text-align: center;">주요 특징</h4><br>
+                <h5>✓ 인공지능의 자세분류 기능</h5><br>
+                <h5>✓ 측정된 자세에 따른 피드백 기능</h5><br>
+                <h5>✓ 개인화된 운동 및 스트레칭 안내</h5><br>
+                <h5>✓ 자세 통계 및 실시간 압력분포 이미지 제공</h5><br>
+                <h5>✓ 최적의 자세 유지를 돕는 스마트한 경고 및 알림 기능</h5><br>
+            </div>
+            <br><br>
             <button id="buy-button">지금 구매하기</button>
-            <p><strong>가격: 89,900원</strong></p> 
+            <p><strong>가격: 89,900원</strong></p>
             <br>
             <br>
         </div>
 
-        <strong >상품정보 제공고시</strong>
+        <strong>상품정보 제공고시</strong>
         <table>
             <tr>
                 <th scope="row">품명 / 모델명</th>
@@ -202,7 +212,7 @@
             </tr>
         </table>
         <strong>fit4care<strong>
-                    <p style="font-size:x-small">스마트인재개발원 사물지능 개발자과정 A반 fit4care  팀은 <br> 바른 척추 건강을 위해 해당 제품을 개발하였습니다.
+                <p style="font-size:x-small">스마트인재개발원 사물지능 개발자과정 A반 fit4care 팀은 바른 척추 건강을 위해 해당 제품을 개발하였습니다.
     </div>
 
     <script>
