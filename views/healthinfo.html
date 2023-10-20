@@ -135,8 +135,11 @@
                 <select id="pain-selector">
                     <option value="none">-- 선택 --</option>
                     <option value="turtle">거북목</option>
-                    <option value="bent-back">굽은등</option>
-                    <option value="Pelvic asymmetry">골반뒤틀림</option>
+                    <option value="bentBack">굽은등</option>
+                    <option value="pelvicAsymmetry">골반뒤틀림</option>
+                    <option value="scoliosis">척추측만증</option>
+                    <option value="lumbarDisc">허리디스크</option>
+                    <option value="carpalTunnelSyndrome">손목터널증후군</option>
                     <!-- 다른 통증 옵션을 추가하세요 -->
                 </select>
             </div>
@@ -172,10 +175,6 @@
                     <li>
                         <h2>바르게 앉는법</h2>
                         <a href='LinkToStretch1'>
-                                <img src="" width="600px">
-                        </a>
-                        <h2>바르게 앉는법</h2>
-                        <a href='LinkToStretch'>
                                 <img src="" width="600px">
                         </a>
                     </li>
@@ -222,15 +221,11 @@
                     { 
                         name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3',
                         image: 'images/howToSitDownCorrectly.png'
-                    },
-                    { 
-                        name: '바르게 서는법', link: 'https://www.youtube.com/watch?v=qa60AEAKmWQ',
-                        image: 'images/howToStandUpCorrectly.png'
-                    },
+                    }
                 ]
 
             },
-            'bent-back': {
+            'bentBack': {
                 exercises: [
                     {
                         name: '>> 데드리프트 운동법', link: 'https://www.youtube.com/watch?v=EBjYQeeBI-0',
@@ -253,16 +248,12 @@
                 ],
                 rightsits: [
                     { 
-                        name: '바르게 물건을 드는 방법', link: 'https://www.youtube.com/watch?v=i9F7noDYSmw',
-                        image: 'images/howToLiftingObjectCorrectly.png'
-                    },
-                    { 
-                        name: '바르게 눕는법', link: 'https://www.youtube.com/watch?v=Jrb5Gr2OQVM',
-                        image: 'images/howToLieCorrectly.png'
+                        name: '바르게 서는법', link: 'https://www.youtube.com/watch?v=qa60AEAKmWQ',
+                        image: 'images/howToStandUpCorrectly.png'
                     }
                 ]
             },
-            'Pelvic asymmetry': {
+            'pelvicAsymmetry': {
                 exercises: [
                     {
                         name: '>> 힙 쓰러스트 운동법', link: 'https://www.youtube.com/watch?v=kNv-0UEUb2Q',
@@ -285,13 +276,93 @@
                 ],
                 rightsits: [
                     { 
-                        name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3',
-                     image: 'images/howToSitDownCorrectly.png'
-                    },
-                    { 
                         name: '바르게 걷는 방법', link: 'https://www.youtube.com/watch?v=Z7_jvuUersc',
                         image: 'images/howToWalkCorrectly.png'
+                    }
+                ]
+            },
+            'scoliosis': {
+                exercises: [
+                    {
+                        name: '>> 플랭크 운동법', link: 'https://www.youtube.com/watch?v=B--6YfhmBGc',
+                        tag: '코어 근육, 등, 어깨, 팔, 하체 근육을 강화하고 전체 근력을 향상시키는데 도움을 줍니다. 꾸준한 플랭크 수행은 자세 개선, 허리 통증 예방, 몸의 안정성 향상 등에 도움이 됩니다.'
                     },
+                    {
+                        name: '>>버디 크런치', link: 'https://www.youtube.com/watch?v=CNrJ1RQ465U',
+                        tag: '복부 근육을 강화하는 데 도움이 되며, 두 사람이 함께 수행하는 파트너 운동입니다.'
+                    },
+                ],
+                stretches: [
+                    {
+                        name: '>> 교정운동', link: 'https://www.youtube.com/watch?v=hUB0dBxot_U',
+                        tag: '#척추측만증 #측만증스트레칭 #척추측만증운동 #측만증교정운동 #척추측만증교정운동'
+                    },
+                    {
+                        name: '>> 슈퍼맨자세', link: 'https://www.youtube.com/watch?v=XW8xitEZGSQ',
+                        tag: '#척추측만증 #측만증스트레칭 # 코어강화운동'
+                    },
+                ],
+                rightsits: [
+                    { 
+                        name: '바르게 눕는법', link: 'https://www.youtube.com/watch?v=Jrb5Gr2OQVM',
+                        image: 'images/howToLieCorrectly.png'
+                    }
+                ]
+            },
+            'lumbarDisc': {
+                exercises: [
+                    {
+                        name: '>> 플랭크 운동법', link: 'https://www.youtube.com/watch?v=B--6YfhmBGc',
+                        tag: '코어 근육, 등, 어깨, 팔, 하체 근육을 강화하고 전체 근력을 향상시키는데 도움을 줍니다. 꾸준한 플랭크 수행은 자세 개선, 허리 통증 예방, 몸의 안정성 향상 등에 도움이 됩니다.'
+                    },
+                    {
+                        name: '>> 버드독', link: 'https://www.youtube.com/watch?v=k9uHaNi4lSM',
+                        tag: '척추의 정렬과 코어 근육 강화에 효과적인 운동으로, 척추를 정렬해 허리통증 완화에 효과적이며 각종 부상을 예방할 수 있습니다.'
+                    },
+                ],
+                stretches: [
+                    {
+                        name: '>> 다운독', link: 'https://www.youtube.com/watch?v=rwe8CHheW2A',
+                        tag: '#유연성늘리기 #다운독자세효과 #햄스트링스트레칭'
+                    },
+                    {
+                        name: '>> 구르기', link: 'https://www.youtube.com/watch?v=V9sB_hN4KSY',
+                        tag: '#척추마사지'
+                    },
+                ],
+                rightsits: [
+                    { 
+                        name: '바르게 물건을 드는 방법', link: 'https://www.youtube.com/watch?v=i9F7noDYSmw',
+                        image: 'images/howToLiftingObjectCorrectly.png'
+                    }
+                ]
+            },
+            'carpalTunnelSyndrome': {
+                exercises: [
+                    {
+                        name: '>> 해머컬', link: 'https://www.youtube.com/watch?v=n4L2Kvdtg-8',
+                        tag: '상완근(상팔근)을 중심으로 하위 팔근을 강화하는 대표적인 운동 중 하나입니다. 이 운동은 주로 상완근, 이두근, 무릎 내측 근육에 집중하여 상체 근력을 향상시키는데 사용됩니다.'
+                    },
+                    {
+                        name: '>> 리버스컬', link: 'https://www.youtube.com/watch?v=8abRjjBJI9o',
+                        tag: '상완근(상팔근) 및 이두근을 중심으로 강화하는 운동 중 하나로, 이두근에 큰 자극을 주는 운동입니다. '
+                    },
+                ],
+                stretches: [
+                    {
+                        name: '>> 손목 굴곡건 ', link: 'https://www.youtube.com/watch?v=FwCR7WxeZio',
+                        tag: '#손목통증 #손가락통증에 도움이 되는 #손목운동법'
+                    },
+                    {
+                        name: '>> 정중신경', link: 'https://www.youtube.com/shorts/Tq5NiTeXC_g',
+                        tag: '#정중신경 스트레칭 #손목통증 #터널 증후군'
+                    },
+                ],
+                rightsits: [
+                    { 
+                     name: '바르게 앉는법', link: 'https://www.youtube.com/watch?v=TmiSDn0nF90&list=PL86UXLJpM6hq5izs2j1gzT_7FVV29KRu3&index=3',
+                     image: 'images/howToSitDownCorrectly.png'
+                    }
                 ]
             }
             // 다른 의심질병에 대한 추천 운동 및 스트레칭 목록을 추가하세요
