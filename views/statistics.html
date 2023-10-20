@@ -191,71 +191,59 @@
     </div>
 
     <script>
-// 시간 변환 함수
-function formatTime(timeInSeconds) {
-    const hours = Math.floor(timeInSeconds / 3600);
-    const minutes = Math.floor((timeInSeconds % 3600) / 60);
-    const seconds = timeInSeconds % 60;
-    return `${hours}시간 ${minutes}분 ${seconds}초`;
-}
+        document.getElementById("submitDate").addEventListener("click", () => {
+            event.preventDefault();
+            const selDate = document.getElementById('date').value;
+            document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
 
-// 현재 날짜를 가져오기
-const currentDate = new Date();
+            // 서버로 POST 요청을 보내서 사용자 통계 데이터 가져오기
+            fetch('/statistics/userstatistics', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ selDate }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 통계 데이터를 받아온 후 그래프를 업데이트
+                    updatePieChart(data.postureCounts);
+                })
+                .catch((error) => console.error(error));
 
-// 날짜 입력란에 날짜 설정
-document.getElementById('date').valueAsDate = currentDate;
+            // 버튼을 클릭했을 때 페이지가 맨 위로 스크롤되지 않도록
+            return false;
+        });
+        // 시간 변환 함수
+        function formatTime(timeInSeconds) {
+            const hours = Math.floor(timeInSeconds / 3600);
+            const minutes = Math.floor((timeInSeconds % 3600) / 60);
+            const seconds = timeInSeconds % 60;
+            return `${hours}시간 ${minutes}분 ${seconds}초`;
+        }
 
-// 사용자가 날짜를 선택하고 확인 버튼을 누를 때 실행되는 함수
-document.getElementById("submitDate").addEventListener("click", () => {
-    event.preventDefault();
-    const selDate = document.getElementById('date').value;
-    console.log('203 line selDate', selDate);
-    document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
+        // 현재 날짜를 가져오기
+        const currentDate = new Date();
 
-    // 서버로 POST 요청을 보내서 사용자 통계 데이터 가져오기
-    fetch('/statistics/userstatistics', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ selDate }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('216 line fetch data ', data.postureCounts);
+        // 날짜 입력란에 날짜 설정
+        document.getElementById('date').valueAsDate = currentDate;
 
-            const correct = data.postureCounts['correct'] || 0;
-            const left = data.postureCounts['left'] || 0;
-            const right = data.postureCounts['right'] || 0;
-            const turtle = data.postureCounts['turtle'] || 0;
-            const bent = data.postureCounts['bent'] || 0;
-            const unflat = data.postureCounts['unflatsit'] || 0;
+        // 사용자가 날짜를 선택하고 확인 버튼을 누를 때 실행되는 함수
+        function updatePieChart(postureCounts) {
+            const correct = postureCounts['correct'] || 0;
+            const left = postureCounts['left'] || 0;
+            const right = postureCounts['right'] || 0;
+            const turtle = postureCounts['turtle'] || 0;
+            const bent = postureCounts['bent'] || 0;
+            const unflat = postureCounts['unflatsit'] || 0;
             const wrongsit = left + right + turtle + bent + unflat;
             const totalsit = correct + wrongsit;
 
             // 배열로 변수들을 저장하여 Math.max() 함수로 최대값을 찾습니다.
             const counts = [correct, left, right, turtle, bent, unflat];
             const longtimesit = Math.max(...counts);
-            if (longtimesit == correct) {
-                document.getElementById('longtimesit').textContent = "바른자세";
-            } else if (longtimesit == left){
-                document.getElementById('longtimesit').textContent = "왼쪽으로 치우쳐져 앉은 자세";
-            }else if (longtimesit == right){
-                document.getElementById('longtimesit').textContent = "오른쪽으로 치우쳐져 앉은 자세";
-            }else if (longtimesit == turtle){
-                document.getElementById('longtimesit').textContent = "앞으로 목이빠져 앉은 자세";
-            }else if (longtimesit == bent){
-                document.getElementById('longtimesit').textContent = "뒤로 기대앉은 자세";
-            }else if (longtimesit == unflat){
-                document.getElementById('longtimesit').textContent = "압력분포가 불균형한 자세";
-            }else{
-                document.getElementById('longtimesit').textContent = "측정결과가 없습니다";
-            }
 
-            const sensorCountResult = document.getElementById('sensorCountResult');
-            console.log(data.postureCounts['correct']);
-            // 이제 위에서 가져온 데이터를 HTML에 렌더링하실 수 있습니다.
-            // 예를 들어, 아래와 같이 각 항목에 데이터를 추가할 수 있습니다.
+            // 각 섹션의 데이터를 업데이트
             document.getElementById('correctsit').textContent = formatTime(correct);
             document.getElementById('leftsit').textContent = formatTime(left);
             document.getElementById('rightsit').textContent = formatTime(right);
@@ -263,24 +251,26 @@ document.getElementById("submitDate").addEventListener("click", () => {
             document.getElementById('bentsit').textContent = formatTime(bent);
             document.getElementById('unflatsit').textContent = formatTime(unflat);
             document.getElementById('wrongsit').textContent = formatTime(wrongsit);
-
             document.getElementById('totalsit').textContent = formatTime(totalsit);
 
-            // 데이터를 받아온 후 다른 작업을 수행하고 싶다면 이곳에 추가 코드를 작성하시면 됩니다.
-            // 원형 그래프를 그릴 데이터와 초기화 스크립트
+            // 원형 그래프를 업데이트
+            updateDoughnutChart(correct, wrongsit);
+        }
+
+        function updateDoughnutChart(correct, wrongsit) {
             var data = {
                 labels: ["바른 자세로 앉은 시간", "잘못된 자세로 앉은 시간"],
                 datasets: [{
-                    data: [correct / (correct + wrongsit) * 100, wrongsit / (correct + wrongsit) * 100],
+                    data: [correct, wrongsit],
                     backgroundColor: ["#36A2EB", "#FFCE56"]
                 }]
-
             };
 
             var ctx = document.getElementById('pie-chart').getContext('2d');
-                
-            var pieChart = new Chart(ctx, {
-                
+            if (window.pieChart) {
+                window.pieChart.destroy();
+            }
+            window.pieChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: data,
                 options: {
@@ -295,20 +285,14 @@ document.getElementById("submitDate").addEventListener("click", () => {
                                     var dataset = data.datasets[tooltipItem.datasetIndex];
                                     var value = dataset.data[tooltipItem.index];
                                     var label = data.labels[tooltipItem.index];
-                                    return label + ': ' + value.toFixed(2) + '%'; // 원하는 형식으로 레이블 수정
+                                    return label + ': ' + value + '분';
                                 }
                             }
                         }
                     }
                 }
             });
-
-        })
-        .catch((error) => console.error(error));
-
-    // 버튼을 클릭했을 때 페이지가 맨 위로 스크롤되지 않도록
-    return false;
-});
+        }
 
     </script>
 
@@ -317,4 +301,4 @@ document.getElementById("submitDate").addEventListener("click", () => {
 </body>
 
 </html>
-{% endblock %}  
+{% endblock %}

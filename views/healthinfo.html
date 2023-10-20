@@ -11,7 +11,7 @@
 <head>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            /* font-family: 'Arial', sans-serif; */
             background-color: #f5f5f5;
             margin: 0;
         }
@@ -53,7 +53,6 @@
             font-family: "Arial", sans-serif;
             margin: 10px 0;
         }
-
         .health-tip-title {
             font-size: 28px;
             margin: 20px 0;
@@ -113,24 +112,28 @@
         select:hover {
             border-color: #ff5a5f;
         }
+
+        ul {
+            list-style: none;
+        }
     </style>
 
 
 </head>
 
 <body>
-    <div class="container">
+    <div id="FONTALL" class="container">
         <div class="health-tip-container">
-            <div class="health-tip-title">알고계셨나요?</div>
+            <div class="health-tip-title">알고계셨나요 ?</div>
             <div class="health-tip-text" id="health-tip-content">Loading...</div>
         </div>
         <hr>
         <div class="recommend-container">
             <h1>추천 운동 및 스트레칭</h1>
             <div class="pain-options">
-                <label for="pain-selector">의심질병을 선택하세요:</label>
+                <label for="pain-selector">의심질병을 선택하세요 :</label>
                 <select id="pain-selector">
-                    <option value="none">정보 없음</option>
+                    <option value="none">-- 선택 --</option>
                     <option value="turtle">거북목</option>
                     <option value="bent-back">굽은등</option>
                     <option value="Pelvic asymmetry">골반뒤틀림</option>
@@ -141,10 +144,10 @@
             <div class="recommended-content" id="recommended-exercises">
                 <h2>추천 운동</h2>
                 <ul>
-                    <li><a href="LinkToExercise1">운동 1</a>
+                    <li><a href="LinkToExercise1"> ✓ 운동 1</a>
                         <p></p>
                     </li>
-                    <li><a href="LinkToExercise2">운동 2</a>
+                    <li><a href="LinkToExercise2">✓ 운동 2</a>
                         <p></p>
                     </li>
                     <!-- 다른 추천 운동을 추가하세요 -->
@@ -154,10 +157,10 @@
             <div class="recommended-content" id="recommended-stretches">
                 <h2>추천 스트레칭</h2>
                 <ul>
-                    <li><a href='LinkToStretch1'>스트레칭 1</a>
+                    <li><a href='LinkToStretch1'>✓ 스트레칭 1</a>
                         <p></p>
                     <li>
-                    <li><a href="LinkToStretch2">스트레칭 2</a>
+                    <li><a href="LinkToStretch2">✓ 스트레칭 2</a>
                         <p></p>
                     </li>
                     <!-- 다른 추천 스트레칭을 추가하세요 -->
@@ -196,22 +199,22 @@
             'turtle': {
                 exercises: [
                     {
-                        name: '넥스 크런치 운동법', link: 'https://www.youtube.com/watch?v=iJQHPT3Vv-A',
+                        name: '>> 넥스 크런치 운동법', link: 'https://www.youtube.com/watch?v=iJQHPT3Vv-A',
                         tag: '목 부위를 강화하고 스트레칭하는 운동입니다. 이 운동을 수행할 때는 조심스럽게 움직이고, 목 부분에 부담을 주지 않도록 주의해야 합니다.'
                     },
                     {
-                        name: '운동 2: 숄더 로테이션 운동법', link: 'https://www.youtube.com/watch?v=Et1ejjYss1Q',
+                        name: '>> 숄더 로테이션 운동법', link: 'https://www.youtube.com/watch?v=Et1ejjYss1Q',
                         tag: '어깨 관절의 유연성을 향상시키고 어깨 근육을 강화하는데 도움을 줍니다.'
                     },
                 ],
 
                 stretches: [
                     {
-                        name: '목&어깨 스트레칭', link: 'https://www.youtube.com/watch?v=jG5F3RhLcpc&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=35&t=5s',
+                        name: '>> 목&어깨 스트레칭', link: 'https://www.youtube.com/watch?v=jG5F3RhLcpc&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=35&t=5s',
                         tag: '#목어깨통증 #승모근통증 #일자목 #버섯목증후군 #거북목 #굽은등'
                     },
                     {
-                        name: '거북목 스트레칭', link: 'https://www.youtube.com/watch?v=KOGIktCMRrY&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=4',
+                        name: '>> 거북목 스트레칭', link: 'https://www.youtube.com/watch?v=KOGIktCMRrY&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=4',
                         tag: '#거북목#거북목교정운동#거북목도수치료#거북목스트레칭#굽은등'
                     },
                 ],
@@ -230,21 +233,21 @@
             'bent-back': {
                 exercises: [
                     {
-                        name: '운동 1: 데드리프트 운동법', link: 'https://www.youtube.com/watch?v=EBjYQeeBI-0',
+                        name: '>> 데드리프트 운동법', link: 'https://www.youtube.com/watch?v=EBjYQeeBI-0',
                         tag: ' 전신 강화와 근력을 향상시키는데 매우 효과적인 운동 중 하나로, 주로 하체와 등 근육을 강화하는 데 사용됩니다. 아울러, 데드리프트는 전체 체력과 균형을 향상시키는데 도움을 줍니다. '
                     },
                     {
-                        name: '운동 2: 플랭크 운동법', link: 'https://www.youtube.com/watch?v=B--6YfhmBGc',
+                        name: '>> 플랭크 운동법', link: 'https://www.youtube.com/watch?v=B--6YfhmBGc',
                         tag: '코어 근육, 등, 어깨, 팔, 하체 근육을 강화하고 전체 근력을 향상시키는데 도움을 줍니다. 꾸준한 플랭크 수행은 자세 개선, 허리 통증 예방, 몸의 안정성 향상 등에 도움이 됩니다.'
                     },
                 ],
                 stretches: [
                     {
-                        name: '스트레칭 1: 굳어있는 등과 날개뼈 풀어주기', link: 'https://www.youtube.com/watch?v=mJuwKvxkfX4&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=29',
+                        name: '>> 굳어있는 등과 날개뼈 풀어주기', link: 'https://www.youtube.com/watch?v=mJuwKvxkfX4&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=29',
                         tag: '#날개죽지통증 #날개뼈통증 #등통증'
                     },
                     {
-                        name: '스트레칭 2: 굽은등 펴기 운동', link: 'https://www.youtube.com/watch?v=uxQdvSTEilI&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=28',
+                        name: '>> 굽은등 펴기 운동', link: 'https://www.youtube.com/watch?v=uxQdvSTEilI&list=PL86UXLJpM6hrCZ-gzdjHM032LpP95NI0G&index=28',
                         tag: '#거북목스트레칭 #굽은등 #라운드숄더'
                     },
                 ],
@@ -262,21 +265,21 @@
             'Pelvic asymmetry': {
                 exercises: [
                     {
-                        name: '운동 1: 힙 쓰러스트 운동법', link: 'https://www.youtube.com/watch?v=kNv-0UEUb2Q',
+                        name: '>> 힙 쓰러스트 운동법', link: 'https://www.youtube.com/watch?v=kNv-0UEUb2Q',
                         tag: '엉덩이와 하체 근육을 강화하는 데 효과적인 운동 중 하나로, 특히 엉덩이 근육을 발달시키는 데 좋습니다. '
                     },
                     {
-                        name: '운동 2: 힙어브덕션 운동법', link: 'https://www.youtube.com/watch?v=D_HUq5odZhg',
+                        name: '>> 힙어브덕션 운동법', link: 'https://www.youtube.com/watch?v=D_HUq5odZhg',
                         tag: '엉덩이 외측에 위치한 근육인 힙 외측 근육(중간 부분)를 강화하기 위한 운동입니다. 이 운동은 엉덩이 근육을 형태 유지하고 엉덩이의 안정성을 높이는 데 도움을 줄 수 있습니다.'
                     },
                 ],
                 stretches: [
                     {
-                        name: '스트레칭 1: 골반전방경사 교정 운동', link: 'https://www.youtube.com/watch?v=3z6I26XIc_g&list=PL86UXLJpM6hqn7Cnqf3glB7qVcgt6LkMh&index=5',
+                        name: '>> 골반전방경사 교정 운동', link: 'https://www.youtube.com/watch?v=3z6I26XIc_g&list=PL86UXLJpM6hqn7Cnqf3glB7qVcgt6LkMh&index=5',
                         tag: '#골반전방경사#전방경사교정루틴#골반전방경사교정운동'
                     },
                     {
-                        name: '스트레칭 2: 골반교정 운동', link: 'https://www.youtube.com/watch?v=I9QDzf8-1Ns&list=PL86UXLJpM6hqn7Cnqf3glB7qVcgt6LkMh&index=26',
+                        name: '>> 골반교정 운동', link: 'https://www.youtube.com/watch?v=I9QDzf8-1Ns&list=PL86UXLJpM6hqn7Cnqf3glB7qVcgt6LkMh&index=26',
                         tag: '#골반전방경사교정 #골반전방경사진단 #허리통증운동'
                     },
                 ],
