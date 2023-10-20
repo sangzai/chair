@@ -99,34 +99,35 @@ router.post('/handleLogin', (req, res) => {
   
   console.log('100 line login data', req.body)
   req.session.user = req.body;
-  const WebSocket = require('ws');
-  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
-
-  // 웹 소켓 연결이 열렸을 때
-
-  wss.on('open', () => {
-    console.log('웹 소켓 연결 시작');
-    
-    // 세션 데이터 가져오기
-    const sessionData = req.session.user.userId;
-
-    // 데이터를 JSON 문자열로 변환
-    const sessionDataJSON = JSON.stringify(sessionData);
-    console.log('로그인할 때 보내는 문구', sessionDataJSON)
-    
-    // 데이터 전송
-    wss.send(sessionDataJSON);
-  });
-
-  // 웹 소켓 연결이 끊겼을 때
-  wss.on('close', () => {
-    console.log('웹 소켓 연결이 끊겼습니다.');
-  });
-
+ 
   let { userId, userPw } = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
     if (rows.length > 0) {
+      const WebSocket = require('ws');
+      const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
+    
+      // 웹 소켓 연결이 열렸을 때
+    
+      wss.on('open', () => {
+        console.log('웹 소켓 연결 시작');
+        
+        // 세션 데이터 가져오기
+        const sessionData = req.session.user.userId;
+    
+        // 데이터를 JSON 문자열로 변환
+        const sessionDataJSON = JSON.stringify(sessionData);
+        console.log('로그인할 때 보내는 문구', sessionDataJSON)
+        
+        // 데이터 전송
+        wss.send(sessionDataJSON);
+      });
+    
+      // 웹 소켓 연결이 끊겼을 때
+      wss.on('close', () => {
+        console.log('웹 소켓 연결이 끊겼습니다.');
+      });
+    
       req.session.user= {
         'userId': rows[0].userId,
         'userName': rows[0].userName,

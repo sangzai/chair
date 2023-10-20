@@ -42,19 +42,7 @@
                   <a href="#">Menu</a>
                   <ul>
                         {% if obj === undefined or obj === "" %}
-                        <li>
-                        <a href="/login" onclick="loginAlert()">
-                           <i class="bi bi-clipboard-check-fill"></i> IOT 장치 관리
-                        </a>
-                        <ul>
-                           <li><a href="/login" onclick="loginAlert()">
-                                 <i class="bi bi-shuffle"></i> 연결상태관리
-                              </a></li>
-                           <li><a href="/login" onclick="loginAlert()">
-                                 <i class="bi bi-droplet"></i> 진동 및 알람 설정
-                              </a></li>
-                        </ul>
-                        </li>
+                  
                         <li>
                         <a href="/login" onclick="loginAlert()">
                            <i class="bi bi-person-fill-check"></i> 사용자 상태
@@ -79,17 +67,9 @@
                         </li>
                         {% else%}
                         <li class="submenu">
-                           <a href="/iot">
-                              <i class="bi bi-clipboard-check-fill"></i> IOT 장치 관리
-                           </a>
-                           <ul>
-                              <li><a href="#">
-                                    <i class="bi bi-shuffle"></i> 연결상태관리
-                                 </a></li>
-                              <li><a href="#">
-                                    <i class="bi bi-droplet"></i> 진동 및 알람 설정
-                                 </a></li>
-                           </ul>
+                     
+                     
+      
                         </li>
                         <li class="submenu">
                            <a href="/userstate">
