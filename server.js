@@ -22,27 +22,6 @@ nunjucks.configure("views", {
   express: app,
   watch: true,
 });
-// 웹 소켓 서버 포트 : 3334
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 3334 });
-
-wss.on('listening', () => {
-    console.log('웹 소켓 서버 시작!');
-});
-
-wss.on('connection', (ws) => {
-    console.log('클라이언트가 연결되었습니다.');
-
-    ws.on('message', (message) => {
-        console.log(`수신한 메시지: ${message}`);
-        ws.send('반가워요'+message);
-    });
-    ws.on('close', () => {
-        console.log('클라이언트가 연결을 종료했습니다.');
-    });
-});
-
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -57,6 +36,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 
 
 app.use("/", indexRouter);

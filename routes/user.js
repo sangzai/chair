@@ -96,53 +96,34 @@ router.post('/pwReset', (req, res) => {
 
 // 로그인 기능
 router.post('/handleLogin', (req, res) => {
+  
   console.log('100 line login data', req.body)
   req.session.user = req.body;
-  let { userId, userPw } = req.body
+  const WebSocket = require('ws');
+  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
 
-// 웹소켓 클라이언트
-const WebSocket = require('ws');
-const ws = new WebSocket('ws://localhost:3334'); // 서버 주소와 포트에 맞게 변경하세요.
+  // 웹 소켓 연결이 열렸을 때
 
-ws.on('open', () => {
-    console.log('WebSocket 연결이 열렸습니다.');
+  wss.on('open', () => {
+    console.log('웹 소켓 연결 시작');
     
-    // 클라이언트에서 서버로 메시지 보내기
-    ws.send(userId);
-});
+    // 세션 데이터 가져오기
+    const sessionData = req.session.user.userId;
 
-ws.on('message', (message) => {
-    console.log(`LOGIN기능이 서버로부터 수신한 메시지: ${message}`);
-});
-
-ws.on('close', () => {
-    console.log('WebSocket 연결이 닫혔습니다.');
-});
-
-//   const WebSocket = require('ws');
-//   const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
-
-// // 웹 소켓 연결이 열렸을 때
-
-// wss.on('open', () => {
-//   console.log('웹 소켓 연결 시작');
-  
-//   // 세션 데이터 가져오기
-//   const sessionData = req.session.user.userId;
-
-//   // 데이터를 JSON 문자열로 변환
-//   const sessionDataJSON = JSON.stringify(sessionData);
-//   console.log('109 line session', sessionDataJSON)
-  
-//   // 데이터 전송
-//   wss.send(sessionDataJSON);
-// });
+    // 데이터를 JSON 문자열로 변환
+    const sessionDataJSON = JSON.stringify(sessionData);
+    console.log('로그인할 때 보내는 문구', sessionDataJSON)
+    
+    // 데이터 전송
+    wss.send(sessionDataJSON);
+  });
 
   // 웹 소켓 연결이 끊겼을 때
-//   wss.on('close', () => {
-//     console.log('웹 소켓 연결이 끊겼습니다.');
-// });
-  
+  wss.on('close', () => {
+    console.log('웹 소켓 연결이 끊겼습니다.');
+  });
+
+  let { userId, userPw } = req.body
   let sql = 'select * from users where userId=? and userPw=MD5(?)'
   conn.query(sql, [userId, userPw], (err, rows) => {
     if (rows.length > 0) {
@@ -167,7 +148,6 @@ ws.on('close', () => {
     }
   })
 })
-
 // 회원탈퇴 + 정보수정 비밀번호 확인
 router.post("/searchmypage", (req, res) => {
   let {userPw} = req.body
@@ -254,30 +234,34 @@ router.post('/user_oder',(req,res)=>{
 
 
 // 로그아웃
+// 로그아웃
 router.get("/logout", (req, res) => {
+  const WebSocket = require('ws');
+  const wss = new WebSocket('ws://127.0.0.1:3334');  // Python 서버에 연결
+  // 웹 소켓 연결이 열렸을 때
+  wss.on('open', () => {
+    console.log('웹 소켓 연결 시작');
+    
+    // 데이터 수정
+    const sessionData = "";
+
+    // 데이터를 JSON 문자열로 변환
+    const sessionDataJSON = JSON.stringify(sessionData);
+    console.log('로그아웃할때 보내는 문구', sessionDataJSON)
+    
+    // 데이터 전송
+    wss.send(sessionDataJSON);
+  });
+
+  // 웹 소켓 연결이 끊겼을 때
+  wss.on('close', () => {
+    console.log('웹 소켓 연결이 끊겼습니다.');
+  });
   req.session.user = "";
   req.session.save(()=>{
     res.send('<script>location.href="http://localhost:3333/"</script>')
   })
 });
-
-router.get("/iot",(req,res)=>{
-  console.log(req.session.user)
-  console.log('iot 버튼 클릭')
-  // 먼저 데이터 베이스를 카운트 시키고 이걸 내가 가지고 온다
-  // 이걸 다 더해서 시간을 표현하는 걸 적용시킨다
-  // 
-  req.session.user.userId
-  let sql = 'select createdAt from sensordata where userId=?';
-conn.query(sql, [req.session.user.userId], (err, rows) => {
-    if (rows.length > 0) {
-      console.log('데이터 연결 성공',rows)
-    }else{
-      console.log('데이터 못가져옴',err)
-    }
-  })
-
-})
 
 
 const app = express();
