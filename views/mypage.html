@@ -3,27 +3,27 @@
 <section id="banner" style="height: 50px;" padding="3em;">
     <h1 style="font-size: 40px; color: #524d58;">마이페이지</h1>
 </section>
-<div id="FONTALL" style="width: 40%; margin: 0 auto;">
-    <!-- <form method="post">  -->
-        <table style="width: 700px">
-            <tr style="height: 50px; background-color: #43419696;">
-                <th colspan="2" style="text-align: center; vertical-align: middle; height: 50px;">마이페이지</th>
+<div id="FONTALL" style="width: 100%; margin-top: 60px; margin-bottom: 60px; padding: 20px; text-align: center;">
+    <table style="width: 100%; max-width: 700px; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); border-radius: 10px; margin: 20px auto;">
+        <tr style="height: 50px; background-color: #434196;">
+            <th colspan="2" style="text-align: center; vertical-align: middle; height: 50px; color: #fff;">마이페이지</th>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="center">ID</td>
-                <td style="display: flex;">{{obj.userId}}</td>
+                <td style="display: flex; padding: 20px 20px;">{{obj.userId}}</td>
             </tr>
             <tr>
-                <td height="35" bgcolor="whitesmoke" align="center">이름</td>
-                <td style="display: flex;">{{obj.userName}} </td>
+                <td height="35" bgcolor="whitesmoke" align="center" >이름
+                </td>
+                <td style="display: flex;padding: 20px 20px;">{{obj.userName}} </td>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="center">Email</td>
-                <td style="display: flex;">{{obj.userEmail}}</td>
+                <td style="display: flex ;padding: 20px 10px;">{{obj.userEmail}}</td>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="center">성별</td>
-                <td style="display: flex;">
+                <td style="display: flex; padding: 20px 10px;">
                     {% if obj.userGender == 'm' %}
                     <span>남자</span>
                     {%else%}
@@ -34,7 +34,7 @@
             <tr>
                 {%set korea = obj.userBirthdate%}
                 <td height="35" bgcolor="whitesmoke" align="center">생일</td>
-                <td style="display: flex;" >{{obj.userBirthdate}}</td>
+                <td style="display: flex; padding: 20px 10px;" >{{obj.userBirthdate}}</td>
                 <script>
                 </script>
                 <td>
@@ -43,20 +43,21 @@
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="center">몸무게</td>
-                <td style="display: flex;">{{obj.userWeight}}kg</td>
+                <td style="display: flex; padding: 20px 10px;">{{obj.userWeight}}kg</td>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="center">키</td>
-                <td style="display: flex;">{{obj.userHeight}}cm</td>
+                <td style="display: flex; padding: 20px 10px;">{{obj.userHeight}}cm</td>
             </tr>
             <tr>
                 <td height="35" bgcolor="whitesmoke" align="center">가입일자</td>
-                <td style="display: flex;">{{obj.createdAt}}</td>
+                <td style="display: flex; padding: 20px 10px;">{{obj.createdAt}}</td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    <button onclick="redirectToPage(1)">회원정보수정</button>
-                    <button onclick="redirectToPage(2)">회원탈퇴</button>
+                    <button onclick="redirectToPage(1)" style="width: 150px; height: 40px; font-size: 16px; background-color: #524d58; color: #fff; border: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); margin-right: 10px;">회원정보수정</button>
+                    <button onclick="redirectToPage(2)" style="width: 150px; height: 40px; font-size: 16px; background-color: #524d58; color: #fff; border: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">회원탈퇴</button>
+                    
                     <script>
                         function redirectToPage(buttonId) {
                             let targetPage = '/pwCheck';

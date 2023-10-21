@@ -21,7 +21,7 @@
    <link rel="stylesheet" href="../public/assets/css/스타일.css">
 
 
-   
+
 
 </head>
 
@@ -41,9 +41,9 @@
                <li class="submenu">
                   <a href="#">Menu</a>
                   <ul>
-                        {% if obj === undefined or obj === "" %}
-                  
-                        <li>
+                     {% if obj === undefined or obj === "" %}
+
+                     <li>
                         <a href="/login" onclick="loginAlert()">
                            <i class="bi bi-person-fill-check"></i> 사용자 상태
                         </a>
@@ -52,47 +52,51 @@
                            <li><a href="/login" onclick="loginAlert()">통계</a></li>
                         </ul>
                      </li>
-                        <li>
+                     <li>
                         <a href="/login" onclick="loginAlert()">
                            <i class="bi bi-heart-pulse-fill"></i> 헬스케어
-                        </a></li>
-                        <li>
+                        </a>
+                     </li>
+                     <li>
                         <a href="/login" onclick="loginAlert()">
                            <i class="bi bi-person-gear"></i> 마이페이지
+                        </a>
+                     </li>
+                     <li>
+                        <a href="/buyitem">
+                           <i class="bi bi-cart"></i> 제품구매
+                        </a>
+                     </li>
+                     {% else%}
+                     <li class="submenu">
+
+
+
+                     </li>
+                     <li class="submenu">
+                        <a href="/userstate">
+                           <i class="bi bi-person-fill-check"></i> 사용자 상태
+                        </a>
+                        <ul>
+                           <li><a href="/userstate">실시간</a></li>
+                           <li><a href="/statistics">통계</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="/healthinfo">
+                           <i class="bi bi-heart-pulse-fill"></i> 헬스케어
                         </a></li>
-                        <li>
-                           <a href="/buyitem">
-                              <i class="bi bi-cart"></i> 제품구매
-                           </a>
-                        </li>
-                        {% else%}
-                        <li class="submenu">
-                     
-                     
-      
-                        </li>
-                        <li class="submenu">
-                           <a href="/userstate">
-                              <i class="bi bi-person-fill-check"></i> 사용자 상태
-                           </a>
-                           <ul>
-                              <li><a href="/userstate">실시간</a></li>
-                              <li><a href="/statistics">통계</a></li>
-                           </ul>
-                        </li>
-                        <li><a href="/healthinfo">
-                              <i class="bi bi-heart-pulse-fill"></i> 헬스케어
-                           </a></li>
-                        <li>
+                     <li>
                         <a href="/mypage">
                            <i class="bi bi-person-gear"></i> 마이페이지
-                        </a></li>
-                        <li>
-                           <a href="/buyitem">
-                              <i class="bi bi-cart"></i> 제품구매
-                           </a></li>
-                           
-                        {%endif%}
+                        </a>
+                     </li>
+                     <li>
+                        <a href="/buyitem">
+                           <i class="bi bi-cart"></i> 제품구매
+                        </a>
+                     </li>
+
+                     {%endif%}
                   </ul>
                </li>
                {% if obj === undefined or obj === "" %}
@@ -100,7 +104,7 @@
                      로그인
                   </a></li>
                {% else %}
-               
+
                <li><a href="/user/logout" class="button primary">로그아웃</a></li>
                {% endif %}
             </ul>
@@ -133,9 +137,9 @@
    <script src="assets/js/util.js"></script>
    <script src="assets/js/main.js"></script>
    <script>
-       function loginAlert() {
-            alert("로그인이 필요한 서비스입니다.");
-        }
+      function loginAlert() {
+         alert("로그인이 필요한 서비스입니다.");
+      }
    </script>
 
 

@@ -10,12 +10,17 @@
     <style>
         /* 부모 컨테이너를 가운데 정렬 */
         .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            /* 뷰포트 높이에 맞게 설정하여 화면 중앙에 폼이 위치하도록 합니다. */
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center; /* 가운데 정렬을 위해 추가 */
+        width: auto; /* 너비를 컨텐츠 크기만큼만 가지도록 설정 */
+        max-width: 700px; /* 최대 너비 설정 */
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+        padding: 20px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
         /* 배경 이미지 설정 */
         body {
@@ -26,7 +31,6 @@
             /* 배경 이미지 반복 없음 */
             background-attachment: fixed;
             /* 배경 이미지 고정 */
-
         }
 
         table {
@@ -35,8 +39,45 @@
 
         /* 폼 요소 스타일 */
         form {
-            width: 700px;
-            height: 700px;
+            max-width: 700px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="date"] {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="radio"] {
+            margin: 0 10px;
+        }
+
+        input[type="submit"] {
+            width: 100px;
+            height: 50px;
+            font-size: 16px;
+            background-color: #434196;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #43419696;
+        }
+
+        /* 레이블 스타일, 필요에 따라 조정합니다. */
+        label {
+            font-weight: bold;
         }
 
         /* 나머지 스타일은 이전 코드와 동일 */
@@ -93,33 +134,33 @@
                                     .catch((error) => console.error(error));
                             });
                         </script>
-                   
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">비밀번호</td>
-                <td>
-                    <input type="password" name="userPw"style="width: 150px; height: 10px; margin-left: 20px;"
-                    maxlength = "15" id="myPw">
-                </td>
-            </tr>
-            <tr>
-                <td height="35" bgcolor="whitesmoke" align="right">비밀번호 확인</td>
-                <td>
-                    <input type="password" name="repw"style="width: 150px; height: 10px; margin-left: 20px;"
-                    maxlength = "15" id="chPw"> <span id="ChPw" style="color: red;"> </span>
-                </td>
-                <script>
-                    var inputElement = document.getElementById("chPw");
-                    var MyElement = document.getElementById("myPw");
-                    var charCountElement = document.getElementById("ChPw");
-                    inputElement.addEventListener("input", function() {
-                        var inputValue = inputElement.value;
-                        if (inputValue!=myPw.value){
-                            charCountElement.innerHTML = "비밀번호가 다릅니다";
 
-                            } else {
-                                charCountElement.innerHTML = " ";
-                            }
-                        });
+                    <tr>
+                        <td height="35" bgcolor="whitesmoke" align="right">비밀번호</td>
+                        <td>
+                            <input type="password" name="userPw" style="width: 150px; height: 10px; margin-left: 20px;"
+                                maxlength="15" id="myPw">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="35" bgcolor="whitesmoke" align="right">비밀번호 확인</td>
+                        <td>
+                            <input type="password" name="repw" style="width: 150px; height: 10px; margin-left: 20px;"
+                                maxlength="15" id="chPw"> <span id="ChPw" style="color: red;"> </span>
+                        </td>
+                        <script>
+                            var inputElement = document.getElementById("chPw");
+                            var MyElement = document.getElementById("myPw");
+                            var charCountElement = document.getElementById("ChPw");
+                            inputElement.addEventListener("input", function () {
+                                var inputValue = inputElement.value;
+                                if (inputValue != myPw.value) {
+                                    charCountElement.innerHTML = "비밀번호가 다릅니다";
+
+                                } else {
+                                    charCountElement.innerHTML = " ";
+                                }
+                            });
                         </script>
                     </tr>
                     <tr>
