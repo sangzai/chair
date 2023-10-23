@@ -132,6 +132,10 @@
                 <tr>
                     <td>자세가 지속되어 고착화 되면 척추 측만증 ,골반 뒤틀림이 발생할 수 있습니다. </td>
                 </tr>
+                <tr>
+                    <td>체형 밸런스 : </td>
+                    <td id="level"> 위험 단계 </td>
+                </tr>
             </div>
             <p class="text"
                 style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
@@ -204,6 +208,10 @@
                     <td>해당 자세가 지속되어 고착화 될 경우 대표적으로 거북목과 굽은등 같은 문제가 발생할 수 있으며 몸 전체적으로 근육들이 약화되기 때문에 다른 자세에서 나타날 수 있는 질병
                         모두 조심 하여야 합니다.</td>
                 </tr>
+                <tr>
+                    <td>체형 밸런스 : </td>
+                    <td id="level"> 위험 단계 </td>
+                </tr>
             </div>
             <p class="text"
                 style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
@@ -238,6 +246,10 @@
                 <tr>
                     <td>다리를 교차하는 동안 관절에 압력이 가해질 수 있으며, 관절 통증 또는 퇴행성 관절질환의 위험이 증가할 수 있습니다.</td>
                 </tr>
+                <tr>
+                    <td>체형 밸런스 : </td>
+                    <td id="level"> 위험 단계 </td>
+                </tr>
             </div>
             <p class="text"
                 style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
@@ -254,7 +266,7 @@
                     <td id="totalsit">0</td>
                 </tr>
                 <tr>
-                    <th>가장 많이 앉은 자세:</th>
+                    <th>가장 많이 앉은 잘못된 자세:</th>
                     <td id="longtimesit">0</td>
                 </tr>
                 <tr>
@@ -286,12 +298,8 @@
                     <td id="unflatsit">0</td>
                 </tr>
                 <tr>
-                    <th>Daily 누적 경고:</th>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th>최근 경고 시간:</th>
-                    <td>0</td>
+                    <td>체형 밸런스 : </td>
+                    <td id="level"> 위험 단계 </td>
                 </tr>
             </table>
         </div>
@@ -313,6 +321,8 @@
             const selDate = document.getElementById('date').value;
             document.getElementById("selectedDate").textContent = selDate; // 선택한 날짜로 업데이트
 
+            document.querySelectorAll('[data-section]').forEach(section => {
+                section.style.display = 'none';})
             // 서버로 POST 요청을 보내서 사용자 통계 데이터 가져오기
             fetch('/statistics/userstatistics', {
                 method: 'POST',
@@ -357,7 +367,7 @@
             const totalsit = correct + wrongsit;
 
             // 배열로 변수들을 저장하여 Math.max() 함수로 최대값을 찾습니다.
-            const counts = [correct, left, right, turtle, bent, unflat];
+            const counts = [ left, right, turtle, bent, unflat];
             const longtimesit = Math.max(...counts);
 
             // 각 섹션의 데이터를 업데이트
@@ -369,7 +379,7 @@
             document.getElementById('unflatsit').textContent = formatTime(unflat);
             document.getElementById('wrongsit').textContent = formatTime(wrongsit);
             document.getElementById('totalsit').textContent = formatTime(totalsit);
-            let mostSatOnPosture = "바른 자세";
+            let mostSatOnPosture = "";
             let session = 0; // 초기값은 0
             if (longtimesit === correct) {
                 session = 0;
