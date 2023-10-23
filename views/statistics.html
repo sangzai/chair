@@ -132,10 +132,6 @@
                 <tr>
                     <td>자세가 지속되어 고착화 되면 척추 측만증 ,골반 뒤틀림이 발생할 수 있습니다. </td>
                 </tr>
-                <tr>
-                    <td>체형 밸런스 : </td>
-                    <td id="level"> 위험 단계 </td>
-                </tr>
             </div>
             <p class="text"
                 style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
@@ -208,10 +204,8 @@
                     <td>해당 자세가 지속되어 고착화 될 경우 대표적으로 거북목과 굽은등 같은 문제가 발생할 수 있으며 몸 전체적으로 근육들이 약화되기 때문에 다른 자세에서 나타날 수 있는 질병
                         모두 조심 하여야 합니다.</td>
                 </tr>
-                <tr>
-                    <td>체형 밸런스 : </td>
-                    <td id="level"> 위험 단계 </td>
-                </tr>
+                <br /><br />
+
             </div>
             <p class="text"
                 style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
@@ -246,10 +240,6 @@
                 <tr>
                     <td>다리를 교차하는 동안 관절에 압력이 가해질 수 있으며, 관절 통증 또는 퇴행성 관절질환의 위험이 증가할 수 있습니다.</td>
                 </tr>
-                <tr>
-                    <td>체형 밸런스 : </td>
-                    <td id="level"> 위험 단계 </td>
-                </tr>
             </div>
             <p class="text"
                 style="background-color: beige; color: #524d58; font-size: medium; text-align: left; margin-top: 70px;">
@@ -263,43 +253,43 @@
             <table>
                 <tr>
                     <th>오늘 총 앉은 시간:</th>
-                    <td id="totalsit">0</td>
+                    <td id="totalsit"></td>
                 </tr>
                 <tr>
                     <th>가장 많이 앉은 잘못된 자세:</th>
-                    <td id="longtimesit">0</td>
+                    <td id="longtimesit"></td>
                 </tr>
                 <tr>
                     <th>바른 자세로 앉은 시간:</th>
-                    <td id="correctsit">0</td>
+                    <td id="correctsit"></td>
                 </tr>
                 <tr>
                     <th>잘못된 자세로 앉은 시간:</th>
-                    <td id="wrongsit">0</td>
+                    <td id="wrongsit"></td>
                 </tr>
                 <tr>
                     <th>왼쪽으로 치우쳐져 앉은 시간:</th>
-                    <td id="leftsit">0</td>
+                    <td id="leftsit"></td>
                 </tr>
                 <tr>
                     <th>오른쪽으로 치우쳐져 앉은 시간:</th>
-                    <td id="rightsit">0</td>
+                    <td id="rightsit"></td>
                 </tr>
                 <tr>
                     <th>앞으로 목이빠져 앉은 시간:</th>
-                    <td id="turtlesit">0</td>
+                    <td id="turtlesit"></td>
                 </tr>
                 <tr>
                     <th>뒤로 기대앉은 시간:</th>
-                    <td id="bentsit">0</td>
+                    <td id="bentsit"></td>
                 </tr>
                 <tr>
                     <th>압력분포가 불균형한 시간:</th>
-                    <td id="unflatsit">0</td>
+                    <td id="unflatsit"></td>
                 </tr>
                 <tr>
                     <td>체형 밸런스 : </td>
-                    <td id="level"> 위험 단계 </td>
+                    <td id="level"> </td>
                 </tr>
             </table>
         </div>
@@ -307,13 +297,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // 페이지가 완전히 로드되었을 때 실행될 코드
-            
+            // 페이지가 완전히 로드되었을 때 실행될 코드 
             // 모든 섹션 숨기기
             document.querySelectorAll('[data-section]').forEach(section => {
                 section.style.display = 'none';
             });
-
             // 이벤트 리스너를 통해 나머지 JavaScript 코드 설정 및 이벤트 처리 가능
         });
         document.getElementById("submitDate").addEventListener("click", () => {
@@ -369,7 +357,6 @@
             // 배열로 변수들을 저장하여 Math.max() 함수로 최대값을 찾습니다.
             const counts = [ left, right, turtle, bent, unflat];
             const longtimesit = Math.max(...counts);
-
             // 각 섹션의 데이터를 업데이트
             document.getElementById('correctsit').textContent = formatTime(correct);
             document.getElementById('leftsit').textContent = formatTime(left);
@@ -386,6 +373,7 @@
             } else if (longtimesit === left) {
                 session = 1; // left일 때도 1번0 세션을 렌더링
                 mostSatOnPosture = "왼쪽으로 다리를 꼰 자세";
+
             } else if (longtimesit === right) {
                 session = 1; // right일 때도 1번 세션을 렌더링
                 mostSatOnPosture = "오른쪽으로 다리를 꼰 자세";
@@ -401,6 +389,7 @@
             }
             document.getElementById('longtimesit').textContent = mostSatOnPosture;
 
+            
 
             const sessionElement = document.querySelector(`[data-section="${session}"]`);
             if (sessionElement) {
@@ -414,7 +403,17 @@
         function updateDoughnutChart(correct, wrongsit) {
             // 총 시간 계산
             const totalMinutes = correct + wrongsit;
-
+            if((correct / totalMinutes) * 100 >80){
+                document.getElementById('level').textContent ="바른"
+            }else if((correct / totalMinutes) * 100 >70){
+                document.getElementById('level').textContent ="보통"
+            }else if((correct / totalMinutes) * 100 >60){
+                document.getElementById('level').textContent ="주의"
+            }else if((correct / totalMinutes) * 100 >0){
+                document.getElementById('level').textContent ="위험"
+            }else{
+                document.getElementById('level').textContent =""
+            }
             // 바른 자세로 앉은 시간 비율 계산
             const correctPercentage = (correct / totalMinutes) * 100;
 
@@ -457,7 +456,6 @@
                 }
             });
         }
-
 
     </script>
 
